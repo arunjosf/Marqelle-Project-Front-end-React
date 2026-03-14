@@ -1,0 +1,793 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Formal Classic Black Blazer",
+      "category": "Formal",
+      "price": 18000,
+      "rating": 4.8,
+      "color": "Black",
+      "image": [
+        "/product-images/pq.png",
+        "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+        "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+        "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "2",
+      "name": "Casual Brown fit Blazer",
+      "category": "Casual",
+      "price": 17499,
+      "rating": 4.6,
+      "color": "Brown",
+      "image": [
+        "/product-images/p4.png",
+        "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+        "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+        "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+      ],
+      "description": "Modern slim-fit navy suit, ideal for weddings and parties.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "3",
+      "name": "Fromal Blue Blazer",
+      "category": "Formal",
+      "price": 12999,
+      "rating": 4.8,
+      "color": "Blue",
+      "image": [
+        "/product-images/pdl2.png",
+        "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+        "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+        "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+        "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+        "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "4",
+      "name": "Casual Dark Brown Blazer",
+      "category": "Casual",
+      "price": 17599,
+      "rating": 4.5,
+      "color": "Dark Brown",
+      "image": [
+        "/product-images/p3.png",
+        "https://static.zara.net/assets/public/64de/b6d4/1ce94e81860f/cdf0c0eee214/05746557700-e1/05746557700-e1.jpg?ts=1758194132388&w=750",
+        "https://static.zara.net/assets/public/46b5/2f49/f78045b6be99/efd27a6708c6/05746557700-e2/05746557700-e2.jpg?ts=1758194132454&w=750",
+        "https://static.zara.net/assets/public/de6f/1368/44b54501b74b/5c984bec0176/05746557700-a1/05746557700-a1.jpg?ts=1758270357887&w=1125",
+        "https://static.zara.net/assets/public/8b0e/ea93/08924ff6a4d3/dd331abae75c/05746557700-a4/05746557700-a4.jpg?ts=1758270362852&w=750",
+        "https://static.zara.net/assets/public/8077/d50e/1c5b454c988a/7a071492fa3e/05746557700-p/05746557700-p.jpg?ts=1758270362157&w=1024"
+      ],
+      "description": "Lightweight beige linen suit, comfortable for summer occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "5",
+      "name": "Grey Winter long Blazer",
+      "category": "Winter",
+      "price": 30999,
+      "rating": 4.3,
+      "color": "Gray",
+      "image": [
+        "/product-images/p5.png"
+      ],
+      "description": "Professional grey suit designed for business meetings and office wear.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "6",
+      "name": "Casual Brown Blazer",
+      "category": "Casual",
+      "price": 13999,
+      "rating": 4.8,
+      "color": "Brown",
+      "image": [
+        "/product-images/p7.png",
+        "https://static.zara.net/assets/public/64de/b6d4/1ce94e81860f/cdf0c0eee214/05746557700-e1/05746557700-e1.jpg?ts=1758194132388&w=750",
+        "https://static.zara.net/assets/public/46b5/2f49/f78045b6be99/efd27a6708c6/05746557700-e2/05746557700-e2.jpg?ts=1758194132454&w=750"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "7",
+      "name": "Party Classic Red Blazer",
+      "category": "Party",
+      "price": 18999,
+      "rating": 4.8,
+      "color": "Red",
+      "image": [
+        "/product-images/p8.png"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "8",
+      "name": "Casual Light Browwn Blazer",
+      "category": "Casual",
+      "price": 12999,
+      "rating": 4.8,
+      "color": "Light Brown",
+      "image": [
+        "/product-images/p9.png"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "9",
+      "name": "Winter Blue Long Blazer",
+      "category": "Winter",
+      "price": 24999,
+      "rating": 4.8,
+      "color": "Blue",
+      "image": [
+        "https://static.zara.net/assets/public/581a/5624/c04a4befb4d1/07a5e417c9ae/05070100401-p/05070100401-p.jpg?ts=1757061835128&w=1024",
+        "https://static.zara.net/assets/public/2d4b/caf3/fa50415fb09b/ed0f32fa4f6f/05070100401-e1/05070100401-e1.jpg?ts=1757400185426&w=750",
+        "https://static.zara.net/assets/public/c8c0/268c/7a6843a1b203/0811b182945c/05070100401-e2/05070100401-e2.jpg?ts=1757400185412&w=750"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "10",
+      "name": "Casual Linen Skyblue Blazer",
+      "category": "Casual",
+      "price": 15999,
+      "rating": 4.8,
+      "color": "Skyblue",
+      "image": [
+        "/product-images/p11.png",
+        "https://static.zara.net/assets/public/f87f/a09b/2d4e48598a20/0a3a9ed1bfe1/04425254403-e1/04425254403-e1.jpg?ts=1754390459373&w=750",
+        "https://static.zara.net/assets/public/c00d/49fd/882e49e1a90a/7ee86b5dd937/04425254403-e2/04425254403-e2.jpg?ts=1754390459579&w=750",
+        "https://static.zara.net/assets/public/ff7c/6964/92c34f72bb73/ecd71af6eb66/04425254403-a4/04425254403-a4.jpg?ts=1754928791156&w=750",
+        "https://static.zara.net/assets/public/aaad/3d42/4d3f432fb91d/85bb97a13ebb/04425254403-a5/04425254403-a5.jpg?ts=1754928791728&w=750"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    },
+    {
+      "id": "11",
+      "name": "Formal Black Blazer",
+      "category": "Formal",
+      "price": 20999,
+      "rating": 4.8,
+      "color": "Black",
+      "image": [
+        "/product-images/pdl.png"
+      ],
+      "description": "Elegant black suit made with premium wool blend, perfect for formal occasions.",
+      "sizes": [
+        "S",
+        "M",
+        "XL",
+        "XXL"
+      ],
+      "inStock": true
+    }
+  ],
+  "admin": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "Admin1234"
+    }
+  ],
+  "users": [
+    {
+      "id": "1762081259685",
+      "firstname": "Arun ",
+      "lastname": "Joseph",
+      "email": "  ",
+      "password": "Arun1234",
+      "blocked": false,
+      "status": "active"
+    },
+    {
+      "id": "1762847393281",
+      "firstname": "Muhammad",
+      "lastname": "Shiyas",
+      "email": "shiyas@gmail.com",
+      "password": "Shiyas1234",
+      "blocked": false
+    },
+    {
+      "id": "1762866950060",
+      "firstname": "Muh",
+      "lastname": "Majid",
+      "email": "majid@gmail.com",
+      "password": "Majid1234",
+      "blocked": false
+    },
+    {
+      "id": "1762935280479",
+      "firstname": "anfas",
+      "lastname": "kt",
+      "email": "anfas@gmail.com",
+      "password": "Anfas1234",
+      "blocked": false
+    },
+    {
+      "id": "112172664829498859105",
+      "name": "arun joseph",
+      "email": "arunjoseph400@gmail.com",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocI9zY4JBW6aBmi8VyCbjRvl47Y0EIvNer7Mv_y-VYiSVPk3OyQ=s96-c",
+      "blocked": false,
+      "firstname": "",
+      "lastname": ""
+    }
+  ],
+  "cart": [
+    {
+      "id": "1",
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1
+    },
+    {
+      "id": "6935",
+      "userId": 1762081259685,
+      "productId": "1",
+      "name": "Formal Classic Black Blazer",
+      "image": [
+        "/product-images/pq.png",
+        "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+        "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+        "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+      ],
+      "price": 15999,
+      "quantity": 2
+    },
+    {
+      "id": "4b35",
+      "userId": 1762081259685,
+      "productId": "2",
+      "name": "Casual Brown fit Blazer",
+      "price": 17499,
+      "size": "S",
+      "image": [
+        "/product-images/p4.png",
+        "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+        "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+        "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+      ],
+      "quantity": 1
+    }
+  ],
+  "orders": [
+    {
+      "id": "94bc",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "a144",
+          "userId": 1762081259685,
+          "productId": "3",
+          "name": "Fromal Blue Blazer",
+          "price": 12999,
+          "size": "M",
+          "image": [
+            "/product-images/pdl2.png",
+            "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+            "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+            "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+            "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+            "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 12999,
+      "status": "Delivered",
+      "date": "2025-11-11",
+      "time": "12:44:28",
+      "paymentMethod": "CARD"
+    },
+    {
+      "id": "64ef",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "15ee",
+          "userId": 1762081259685,
+          "productId": "2",
+          "name": "Casual Brown fit Blazer",
+          "price": 17499,
+          "size": "M",
+          "image": [
+            "/product-images/p4.png",
+            "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+            "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+            "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 17499,
+      "status": "Pending",
+      "date": "2025-11-11",
+      "time": "12:45:27",
+      "paymentMethod": "UPI"
+    },
+    {
+      "id": "7dc0",
+      "userId": 1762866950060,
+      "items": [
+        {
+          "id": "d0c1",
+          "userId": 1762866950060,
+          "productId": "1",
+          "name": "Formal Classic Black Blazer",
+          "price": 15999,
+          "size": "M",
+          "image": [
+            "/product-images/pq.png",
+            "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+            "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+            "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 15999,
+      "status": "Pending",
+      "date": "2025-11-11T13:46:09.039Z",
+      "paymentMethod": "UPI"
+    },
+    {
+      "id": "a5da",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "890a",
+          "userId": 1762847393281,
+          "productId": "2",
+          "name": "Casual Brown fit Blazer",
+          "price": 17499,
+          "size": "S",
+          "image": [
+            "/product-images/p4.png",
+            "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+            "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+            "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 17499,
+      "status": "Pending",
+      "date": "2025-11-12T04:37:08.005Z",
+      "paymentMethod": "CARD"
+    },
+    {
+      "id": "d209",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "0f79",
+          "userId": 1762847393281,
+          "productId": "3",
+          "name": "Fromal Blue Blazer",
+          "price": 12999,
+          "size": "M",
+          "image": [
+            "/product-images/pdl2.png",
+            "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+            "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+            "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+            "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+            "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 12999,
+      "status": "Pending",
+      "date": "2025-11-12T08:12:31.379Z",
+      "paymentMethod": "UPI"
+    },
+    {
+      "id": "5765",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "0038",
+          "userId": 1762847393281,
+          "productId": "2",
+          "name": "Casual Brown fit Blazer",
+          "price": 17499,
+          "size": "S",
+          "image": [
+            "/product-images/p4.png",
+            "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+            "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+            "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+          ],
+          "quantity": 3
+        }
+      ],
+      "total": 52497,
+      "status": "Pending",
+      "date": "2025-11-13T06:26:56.267Z",
+      "paymentMethod": "UPI"
+    },
+    {
+      "id": "fbb5",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "a0c1",
+          "userId": 1762847393281,
+          "productId": "2",
+          "name": "Casual Brown fit Blazer",
+          "price": 17499,
+          "size": "S",
+          "image": [
+            "/product-images/p4.png",
+            "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+            "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+            "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+            "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 17499,
+      "status": "Delivered",
+      "date": "2025-11-13T10:40:08.701Z",
+      "paymentMethod": "NETBANKING"
+    },
+    {
+      "id": "dd91",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "e1c1",
+          "userId": 1762081259685,
+          "productId": "9",
+          "name": "Winter Blue Long Blazer",
+          "price": 24999,
+          "size": "M",
+          "image": [
+            "https://static.zara.net/assets/public/581a/5624/c04a4befb4d1/07a5e417c9ae/05070100401-p/05070100401-p.jpg?ts=1757061835128&w=1024",
+            "https://static.zara.net/assets/public/2d4b/caf3/fa50415fb09b/ed0f32fa4f6f/05070100401-e1/05070100401-e1.jpg?ts=1757400185426&w=750",
+            "https://static.zara.net/assets/public/c8c0/268c/7a6843a1b203/0811b182945c/05070100401-e2/05070100401-e2.jpg?ts=1757400185412&w=750"
+          ],
+          "quantity": 1
+        },
+        {
+          "id": "b675",
+          "userId": 1762081259685,
+          "productId": "1",
+          "name": "Formal Classic Black Blazer",
+          "image": [
+            "/product-images/pq.png",
+            "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+            "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+            "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+          ],
+          "price": 15999,
+          "quantity": 1
+        }
+      ],
+      "total": 40998,
+      "status": "Cancelled",
+      "date": "2025-11-13T11:11:11.737Z",
+      "paymentMethod": "CASH"
+    },
+    {
+      "id": "f4fa",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "cebe",
+          "userId": 1762081259685,
+          "productId": "7",
+          "name": "Party Classic Red Blazer",
+          "price": 18999,
+          "size": "S",
+          "image": [
+            "/product-images/p8.png"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 18999,
+      "date": "2025-11-13T12:46:07.256Z",
+      "paymentMethod": "UPI",
+      "status": "Delivered"
+    },
+    {
+      "id": "b362",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "9c85",
+          "userId": 1762081259685,
+          "productId": "10",
+          "name": "Casual Linen Skyblue Blazer",
+          "price": 15999,
+          "size": "S",
+          "image": [
+            "/product-images/p11.png",
+            "https://static.zara.net/assets/public/f87f/a09b/2d4e48598a20/0a3a9ed1bfe1/04425254403-e1/04425254403-e1.jpg?ts=1754390459373&w=750",
+            "https://static.zara.net/assets/public/c00d/49fd/882e49e1a90a/7ee86b5dd937/04425254403-e2/04425254403-e2.jpg?ts=1754390459579&w=750",
+            "https://static.zara.net/assets/public/ff7c/6964/92c34f72bb73/ecd71af6eb66/04425254403-a4/04425254403-a4.jpg?ts=1754928791156&w=750",
+            "https://static.zara.net/assets/public/aaad/3d42/4d3f432fb91d/85bb97a13ebb/04425254403-a5/04425254403-a5.jpg?ts=1754928791728&w=750"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 15999,
+      "date": "2025-11-13T12:53:56.929Z",
+      "paymentMethod": "CARD",
+      "status": "Shipped"
+    },
+    {
+      "id": "b33d",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "c875",
+          "userId": 1762081259685,
+          "productId": "3",
+          "name": "Fromal Blue Blazer",
+          "price": 12999,
+          "size": "S",
+          "image": [
+            "/product-images/pdl2.png",
+            "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+            "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+            "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+            "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+            "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 12999,
+      "date": "2025-11-13T13:13:05.237Z",
+      "paymentMethod": "CARD",
+      "status": "Pending"
+    },
+    {
+      "id": "2a7d",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "a820",
+          "userId": 1762847393281,
+          "productId": "3",
+          "name": "Fromal Blue Blazer",
+          "price": 12999,
+          "size": "M",
+          "image": [
+            "/product-images/pdl2.png",
+            "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+            "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+            "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+            "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+            "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 12999,
+      "date": "2025-11-13T14:31:53.930Z",
+      "paymentMethod": "CARD",
+      "status": "Shipped"
+    },
+    {
+      "id": "af4c",
+      "userId": 1762081259685,
+      "items": [
+        {
+          "id": "3f40",
+          "userId": 1762081259685,
+          "productId": "1",
+          "name": "Formal Classic Black Blazer",
+          "price": 18,
+          "size": "S",
+          "image": [
+            "/product-images/pq.png",
+            "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+            "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+            "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 18,
+      "date": "2025-11-14T11:10:44.352Z",
+      "paymentMethod": "UPI",
+      "status": "Out for Delivery"
+    },
+    {
+      "id": "115c",
+      "userId": 1762847393281,
+      "items": [
+        {
+          "id": "901f",
+          "userId": 1762847393281,
+          "productId": "1",
+          "name": "Formal Classic Black Blazer",
+          "price": 18000,
+          "size": "S",
+          "image": [
+            "/product-images/pq.png",
+            "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+            "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+            "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+            "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+          ],
+          "quantity": 1
+        }
+      ],
+      "total": 18000,
+      "date": "2025-11-17T10:16:31.822Z",
+      "paymentMethod": "UPI",
+      "status": "Cancelled"
+    }
+  ],
+  "wishlist": [
+    {
+      "id": "1",
+      "userId": "1",
+      "productId": "1",
+      "name": "T-Shirt",
+      "price": 999,
+      "image": "image-url.jpg"
+    },
+    {
+      "id": "a36a",
+      "userId": "1762065035776",
+      "productId": "1",
+      "name": "Formal Classic Black Blazer",
+      "price": 15999,
+      "image": [
+        "/product-images/pq.png",
+        "https://static.zara.net/assets/public/5a95/c7e1/75aa4a938156/bcd3a66afa49/05732173401-e1/05732173401-e1.jpg?ts=1753719397421&w=750",
+        "https://static.zara.net/assets/public/5888/855b/f3ce48428b0f/d55f583cde3e/05732173401-e2/05732173401-e2.jpg?ts=1753719397480&w=750",
+        "https://static.zara.net/assets/public/4d9e/090c/f9774cd09487/5355d66a35d3/01564300401-a5/01564300401-a5.jpg?ts=1753720767203&w=750",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125",
+        "https://static.zara.net/assets/public/9875/55d5/3a844e8680d9/efdf4b497f14/0573217340-a1/0573217340-a1.jpg?ts=1753784116871&w=1125"
+      ]
+    },
+    {
+      "id": "4512",
+      "userId": 1762081259685,
+      "productId": "4",
+      "name": "Casual Dark Brown Blazer",
+      "price": 17599,
+      "image": [
+        "/product-images/p3.png",
+        "https://static.zara.net/assets/public/64de/b6d4/1ce94e81860f/cdf0c0eee214/05746557700-e1/05746557700-e1.jpg?ts=1758194132388&w=750",
+        "https://static.zara.net/assets/public/46b5/2f49/f78045b6be99/efd27a6708c6/05746557700-e2/05746557700-e2.jpg?ts=1758194132454&w=750",
+        "https://static.zara.net/assets/public/de6f/1368/44b54501b74b/5c984bec0176/05746557700-a1/05746557700-a1.jpg?ts=1758270357887&w=1125",
+        "https://static.zara.net/assets/public/8b0e/ea93/08924ff6a4d3/dd331abae75c/05746557700-a4/05746557700-a4.jpg?ts=1758270362852&w=750",
+        "https://static.zara.net/assets/public/8077/d50e/1c5b454c988a/7a071492fa3e/05746557700-p/05746557700-p.jpg?ts=1758270362157&w=1024"
+      ]
+    },
+    {
+      "id": "1cfc",
+      "userId": 1762081259685,
+      "productId": "2",
+      "name": "Casual Brown fit Blazer",
+      "price": 17499,
+      "image": [
+        "/product-images/p4.png",
+        "https://static.zara.net/assets/public/5294/2c22/752c49139e74/742ba3d2d5ce/04088700700-e1/04088700700-e1.jpg?ts=1760356444967&w=750",
+        "https://static.zara.net/assets/public/ff7e/f82a/53754616ac86/c1376c757acb/04088700700-e2/04088700700-e2.jpg?ts=1760356444890&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750",
+        "https://static.zara.net/assets/public/6324/39c1/f01a47c3bcdd/a829ed0dffc0/04088700700-e4/04088700700-e4.jpg?ts=1760356483296&w=750",
+        "https://static.zara.net/assets/public/6724/c0ff/e0d94ab2959f/ae165a83b0c7/04088700700-e3/04088700700-e3.jpg?ts=1760356481801&w=750"
+      ]
+    },
+    {
+      "id": "ac01",
+      "userId": 1762081259685,
+      "productId": "3",
+      "name": "Fromal Blue Blazer",
+      "price": 12999,
+      "image": [
+        "/product-images/pdl2.png",
+        "https://static.zara.net/assets/public/23e5/f37b/fa2b41698869/d8405fb3caf4/05674718200-e1/05674718200-e1.jpg?ts=1753719398925&w=750",
+        "https://static.zara.net/assets/public/e12f/7932/0a6541f5bf58/f21c3016f876/05674718200-e2/05674718200-e2.jpg?ts=1753719398733&w=750",
+        "https://static.zara.net/assets/public/cd30/90f8/7f9b49489037/e9ded0b4a484/05674718200-a5/05674718200-a5.jpg?ts=1757318891681&w=750",
+        "https://static.zara.net/assets/public/167f/610a/07ea4deea10f/edab28acb3af/05674718200-a2/05674718200-a2.jpg?ts=1757318891720&w=750",
+        "https://static.zara.net/assets/public/2327/fb8c/ee3048989164/99435dea2322/05674718200-a1/05674718200-a1.jpg?ts=1757319914094&w=1125"
+      ]
+    }
+  ]
+}
