@@ -9,7 +9,10 @@ export default function Signup() {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("");
+ 
+  const AUTH_URL = "https://localhost:7177/api/usersauth";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +20,19 @@ export default function Signup() {
     if (!firstname || !lastname || !email || !password) {
       setError("Please fill in all fields");
       return;
+    }
+    
+    const Name = /^[A-Za-z][A-Za-z\s]*$/;
+
+    if(!Name.test(firstname))
+    {
+      setError("First name must start with a letter & contain only letters and spaces")
+      return
+    }
+
+    if(!Name.test(lastname))
+    {
+      setError("Last name must start with a letter & contain only letters and spaces")
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,27 +48,26 @@ export default function Signup() {
       );
       return;
     }
+    
+    if(password !== confirmPassword)
+    {
+      setError("Passwords do not match")
+      return
+    }
 
     try {
-      const existingUser = await axios.get(
-        `http://localhost:5000/users?email=${email}`
-      );
+      const formData = new FormData();
+      formData.append("Firstname", firstname.trim());
+      formData.append("LastName", lastname.trim());
+      formData.append("Email", email.trim());
+      formData.append("Password", password.trim());
+      formData.append("ConfirmPassword", confirmPassword);
 
-      if (existingUser.data.length > 0) {
-        setError("User already exists with this email");
-        return;
-      }
+      const res = await axios.post(`${AUTH_URL}/register`, formData, {
+        withCredentials: true,
+      });
 
-      const newUser = {
-        id: Date.now(),
-        firstname,
-        lastname,
-        email,
-        password,
-      };
-
-      await axios.post("http://localhost:5000/users", newUser);
-
+      if (res.data.success) {
         toast.success("Sign up Successful!", {
           style: {
             borderRadius: "10px",
@@ -67,14 +82,17 @@ export default function Signup() {
           },
         });
 
-        setTimeout(() => navigate("/login"), 1000);
+      setTimeout(() => navigate("/login"), 1000);
+
+      } else {
+        setError(res.data.message || "Registration failed. Please try again.");
+      }
     } catch (err) {
-      console.error(err);
-      setError("Something went wrong. Please try again later.");
+      const msg = err.response?.data?.message || "Something went wrong. Please try again later.";
+      setError(msg);
     }
   };
 
-   
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="relative w-[800px] rounded-3xl shadow-2xl overflow-hidden flex gap-2 bg-white">
@@ -144,6 +162,15 @@ export default function Signup() {
               className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+            
+            <p className="text-xs font-semibold text-gray-700 ml-4 mb-1">Confirm Passward</p>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-black"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
             {error && (

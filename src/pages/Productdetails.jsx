@@ -14,25 +14,29 @@ export default function Productdetails() {
   const [filledIcon, setFilledIcon] = useState({});
   const [open, setOpen] = useState(false);
 
+  const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
+  const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+  const CART_URL = "https://localhost:7177/api/usercart";
+
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/products/${id}`)
-      .then((res) => setProductdetails(res.data))
+      .get(`${PRODUCTS_URL}/id?productId=${id}`, {withCredentials: true})
+      .then((res) => setProductdetails(res.data.data))
       .catch((err) => console.log("Product fetch error:", err));
   }, [id]);
 
   useEffect(() => {
     if (!user) return;
     axios
-      .get(`http://localhost:5001/wishlist?userId=${user.id}`)
+      .get(`${WISHLIST_URL}/Get`, {withCredentials: true})  
       .then((res) => {
-        setWishlist(res.data);
+        setWishlist(res.data.data || []);
         const wish = {};
-        res.data.forEach((item) => (wish[item.productId] = true));
+        res.data.data.forEach((item) => (wish[item.productId] = true));
         setFilledIcon(wish);
       })
       .catch((err) => console.log(err));
-  }, [user]);
+  }, [user, productdetails]);
 
   const toggleIcon = async (prod) => {
     if (!user) {
@@ -49,25 +53,19 @@ export default function Productdetails() {
     }
 
     const isFilled = filledIcon[prod.id];
+
     try {
       if (isFilled) {
         const itemToRemove = wishlist.find(
           (w) => w.productId === prod.id && w.userId === user.id
         );
         if (itemToRemove) {
-          await axios.delete(`http://localhost:5001/wishlist/${itemToRemove.id}`);
-          setWishlist((prev) => prev.filter((w) => w.id !== itemToRemove.id));
+          await axios.delete(`${WISHLIST_URL}/Delete?productId=${prod.id}`, {withCredentials: true,});
+          setWishlist((prev) => prev.filter((w) => w.productId !== prod.id));
         }
       } else {
-        const newItem = {
-          userId: user.id,
-          productId: prod.id,
-          name: prod.name,
-          price: prod.price,
-          image: prod.image,
-        };
-        const res = await axios.post("http://localhost:5001/wishlist", newItem);
-        setWishlist((prev) => [...prev, res.data]);
+        const res = await axios.post(`${WISHLIST_URL}/add?productId=${prod.id}`, {}, { withCredentials: true,});
+        setWishlist(res.data.data || []);
       }
 
       setFilledIcon((prev) => ({
@@ -114,41 +112,33 @@ export default function Productdetails() {
     return;
   }
 
-  try {
-    const res = await axios.get(
-      `http://localhost:5001/cart?userId=${user.id}&productId=${productdetails.id}&size=${selectedSize}`
-    );
-
-    if (res.data.length > 0) {
-      toast("Item already in cart!", {
-        style: {
-          borderRadius: "10px",
-          background: "#fff",
-          color: "#111",
-          border: "1px solid #ddd",
-          fontWeight: "normal",
-        },
-        iconTheme: {
-          primary: "#111",
-          secondary: "#fff",
-        },
-      });
-      return;
-    }
-
-    const newCartItem = {
-      userId: user.id,
-      productId: productdetails.id,
-      name: productdetails.name,
-      price: productdetails.price,
-      size: selectedSize,
-      image: productdetails.image,
-      quantity: 1,
-    };
-
-    await axios.post("http://localhost:5001/cart", newCartItem);
-
-    toast.success("Added to cart", {
+   try {
+      const res = await axios.post(
+        `${CART_URL}/add?productId=${productdetails.id}&size=${selectedSize}`,
+        {},
+        { withCredentials: true }
+      );
+ 
+      if (res.data.success) {
+        toast.success("Added to cart", {
+          style: {
+            borderRadius: "10px",
+            background: "#fff",
+            color: "#111",
+            border: "1px solid #ddd",
+            fontWeight: "normal",
+          },
+          iconTheme: { primary: "#111", secondary: "#fff" },
+        });
+ 
+        const cartRes = await axios.get(`${CART_URL}/Cartitems`, { withCredentials: true });
+        setCart(cartRes.data.data || []);
+      }
+      } catch (err) {
+  const msg = err.response?.data?.message || "Something went wrong while adding to cart!";
+  
+  if (err.response?.status === 400 && msg === "Item already in cart") {
+    toast("Item already in cart!", {
       style: {
         borderRadius: "10px",
         background: "#fff",
@@ -156,14 +146,10 @@ export default function Productdetails() {
         border: "1px solid #ddd",
         fontWeight: "normal",
       },
-      iconTheme: {
-        primary: "#111",
-        secondary: "#fff",
-      },
+      iconTheme: { primary: "#111", secondary: "#fff" },
     });
-  } catch (err) {
-    console.error("Error adding to cart:", err);
-    toast.error("Something went wrong while adding to cart!", {
+  } else {
+    toast.error(msg, {
       style: {
         borderRadius: "10px",
         background: "#fff",
@@ -171,13 +157,11 @@ export default function Productdetails() {
         border: "1px solid #ddd",
         fontWeight: "normal",
       },
-      iconTheme: {
-        primary: "#111",
-        secondary: "#fff",
-      },
+      iconTheme: { primary: "#111", secondary: "#fff" },
     });
   }
-};
+}
+  }
 
   if (!productdetails) {
     return (
@@ -241,7 +225,7 @@ export default function Productdetails() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 mt-10 md:mt-15 px-4 md:px-10 w-full md:w-267 mx-auto md:ml-47">
         <div className="flex-1 flex justify-center">
           <img
-            src={productdetails.image?.[0]}
+            src={productdetails.images && productdetails.images.length > 0 ? productdetails.images[0] : "/placeholder.png"}
             alt={productdetails.name}
             className=" mx-5 h-[420px] w-[350px] sm:h-[450px] sm:w-[350px] md:h-[500px] md:w-[420px] object-cover rounded-lg shadow-lg"
           />
@@ -280,33 +264,47 @@ export default function Productdetails() {
             Rating: {productdetails.rating}
           </p>
 
-          <p className="mt-6 font-medium text-gray-800">Size:</p>
-          <div className="flex flex-wrap justify-start md:justify-start gap-2 mt-2">
-            {productdetails.sizes?.map((size, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedSize(size)}
-                className={`px-1 py-1 border rounded-md text-sm sm:text-base transition-all duration-200 w-11 ${
-                  selectedSize === size
-                    ? "bg-gray-800 text-white border-gray-800"
-                    : "border-gray-700 text-gray-800 hover:bg-gray-100"}`}>
-                {size}
-              </button>
-            ))}
-          </div>
+        <p className="mt-6 font-medium text-gray-800">Size:</p>
+        <div className="flex flex-wrap justify-start md:justify-start gap-2 mt-2">
+       {["S", "M", "L", "XL"].map((size, index) => {
+    const inStock = productdetails.sizes?.includes(size);
+    return (
+      <button
+        key={index}
+        onClick={() => inStock && setSelectedSize(size)}
+        disabled={!inStock}
+        className={`px-1 py-1 border rounded-md text-sm sm:text-base transition-all duration-200 w-11 ${
+          selectedSize === size
+            ? "bg-gray-800 text-white border-gray-800"
+            : inStock
+            ? "border-gray-700 text-gray-800 hover:bg-gray-100"
+            : "border-gray-300 text-gray-300 cursor-not-allowed line-through"
+        }`}>
+        {size}
+      </button>
+    );
+  })}
+  {productdetails.sizes?.length === 0 && (
+    <div className="w-full mt-5">
+    <p className="text-red-500 text-sm ">Temporarily Out of stock</p>
+    </div>
+  )}
+</div>
 
-          <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-8">
-            <button
-              onClick={handleAddToCart}
-              className="px-6 py-2 text-white rounded-lg hover:bg-gray-800 border-2 border-gray-900 bg-black w-full sm:w-40">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
+   <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-8">
+  {productdetails.sizes?.length > 0 && (
+    <button
+      onClick={handleAddToCart}
+      className="px-6 py-2 text-white rounded-lg hover:bg-gray-800 border-2 border-gray-900 bg-black w-full sm:w-40">
+      Add to Cart
+    </button>
+  )}
+</div>
+    </div>
+   </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-7  mt-15 md:mt-20 mb-40 place-items-center md:mx-62">
-        {productdetails.image?.slice(1, 5).map((img, index) => (
+        {productdetails.images?.slice(1, 5).map((img, index) => (
           <img
             key={index}
             src={img}

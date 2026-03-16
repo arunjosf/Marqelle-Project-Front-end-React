@@ -1,113 +1,39 @@
 import { useContext, useEffect, useState } from "react";
 import { context } from "../App";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function Wishlist() {
   const { user, setCart, wishlist, setWishlist } = useContext(context);
+   const navigate = useNavigate();
+  const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+
 
   useEffect(() => {
     if (!user) return;
-    const uid = String(user.id);
-
     axios
-      .get("http://localhost:5000/wishlist")
-      .then((res) => {
-        const filtered = res.data.filter(
-          (item) => String(item.userId) === uid
-        );
-        setWishlist(filtered);
-      })
+      .get(`${WISHLIST_URL}/Get`, { withCredentials: true })
+      .then((res) => setWishlist(res.data.data || []))
       .catch((err) => console.error("Wishlist fetch error:", err));
   }, [user]);
-
-  const handleAddToCart = async (item) => {
-    if (!user) {
-      toast.error("Please login to add items to cart.", {
-        style: {borderRadius: "10px",background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal",
-        },
-      });
-      return;
-    }
-
-    try {
-      const { data: allCart } = await axios.get("http://localhost:5000/cart");
-      const userCart = allCart.filter((c) => c.userId === user.id);
-      const exists = userCart.find((c) => c.productId === item.productId);
-
-      if (exists) {
-        toast("Already in cart.", {
-          style: {
-            borderRadius: "10px",
-            background: "#fff",
-            color: "#111",
-            border: "1px solid #ddd",
-            fontWeight: "normal",
-          },
-        });
-        return;
-      }
-
-      const newCartItem = {
-        userId: user.id,
-        productId: item.productId,
-        name: item.name,
-        image: item.image,
-        price: item.price,
-        quantity: 1,
-      };
-
-      await axios.post("http://localhost:5000/cart", newCartItem);
-
-      const refreshed = await axios.get("http://localhost:5000/cart");
-      setCart(refreshed.data.filter((c) => c.userId === user.id));
-
-      await axios.delete(`http://localhost:5000/wishlist/${item.id}`);
-      setWishlist((prev) => prev.filter((w) => w.id !== item.id));
-
-      toast.success("Added to cart & removed from wishlist", {
-        style: {
-          borderRadius: "10px",background: "#fff",color: "#111",border: "1px solid #ddd",fontWeight: "normal",
-        },
-        iconTheme: {
-          primary: "#111", secondary: "#fff",
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong.", {
-        style: {
-          borderRadius: "10px",background: "#fff",color: "#111",border: "1px solid #ddd",fontWeight: "normal",
-        },
-      });
-    }
+ 
+  const handleAddToCart = (productId) => {
+    navigate(`/productdetails/${productId}`);
   };
-
-  const handleRemoveWishlist = async (id) => {
+ 
+  const handleRemoveWishlist = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/wishlist/${id}`);
-      setWishlist((prev) => prev.filter((item) => item.id !== id));
-
+      await axios.delete(`${WISHLIST_URL}/Delete?productId=${productId}`, {withCredentials: true,});
+      setWishlist((prev) => prev.filter((w) => w.productId !== productId));
+ 
       toast.success("Removed from wishlist", {
-        style: {
-          borderRadius: "10px",background: "#fff",color: "#111",border: "1px solid #ddd",fontWeight: "normal",
-        },
-        iconTheme: {
-          primary: "#111", 
-          secondary: "#fff",
-        },
+        style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
+        iconTheme: { primary: "#111", secondary: "#fff" },
       });
     } catch (err) {
-      console.error("Error removing from wishlist:", err);
       toast.error("Failed to remove from wishlist", {
-        style: {
-          borderRadius: "10px",
-          background: "#fff",
-          color: "#111",
-          border: "1px solid #ddd",
-          fontWeight: "normal",
-        },
+        style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
       });
     }
   };
@@ -130,23 +56,23 @@ export default function Wishlist() {
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-6 mx-25">
-            {wishlist.map((prod) => (
-              <div key={prod.id} className="text-left rounded-2xl">
+            {wishlist.map((prod, index) => (
+              <div key={prod.productId || index} className="text-left rounded-2xl">
             <Link to={`/productdetails/${prod.productId}`}>
               <img
                 src={
-                 Array.isArray(prod.image)? prod.image[0]: prod.image
+                 Array.isArray(prod.productImage)? prod.productImage[0]: prod.productImage
                     }
-                    alt={prod.name}
+                    alt={prod.productName}
                     className="h-[300px] w-[230px] object-cover rounded-lg mx-auto"
                   />
                 </Link>
 
                 <h1 className="mt-3 font-serif text-gray-900 ml-2">
-                  {prod.name}
+                  {prod.productName}
                 </h1>
                 <h1 className="mt-1 ml-2 text-gray-800 text-sm font-medium">
-                  ₹{prod.price}
+                  ₹{prod.productPrice}
                 </h1>
 
                 <div className="flex justify-center gap-3 mt-4">
@@ -156,7 +82,7 @@ export default function Wishlist() {
                     Add to Cart
                   </button>
                   <button
-                    onClick={() => handleRemoveWishlist(prod.id)}
+                    onClick={() => handleRemoveWishlist(prod.productId)}
                     className="text-gray-700 text-sm font-medium hover:underline w-28 border rounded px-3">
                     Remove
                   </button>

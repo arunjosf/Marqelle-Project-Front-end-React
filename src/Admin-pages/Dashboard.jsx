@@ -23,7 +23,7 @@ export default function AdminDashboard() {
       ]);
 
       setOrders(ordersRes.data || []);
-      setProducts(productsRes.data || []);
+      setProducts(productsRes.data.data || []);
       setUsers(usersRes.data || []);
     } catch (err) {
       console.error("Admin fetch error:", err);

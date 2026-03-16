@@ -15,6 +15,9 @@ export default function Home() {
   return sessionStorage.getItem("hasVisitedHome") ? false : true;
 });
 
+const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
+const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+
 useEffect(() => {
   if (isFirstLoad) {
     sessionStorage.setItem("hasVisitedHome", "true");
@@ -25,19 +28,20 @@ useEffect(() => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/products")
-      .then((res) => setProducts(res.data.slice(0, 6)))
+      .get(`${PRODUCTS_URL}/all`, {withCredentials: true})
+      .then((res) => setProducts(res.data.data.slice(0, 6) || []))
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
     if (!user) return;
     axios
-      .get(`http://localhost:5001/wishlist?userId=${user.id}`)
+      .get(`${WISHLIST_URL}/Get`, {withCredentials: true})
       .then((res) => {
-        setWishlist(res.data);
+        const wishlistData = res.data.data || []
+        setWishlist(wishlistData);
         const hearts = {};
-        res.data.forEach((item) => (hearts[item.productId] = true));
+        res.data.data.forEach((item) => (hearts[item.productId] = true));
         setFilledHearts(hearts);
       })
       .catch((err) => console.log(err));
@@ -62,34 +66,26 @@ useEffect(() => {
     }
     const isFilled = filledHearts[prod.id];
 
-    try {
-      if (isFilled) {
-        const itemToRemove = wishlist.find(
-          (w) => w.productId === prod.id && w.userId === user.id
-        );
-        if (itemToRemove) {
-          await axios.delete(`http://localhost:5001/wishlist/${itemToRemove.id}`);
-          setWishlist((prev) => prev.filter((w) => w.id !== itemToRemove.id));
-        }
-      } else {
-        const newItem = {
-          userId: user.id,
-          productId: prod.id,
-          name: prod.name,
-          price: prod.price,
-          image: prod.image,
-        };
-        const res = await axios.post("http://localhost:5001/wishlist", newItem);
-        setWishlist((prev) => [...prev, res.data]);
-      }
+      try {
+  if (isFilled) {
+    await axios.delete(`${WISHLIST_URL}/Delete?productId=${prod.id}`, {
+      withCredentials: true,
+    });
+    setWishlist((prev) => prev.filter((w) => w.productId !== prod.id));
+  } else {
+    const res = await axios.post(`${WISHLIST_URL}/add?productId=${prod.id}`, {}, {
+      withCredentials: true,
+    });
+    setWishlist(res.data.data || []);
+  }
 
-      setFilledHearts((prev) => ({
-        ...prev,
-        [prod.id]: !isFilled,
-      }));
-    } catch (err) {
-      console.error("Wishlist toggle error:", err);
-    }
+  setFilledHearts((prev) => ({
+    ...prev,
+    [prod.id]: !isFilled,
+  }));
+} catch (err) {
+  console.error("Wishlist toggle error:", err);
+}
   };
 
   return (
@@ -102,7 +98,7 @@ useEffect(() => {
 
 
         <h1 className="text-4xl md:text-6xl font-serif font-light text-gray-900 leading-snug">
-          Bespoke Blazers <br /> for the Modern Era!
+          Bespoke Suits <br /> for the Modern Era!
         </h1>
 
         <div className="flex justify-center gap-3 mx-auto mt-5">
@@ -152,7 +148,7 @@ useEffect(() => {
         <div key={prod.id} className="text-center">
           <Link to={`/productdetails/${prod.id}`}>
             <img
-              src={prod.image[0]}
+              src={prod.images && prod.images.length > 0 ? prod.images[0] : "/placeholder.png"}
               alt={prod.name}
               className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto"
             />
@@ -185,13 +181,18 @@ useEffect(() => {
   </div>
 </div>
 
-<div className="flex flex-col md:flex-row mt-2 w-full gap-2 mb-2">
-  <div className="w-full md:w-1/2 bg-gray-300 pt-10 md:pt-30 flex justify-center">
-    <img
-      className="h-[200px] sm:h-[250px] md:h-100 mx-auto"
-      src="src/assets/summer.png"
-      alt=""
-    />
+  <div className="flex flex-col md:flex-row mt-2 w-full gap-2 mb-2">
+  <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden">
+  <video
+      src="videofinalsh.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="w-full h-full object-cover"
+    ></video>
+
+
   </div>
   <div
     className="w-full md:w-1/2 h-[200px] sm:h-[250px] md:h-130 bg-cover bg-center"
@@ -221,7 +222,7 @@ useEffect(() => {
         className="md:h-[380px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto"
       ></video>
       <video
-        src="/58affb1b23391f9951d1c54a39df683d.mp4"
+        src="public/7426708-hd_1080_1920_25fps.mp4"
         autoPlay
         loop
         muted

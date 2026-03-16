@@ -30,27 +30,57 @@ export const context = createContext()
 export default function App(){
 
   const[products, setProducts] = useState([])
-  const [user, setUser] = useState(null); 
   const [cart, setCart] = useState([])
   const [orders, setOrders] = useState([]);
   const [wishlist, setWishlist] = useState([])
 
-useEffect(() => {
-  const savedUser = localStorage.getItem("user");
-  if (savedUser) {
-    setUser(JSON.parse(savedUser));
-  }
-}, []);
+  const [user, setUser] = useState(() => {
+  const stored = localStorage.getItem("user");
+  return stored ? JSON.parse(stored) : null;});
 
-useEffect(() => {
+  useEffect(() => {
   if (user) {
-    axios.get(`http://localhost:5000/cart?userId=${user.id}`)
-      .then(res => setCart(res.data))
+    axios.get(`https://localhost:7177/api/usercart/Cartitems`, { withCredentials: true })
+      .then(res => setCart(res.data.data || []))
       .catch(err => console.log(err));
   }
 }, [user]);
 
-  
+  useEffect(() => {
+  const interceptor = axios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (originalRequest.url?.includes("/usersauth/refresh")) {
+        return Promise.reject(error);
+      }
+
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        try {
+          await axios.post(
+            "https://localhost:7177/api/usersauth/refresh",
+            {},
+            { withCredentials: true }
+          );
+          return axios(originalRequest);
+        } catch (err) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("admin");
+          setUser(null);
+          window.location.href = "/login";
+        }
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
+  return () => axios.interceptors.response.eject(interceptor);
+}, []);
+
   return(
     <>
     <ScrollToTop />

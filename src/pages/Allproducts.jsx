@@ -15,25 +15,29 @@ export default function Allproducts() {
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
 
+  const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
+  const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+
   useEffect(() => {
     const url = category
-      ? `http://localhost:5001/products?category=${category}`
-      : "http://localhost:5001/products";
+      ? `${PRODUCTS_URL}/Search?category=${category}`
+      : `${PRODUCTS_URL}/all`;
 
     axios
       .get(url)
-      .then((res) => setProducts(res.data))
+      .then((res) => setProducts(res.data.data || []))
       .catch((err) => console.log(err));
   }, [category]);
 
  useEffect(() => {
     if (!user) return;
     axios
-      .get(`http://localhost:5001/wishlist?userId=${user.id}`)
+      .get(`${WISHLIST_URL}/Get`, {withCredentials: true})
       .then((res) => {
-        setWishlist(res.data);
+        const wishlistData = res.data.data || [];
+        setWishlist(wishlistData);
         const hearts = {};
-        res.data.forEach((item) => (hearts[item.productId] = true));
+        wishlistData.forEach((item) => (hearts[item.productId] = true));
         setFilledIcon(hearts);
       })
       .catch((err) => console.log(err));
@@ -59,35 +63,27 @@ export default function Allproducts() {
     const isFilled = filledIcon[prod.id];
 
     try {
-      if (isFilled) {
-        const itemToRemove = wishlist.find(
-          (w) => w.productId === prod.id && w.userId === user.id
-        );
-        if (itemToRemove) {
-          await axios.delete(`http://localhost:5001/wishlist/${itemToRemove.id}`);
-          setWishlist((prev) => prev.filter((w) => w.id !== itemToRemove.id));
-        }
-      } else {
-        const newItem = {
-          userId: user.id,
-          productId: prod.id,
-          name: prod.name,
-          price: prod.price,
-          image: prod.image,
-        };
-        const res = await axios.post("http://localhost:5001/wishlist", newItem);
-        setWishlist((prev) => [...prev, res.data]);
-      }
+  if (isFilled) {
+    await axios.delete(`${WISHLIST_URL}/Delete?productId=${prod.id}`, {
+      withCredentials: true,
+    });
+    setWishlist((prev) => prev.filter((w) => w.productId !== prod.id));
+  } else {
+    const res = await axios.post(`${WISHLIST_URL}/add?productId=${prod.id}`, {}, {
+      withCredentials: true,
+    });
+    setWishlist(res.data.data || []);
+  }
 
-      setFilledIcon((prev) => ({
-        ...prev,
-        [prod.id]: !isFilled,
-      }));
-    } catch (err) {
-      console.error("Wishlist toggle error:", err);
-    }
-  };
-
+  setFilledIcon((prev) => ({
+    ...prev,
+    [prod.id]: !isFilled,
+  }));
+} catch (err) {
+  console.error("Wishlist toggle error:", err);
+}
+  }
+console.log("products:", products, Array.isArray(products));
 
   return (
     <>
@@ -146,7 +142,7 @@ export default function Allproducts() {
               className="text-center cursor-pointer"
               onClick={() => navigate(`/productdetails/${prod.id}`)}>
               <img
-                src={prod.image[0]}
+                src={prod.images && prod.images.length > 0 ? prod.images[0] : "/placeholder.png"}
                 alt={prod.name}
                 className="h-[350px] w-[250px] object-cover rounded-lg mx-auto"/>
 

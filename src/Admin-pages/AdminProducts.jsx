@@ -16,7 +16,7 @@ const [errors, setErrors] = useState({ image: "", sizes: "" });
   const fetchProducts = () => {
     axios
       .get("http://localhost:5000/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => setProducts(res.data.data || []))
       .catch((err) => console.error("Fetch products error:", err));
   };
   

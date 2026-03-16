@@ -14,6 +14,8 @@ export default function Login() {
 
   const { setUser } = useContext(context);
 
+  const AUTH_URL = "https://localhost:7177/api/usersauth";
+
   const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -28,24 +30,34 @@ export default function Login() {
     return;
   }
 
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-  if (!passwordPattern.test(password)) {
-    setError(
-      "Password must be at least 8 characters long, include one uppercase letter and one number"
-    );
-    return;
-  }
+  // const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+  // if (!passwordPattern.test(password)) {
+  //   setError(
+  //     "Password must be at least 8 characters long, include one uppercase letter and one number"
+  //   );
+  //   return;
+  // }
 
   try {
-    const adminRes = await axios.get(
-      `http://localhost:5000/admin?email=${email}&password=${password}`
-    );
+    const formData = new FormData();
+    formData.append("Email", email.trim());
+    formData.append("Password", password);
 
-    if (adminRes.data.length > 0) {
-      const admin = adminRes.data[0];
-      admin.id = Number(admin.id);
+    const res = await axios.post(`${AUTH_URL}/login`, formData,{
+     withCredentials: true,
+    });
+  
 
-      localStorage.setItem("admin", JSON.stringify(admin));
+    if(res.data.success){
+      const userData = res.data.data;
+      const token =  userData.token;
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const roleId = payload.role;  
+
+      if(roleId == 2)
+      {
+
+      localStorage.setItem("admin", JSON.stringify({email, token}));
 
       toast.success("Admin Login Successful!", {
         style: {
@@ -59,62 +71,31 @@ export default function Login() {
       });
 
       setTimeout(() => navigate("/admin/dashboard"), 1000);
-      return;
-    }
-
-    const userRes = await axios.get(
-      `http://localhost:5000/users?email=${email}&password=${password}`
-    );
-
-    if (userRes.data.length > 0) {
-      const user = userRes.data[0];
-
-      if (user.blocked) {
-        toast.error("Your account has been blocked", {
-          style: {
-            borderRadius: "10px",
-            background: "#fff",
-            color: "#111",
-            border: "1px solid #ddd",
-            fontWeight: "normal",
-          },
-          iconTheme: { primary: "#111", secondary: "#fff" },
-        });
-        return; 
+    }else{
+    localStorage.setItem("user", JSON.stringify({ email, token }));
+          setUser({ email, token });
+          toast.success("Login Successful!", {
+            style: {
+              borderRadius: "10px",
+              background: "#fff",
+              color: "#111",
+              border: "1px solid #ddd",
+              fontWeight: "normal",
+            },
+            iconTheme: { primary: "#111", secondary: "#fff" },
+          });
+          setTimeout(() => navigate("/"), 1000);
+        }
       }
-
-      user.id = Number(user.id);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      toast.success("Login Successful!", {
-        style: {
-          borderRadius: "10px",
-          background: "#fff",
-          color: "#111",
-          border: "1px solid #ddd",
-          fontWeight: "normal",
-        },
-        iconTheme: { primary: "#111", secondary: "#fff" },
-      });
-
-      setTimeout(() => navigate("/"), 1000);
-    } else {
-      toast.error("Invalid email or password", {
-        style: {
-          borderRadius: "10px",
-          background: "#fff",
-          color: "#111",
-          border: "1px solid #ddd",
-          fontWeight: "normal",
-        },
-        iconTheme: { primary: "#111", secondary: "#fff" },
-      });
+        else{
+        setError(res.data.message || "Invalid email or password");
+        }
+         } catch (err) {
+      const msg = err.response?.data?.message || "Something went wrong. Try again later.";
+      setError(msg);
     }
-  } catch (err) {
-    console.error(err);
-    setError("Something went wrong. Try again later.");
-  }
-};
+   };
+   
 
 const loginWithGoogle = useGoogleLogin({
   onSuccess: async (tokenResponse) => {
@@ -193,8 +174,6 @@ const loginWithGoogle = useGoogleLogin({
     toast.error("Google login failed");
   },
 });
-
-
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">

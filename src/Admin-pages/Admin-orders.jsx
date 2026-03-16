@@ -21,7 +21,7 @@ export default function AdminOrders() {
         .sort((a, b) => new Date(b.date) - new Date(a.date));
 
       setOrders(validOrders);
-      setProducts(productsRes.data || []);
+      setProducts(productsRes.data.data || []);
       setUsers(usersRes.data || []);
 
     } catch (err) {

@@ -22,7 +22,7 @@ export default function Search() {
     if (products.length === 0) {
       axios
         .get("http://localhost:5000/products")
-        .then((res) => setProducts(res.data))
+        .then((res) => setProducts(res.data.data || []))
         .catch((err) => console.log(err));
     }
   }, []);

@@ -17,7 +17,7 @@ export default function Profile() {
 
     axios
       .get("http://localhost:5000/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => setProducts(res.data.data || []))
       .catch((err) => console.error("Product fetch error:", err));
 
     axios
