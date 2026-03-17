@@ -90,7 +90,28 @@ useEffect(() => {
 
   return (
     <>
-    <div className="w-full bg-gray-300 pt-30 text-center overflow-hidden">
+     <div className="w-full h-[500px] md:h-[880px] overflow-hidden  relative">
+  <video
+    src="public/7319402-uhd_4096_2160_25fps.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="w-full h-full object-cover"
+  />
+   <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+    <h1 id= "logo-text" className="text-gray-200 font-serif font-light 
+                   text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 
+                   leading-tight tracking-wide">
+      Marqelle.
+    </h1>
+    <p className="typing-text mt-7 text-gray-300 text-xs md:text-base tracking-wide">
+      <i>Designed with purpose, crafted with precision, and worn with confidence</i>
+    </p>
+  </div>
+</div>
+
+    <div className="w-full bg-gray-300 pt-25 text-center overflow-hidden">
    <motion.div
   initial={isFirstLoad ? { opacity: 1, y: -250 } : { opacity: 1, y: 0 }}
   animate={{ opacity: 1, y: 0 }}
@@ -128,8 +149,7 @@ useEffect(() => {
         style={{ backgroundImage: "url('src/assets/home2.png')" }}
       ></motion.div>
     </div>
-
-
+   
 
 <div className="bg-gray-200 mt-2 py-10 md:py-20">
   <div className="px-4">
@@ -196,7 +216,7 @@ useEffect(() => {
   </div>
   <div
     className="w-full md:w-1/2 h-[200px] sm:h-[250px] md:h-130 bg-cover bg-center"
-    style={{ backgroundImage: "url('src/assets/Winter2.png')" }}></div>
+    style={{ backgroundImage: "url('public/herovop.png')" }}></div>
 </div>
 
 {/* <div className="w-full h-140"  style={{ backgroundImage: "url('src/assets/m3.png')" }}></div> */}
@@ -211,10 +231,10 @@ useEffect(() => {
     </p>
   </div>
 
-  <div className="w-full flex justify-center mt-10 md:mt-15 px-4">
+  {/* <div className="w-full flex justify-center mt-10 md:mt-15 px-4">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <video
-        src="/50f84a7626c2929511ce7f60c959908f.mp4"
+        src="public/16077695-uhd_3840_2160_30fps.mp4"
         autoPlay
         loop
         muted
@@ -231,7 +251,7 @@ useEffect(() => {
       ></video>
 
       <video
-        src="/610aba084d7c56ef9d5dc02628dd4257.mp4"
+        src="public/7266482-uhd_2160_4096_25fps.mp4"
         autoPlay
         loop
         muted
@@ -239,8 +259,32 @@ useEffect(() => {
         className="md:h-[380px] h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto"
       ></video>
     </div>
+  </div> */}
+
+  <div className="w-full flex justify-center mt-10 md:mt-15 px-4">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+    <img
+      src="public/Group 42.png"
+      alt="img1"
+      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+    />
+
+    <img
+      src="public/Rectangle 69png.png"
+      alt="img2"
+      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+    />
+
+    <img
+      src="public/Rectangle 8.png"
+      alt="img3"
+      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+    />
+
   </div>
 </div>
+</div>  
 
     </>
   );

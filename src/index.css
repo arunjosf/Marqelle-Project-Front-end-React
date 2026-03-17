@@ -4,3 +4,50 @@
 #logo-text {
    font-family: "Prata", serif;
 }
+
+.typing-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+
+  border-right: 1px solid transparent;
+
+  width: 0;
+  max-width: max-content;
+  opacity: 0;
+
+  animation: 
+    fadeIn 0.5s ease 6.5s forwards,
+    typingSmooth 6s cubic-bezier(0.65, 0, 0.35, 1) 5s forwards,
+    blink 1s ease 6.5s infinite,
+    showCursor 0s linear 5s forwards;
+}
+
+/* Smooth typing (no steps) */
+@keyframes typingSmooth {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Softer cursor */
+@keyframes blink {
+  0%, 100% { border-color: rgba(255,255,255,0.6); }
+  50% { border-color: transparent; }
+}
+
+@keyframes showCursor {
+  to {
+    border-right-color: rgba(255,255,255,0.6);
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Cursor blink */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}

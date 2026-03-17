@@ -27,19 +27,19 @@ export default function Navbar() {
 
   return (
  <nav className="pt-5 fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-transparent">
-  <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-2xl transition-all duration-300 ${isScrolled ? "backdrop-blur-lg bg-white/30 shadow-md" : ""}`}>
+  <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-2xl transition-all duration-300 ${isScrolled ? "backdrop-blur-lg bg-white/30 shadow-md" : "backdrop-blur-lg bg-white/30 shadow-md"}`}>
     <div className="flex justify-between items-center h-16">
 
           
-          <div className="flex-shrink-0 font-bold text-3xl">
+          <div id="logo-text" className="flex-shrink-0 font-bold text-3xl ">
             <NavLink to="/">Marqelle. </NavLink>
           </div>
 
-          <div className="hidden md:flex gap-8 text-gray-800 font-medium md:ml-15">
-            <NavLink to="/home" className="hover:text-gray-600">Home</NavLink>
-            <NavLink to="/about" className="hover:text-gray-600">About</NavLink>
-            <NavLink to="/allproducts?category=Formal" className="hover:text-gray-600">Formal</NavLink>
-            <NavLink to="/allproducts?category=Casual" className="hover:text-gray-600">Casual</NavLink>
+          <div className="hidden md:flex gap-8 text-gray-900 font-medium md:ml-15">
+            <NavLink to="/home" className="hover:text-gray-800">Home</NavLink>
+            <NavLink to="/allproducts" className="hover:text-gray-800">Shop</NavLink>
+            <NavLink to="/explore" className="hover:text-gray-800">Explore</NavLink>
+            <NavLink to="/about" className="hover:text-gray-800">About</NavLink>
           </div>
 
           <div className="flex items-center">
@@ -68,7 +68,7 @@ export default function Navbar() {
   <span className="text-xs">{wishlist.length}</span></Link>
 </button>
 
-                    <button className="px-3 text-gray-800 text-sm">
+                    <button className="px-3 text-gray-900 text-sm">
   <Link to="/cart" className="flex items-center">
     <ShoppingCart size={17} />
     <span className="text-xs">{cart.length}</span>

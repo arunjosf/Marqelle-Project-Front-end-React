@@ -1,202 +1,331 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { context } from "../App";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; 
+import { context } from "../App";
 
-import {
-  CreditCard,
-  Banknote,
-  Landmark,
-  Gift,
-  Wallet,
-} from "lucide-react";
-
-export default function Payment() {
-  const { user, cart, setCart } = useContext(context);
-  const [selected, setSelected] = useState(null);
-  const navigate = useNavigate(); 
-
-  const methods = [
-    {
-      title: "PAY BY ANY UPI APP",
-      label: "UPI",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/2560px-UPI-Logo-vector.svg.png",
-    },
-    {
-      title: "CREDIT/DEBIT CARD",
-      label: "CARD",
-      icon: <CreditCard className="w-6 h-6 text-gray-900" />,
-    },
-    {
-      title: "NETBANKING",
-      label: "NETBANKING",
-      icon: <Landmark className="w-6 h-6 text-gray-900" />,
-    },
-    {
-      title: "RUPAY",
-      label: "RUPAY",
-      icon: <Wallet className="w-6 h-6 text-gray-900" />,
-    },
-    {
-      title: "GIFT CARD",
-      label: "GIFT CARD",
-      icon: <Gift className="w-6 h-6 text-gray-900" />,
-    },
-    {
-      title: "CASH ON DELIVERY",
-      label: "CASH",
-      icon: <Banknote className="w-6 h-6 text-gray-900" />,
-    },
-  ];
-
-  useEffect(() => {
-  if (!user) return;
-  axios.get(`http://localhost:5000/cart?userId=${user.id}`)
-    .then(res => setCart(res.data))
-    .catch(err => console.error("Cart fetch error:", err));
-}, [user, setCart]);
-
-
-  const handleConfirm = async () => {
-  if (!selected) {
-    toast.error("Please select a payment method first!", {
-      style: {
-        borderRadius: "10px",
-        background: "#fff",
-        color: "#111",
-        border: "1px solid #ddd",
-        fontWeight: "normal",
-      },
-      iconTheme: {
-        primary: "#111",
-        secondary: "#fff",
-      },
-    });
-    return;
-  }
-
-  try {
-    if (!user || !cart || cart.length === 0) {
-      toast.error("No user or cart found!", {
-        style: {
-          borderRadius: "10px",
-          background: "#fff",
-          color: "#111",
-          border: "1px solid #ddd",
-          fontWeight: "normal",
-        },
-      });
-      return;
-    }
-
-    const total = cart.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-
-    const newOrder = {
-      userId: user.id,
-      items: cart,
-      total,
-      date: new Date().toISOString(), 
-      paymentMethod: selected,
-      status: "Pending"
-    };
-
-    await axios.post("http://localhost:5000/orders", newOrder);
-    await Promise.all(cart.map(item => axios.delete(`http://localhost:5000/cart/${item.id}`)));
-    setCart([]);
-
-    toast.success("Payment successful! Order placed", {
-      duration: 3000,
-      style: {
-        borderRadius: "10px",
-        background: "#fff",
-        color: "#111",
-        border: "1px solid #ddd",
-        fontWeight: "normal",
-        fontSize: "15px",
-        padding: "12px 18px",
-      },
-      iconTheme: {
-        primary: "black",
-        secondary: "#fff",
-      },
-    });
-
-    setTimeout(() => {
-      navigate("/profile");
-    }, 3200);
-
-  } catch (err) {
-    console.error(err);
-    toast.error("Something went wrong while processing payment!", {
-      style: {
-        borderRadius: "10px",
-        background: "#fff",
-        color: "#111",
-        border: "1px solid #ddd",
-        fontWeight: "normal",
-      },
-    });
-  }
+const BASE = "https://localhost:7177/api";
+const TOAST_STYLE = {
+  style: {
+    borderRadius: "10px",
+    background: "#fff",
+    color: "#111",
+    border: "1px solid #ddd",
+    fontWeight: "normal",
+  },
 };
 
-
+// ── Step Bar ──────────────────────────────────────────────────────────────────
+function StepBar({ step }) {
+  const steps = ["Address", "Order Summary", "Payment"];
   return (
-    <div className="min-h-screen bg-white px-4 py-10">
-      <h2 className="text-4xl md:text-5xl font-semibold text-black text-left md:ml-56 mt-8 ml-9">
-        Marqelle.
-      </h2>
-      <hr className="border-t border-gray-900 w-[81%] mx-5 md:w-[70%] mx-auto mt-5 md:mt-7" />
-
-      <div className="bg-[#FFF4E5] border border-[#FFD9A1] text-[#714B00] text-sm text-center py-3 mb-8 max-w-5xl mx-auto rounded mt-10">
-        Please note that only cards that use 3D Secure are accepted. Contact your bank to activate it or for further instructions.
-      </div>
-
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-base font-semibold tracking-wide mb-6">
-          CHOOSE A PAYMENT METHOD
-        </h2>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-          {methods.map((method) => (
-            <div
-              key={method.title}
-              onClick={() => setSelected(method.label)}
-              className={`cursor-pointer border rounded-md flex flex-col justify-center items-center py-5 text-center transition-all duration-200 
-              ${
-                selected === method.label
-                  ? "border-black bg-gray-100"
-                  : "border-gray-400 hover:border-black"
-              }`}
-            >
-              {method.img ? (
-                <img
-                  src={method.img}
-                  alt={method.label}
-                  className="w-16 mb-2 object-contain"
-                />
-              ) : (
-                <span className="text-2xl mb-2">{method.icon}</span>
-              )}
-              <p className="font-medium text-sm">{method.label}</p>
-              <p className="text-xs mt-1 text-gray-600">{method.title}</p>
-            </div>
-          ))}
+    <div className="bg-white border-b border-gray-100">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex items-center justify-center gap-0 py-3">
+          {steps.map((s, i) => {
+            const idx = i + 1;
+            const done = step > idx;
+            const active = step === idx;
+            return (
+              <div key={s} className="flex items-center">
+                <div className="flex items-center gap-1.5">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition-all
+                    ${done ? "bg-black border-black text-white"
+                      : active ? "bg-white border-black text-black"
+                      : "bg-white border-gray-300 text-gray-300"}`}>
+                    {done ? (
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : idx}
+                  </div>
+                  <span className={`text-xs font-medium
+                    ${active ? "text-black" : done ? "text-gray-400" : "text-gray-300"}`}>
+                    {s}
+                  </span>
+                </div>
+                {i < steps.length - 1 && (
+                  <div className={`w-8 sm:w-14 h-px mx-2 rounded-full transition-all
+                    ${step > idx ? "bg-black" : "bg-gray-200"}`} />
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
+    </div>
+  );
+}
 
-      <div className="flex justify-center md:justify-end max-w-5xl mx-auto">
+// ── Loading Skeleton ──────────────────────────────────────────────────────────
+function Skeleton() {
+  return (
+    <div className="min-h-screen bg-gray-50/80">
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="h-7 w-32 bg-gray-400 rounded-lg mx-auto animate-pulse" />
+      </div>
+      <StepBar step={3} />
+      <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 flex flex-col gap-4">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4">
+            <div className="h-5 w-40 bg-gray-400 rounded animate-pulse" />
+            {[1, 2].map((i) => (
+              <div key={i} className="border-2 border-gray-200 rounded-2xl p-4 flex gap-3">
+                <div className="w-4 h-4 rounded-full bg-gray-400 mt-1 animate-pulse flex-shrink-0" />
+                <div className="flex-1 flex flex-col gap-2">
+                  <div className="h-4 w-32 bg-gray-400 rounded animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Payment Methods ───────────────────────────────────────────────────────────
+function PaymentMethods({ selectedMethod, onSelect }) {
+  const methods = [
+    { id: "card", name: "Credit/Debit Card", icon: "💳" },
+    { id: "upi", name: "UPI", icon: "📱" },
+    { id: "wallet", name: "Digital Wallet", icon: "💰" },
+    { id: "cod", name: "Cash on Delivery", icon: "🚚" },
+  ];
+
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+      <h2 className="text-base font-semibold text-gray-900 mb-4">Payment Method</h2>
+      <div className="flex flex-col gap-2">
+        {methods.map((method) => (
+          <button
+            key={method.id}
+            onClick={() => onSelect(method.id)}
+            className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left
+              ${selectedMethod === method.id 
+                ? "border-black bg-gray-50" 
+                : "border-gray-200 hover:border-gray-300 bg-white"}`}
+          >
+            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0
+              ${selectedMethod === method.id ? "border-black" : "border-gray-300"}`}>
+              {selectedMethod === method.id && <div className="w-2 h-2 rounded-full bg-black" />}
+            </div>
+            <span className="text-lg">{method.icon}</span>
+            <span className="text-sm font-medium text-gray-900">{method.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Price Summary Sidebar ─────────────────────────────────────────────────────
+function PriceSummary({ checkoutData, onPayment, isProcessing }) {
+  if (!checkoutData) return null;
+  const count = checkoutData.products?.length ?? 0;
+  
+  return (
+    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden sticky top-6">
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4 border-b border-gray-100">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Price Details</h3>
+      </div>
+
+      <div className="px-5 py-4 flex flex-col gap-3">
+        {/* Item count */}
+        <div className="flex justify-between items-center text-sm text-gray-600">
+          <span>Price ({count} item{count !== 1 ? "s" : ""})</span>
+          <span className="font-medium text-gray-800">₹{checkoutData.subTotal?.toLocaleString('en-IN')}</span>
+        </div>
+
+        {/* Delivery */}
+        <div className="flex justify-between items-center text-sm text-gray-600">
+          <span>Delivery Charges</span>
+          {checkoutData.shippingCharge === 0 ? (
+            <span className="text-green-600 font-semibold">FREE</span>
+          ) : (
+            <span className="font-medium text-gray-800">₹{checkoutData.shippingCharge}</span>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-dashed border-gray-200 my-1" />
+
+        {/* Total */}
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-bold text-gray-900">Total Amount</span>
+          <span className="text-lg font-bold text-gray-900">₹{checkoutData.totalAmount?.toLocaleString('en-IN')}</span>
+        </div>
+
+        {/* Savings note */}
+        {checkoutData.shippingCharge > 0 && (
+          <div className="bg-green-50 border border-green-100 rounded-xl px-3 py-2 flex items-center gap-2">
+            <span className="text-green-600 text-sm">🎉</span>
+            <p className="text-xs text-green-700 font-medium">
+              You're saving ₹{checkoutData.shippingCharge} on delivery with this order!
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Place Order Button */}
+      <div className="px-5 pb-5">
         <button
-          onClick={handleConfirm}
-          className="mt-12 w-full sm:w-60 py-3 text-white rounded-lg hover:bg-gray-800 border-2 border-gray-900 bg-black transition"
+          onClick={onPayment}
+          disabled={isProcessing}
+          className="w-full py-3 bg-black text-white text-sm font-semibold rounded-xl hover:bg-gray-800 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
         >
-          Confirm Your Order
+          {isProcessing ? "Processing..." : "Place Order"}
+          {!isProcessing && (
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          )}
         </button>
       </div>
     </div>
   );
 }
 
+// ── Main Payment Page ─────────────────────────────────────────────────────────
+export default function Payment() {
+  const { user, setCart } = useContext(context);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get state from checkout page navigation
+  const { address, addressId, checkoutData } = location.state || {};
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Verify user and required data
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    
+    // If no address or addressId, redirect back to checkout
+    if (!addressId) {
+      toast.error("Please select a delivery address", TOAST_STYLE);
+      navigate("/checkout");
+      return;
+    }
+
+    setLoading(false);
+  }, [user, addressId, navigate]);
+
+  async function handlePlaceOrder() {
+    if (!selectedPaymentMethod) {
+      toast.error("Please select a payment method", TOAST_STYLE);
+      return;
+    }
+
+    if (!addressId) {
+      toast.error("Delivery address is required", TOAST_STYLE);
+      return;
+    }
+
+    if (!checkoutData) {
+      toast.error("Something went wrong. Please go back and try again.", TOAST_STYLE);
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      // Map payment method to backend enum
+      const paymentMethodMap = {
+        card: "Card",
+        upi: "UPI",
+        wallet: "Wallet",
+        cod: "COD",
+      };
+
+      // Call place order API with addressId in query string
+      const response = await axios.post(
+        `${BASE}/userorder/place-order?addressId=${addressId}`,
+        {
+          paymentMethod: paymentMethodMap[selectedPaymentMethod] || "Card",
+          totalAmount: checkoutData.totalAmount,
+        },
+        { withCredentials: true }
+      );
+
+      // Clear the cart after successful order
+      setCart([]);
+
+      toast.success("Order placed successfully!", { 
+        ...TOAST_STYLE, 
+        iconTheme: { primary: "#111", secondary: "#fff" } 
+      });
+
+      // Navigate to orders page
+      navigate("/profile/orders");
+    } catch (err) {
+      const errorMsg = err?.response?.data?.Message || "Failed to place order. Please try again.";
+      toast.error(errorMsg, TOAST_STYLE);
+      console.error("Order placement error:", err);
+    } finally {
+      setIsProcessing(false);
+    }
+  }
+
+  if (loading) return <Skeleton />;
+
+  return (
+    <div className="min-h-screen bg-gray-50/80">
+      <div className="bg-white border-b border-gray-100 px-6 py-4">
+        <h1 className="text-2xl font-semibold text-gray-800 text-center">Marqelle</h1>
+      </div>
+
+      <StepBar step={3} />
+
+      <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 flex flex-col gap-4">
+          
+          {/* Delivery Address Card */}
+          {address && (
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+              <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-3">Deliver to</p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-sm font-semibold text-gray-900">{address?.fullName}</span>
+                    <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-md font-semibold uppercase">
+                      {address?.addressType}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {address?.flatorHouseorBuildingName}, {address?.landMark},{" "}
+                    {address?.city}, {address?.state} — {address?.pincode}
+                  </p>
+                  <p className="text-sm text-gray-500 mt-1">{address?.phoneNumber}</p>
+                </div>
+                <button
+                  onClick={() => navigate("/checkout")}
+                  className="text-xs font-semibold text-black border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors flex-shrink-0"
+                >
+                  Change
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Payment Methods */}
+          <PaymentMethods selectedMethod={selectedPaymentMethod} onSelect={setSelectedPaymentMethod} />
+        </div>
+
+        {/* Sidebar */}
+        <div className="lg:col-span-1">
+          <PriceSummary 
+            checkoutData={checkoutData}
+            onPayment={handlePlaceOrder}
+            isProcessing={isProcessing}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -18,6 +18,8 @@ import Search from "./pages/Search";
 import { Toaster } from "react-hot-toast";
 import About from "./pages/About";
 import axios from "axios";
+import Checkout from "./pages/Checkout";
+
 
 import AdminProtected from "./Admin-pages/Admin-route";
 import AdminDashboard from "./Admin-pages/Dashboard";
@@ -98,6 +100,8 @@ export default function App(){
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/search" element={<Search />} />
       <Route path="/about" element={<><Navbar /><About /><Footer /></>} />
+      <Route path="/checkout" element={<><Checkout /><Footer /></>} />
+
 
       <Route path="/profile" element={<Profile />}>
       <Route path="orders" element={<Orders />} />

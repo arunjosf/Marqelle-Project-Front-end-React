@@ -174,7 +174,7 @@ export default function Productdetails() {
   return (
     <>
       <div className="flex items-center justify-between px-55 mt-8">
-       <Link to={"/home"}><h2 className="text-4xl md:text-5xl font-semibold text-black text-left md:text-left md:ml-1 mt-8">
+       <Link to={"/home"}><h2 id="logo-text" className="text-5xl md:text-5xl font-semibold text-black text-left md:text-left md:ml-1 mt-8">
           Marqelle.
         </h2></Link>
 

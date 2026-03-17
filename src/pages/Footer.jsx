@@ -55,7 +55,7 @@ export default function Footer() {
 <div className="flex flex-col md:flex-row justify-between items-start gap-10 mt-10">
 
    <div className="w-full md:w-1/2 md:text-left">
-    <h2 className="text-2xl font-bold text-black">Marqelle.</h2>
+    <h2 id="logo-text" className="text-2xl font-bold text-black">Marqelle.</h2>
     <p className="mt-3 text-sm text-gray-700 leading-loose">
       Your one-stop shop for quality products and exclusive deals.
     </p>

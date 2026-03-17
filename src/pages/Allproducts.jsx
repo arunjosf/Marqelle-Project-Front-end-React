@@ -87,8 +87,8 @@ console.log("products:", products, Array.isArray(products));
 
   return (
     <>
-      <div className="flex items-center justify-between px-55 mt-8">
-        <Link to={"/home"}><h2 className="text-8xl font-semibold text-black">Marqelle.</h2></Link>
+      <div className="flex items-center justify-between px-55 mt-9">
+        <Link to={"/home"}><h2 id="logo-text" className="text-7xl font-semibold text-black">Marqelle.</h2></Link>
         <div className="flex items-center gap-3">
           <button
             className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
