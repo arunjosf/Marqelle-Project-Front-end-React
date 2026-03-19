@@ -18,10 +18,10 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("🚀 Orders component mounted");
+    console.log("Orders component mounted");
 
     const loggedUser = localStorage.getItem("user");
-    console.log("1️⃣ Logged in user:", loggedUser ? "Yes" : "No");
+    console.log("1️ Logged in user:", loggedUser ? "Yes" : "No");
 
     if (!loggedUser) {
       console.log("No user in localStorage");
@@ -31,17 +31,16 @@ export default function Orders() {
 
     try {
       const user = JSON.parse(loggedUser);
-      console.log("2️⃣ User object:", user);
+      console.log("2️ User object:", user);
       console.log("   Token:", user?.token ? "Present" : "Missing");
 
-      // API uses token authentication, not user ID
       if (!user || !user.token) {
         console.log("No authentication token");
         setLoading(false);
         return;
       }
 
-      console.log("3️⃣ Making API call with token...");
+      console.log("3️ Making API call with token...");
 
       axios
         .get(`${BASE}/userorder/my-orders`, { withCredentials: true })
@@ -51,7 +50,7 @@ export default function Orders() {
           console.log("   Data:", res.data);
 
           if (res.data.data && Array.isArray(res.data.data)) {
-            console.log("4️⃣ Processing", res.data.data.length, "orders");
+            console.log("4️ Processing", res.data.data.length, "orders");
             const fetchedOrders = res.data.data;
 
             const transformedOrders = fetchedOrders.map((order) => {
@@ -69,7 +68,7 @@ export default function Orders() {
               };
             });
 
-            console.log("5️⃣ Transformed orders:", transformedOrders);
+            console.log("5️ Transformed orders:", transformedOrders);
 
             const sorted = transformedOrders.sort((a, b) => {
               const parseDate = (order) => {
@@ -83,10 +82,10 @@ export default function Orders() {
               return parseDate(b) - parseDate(a);
             });
 
-            console.log("✨ Final orders:", sorted);
+            console.log(" Final orders:", sorted);
             setOrders(sorted);
           } else {
-            console.log("⚠️ Invalid response format");
+            console.log("Invalid response format");
           }
           setLoading(false);
         })
@@ -255,7 +254,6 @@ export default function Orders() {
               </span>
             </div>
 
-            {/* Order Tracking - Same style as provided */}
             {!isCancelled ? (
               <div className="mt-5">
                 <h4 className="text-sm font-medium mb-2">Order Tracking</h4>

@@ -13,6 +13,8 @@ export default function Productdetails() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [filledIcon, setFilledIcon] = useState({});
   const [open, setOpen] = useState(false);
+  const [showSizeChart, setShowSizeChart] = useState(false);
+  const [unit, setUnit] = useState("cm");
 
   const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
   const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
@@ -179,15 +181,16 @@ export default function Productdetails() {
         </h2></Link>
 
         <div className="flex items-center gap-3">
+          <Link className= "text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
           <button
             className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
             onClick={() => navigate(user ? "/profile" : "/login")}>
             {user ? (
-              <span className="text-sm font-semibold">
+              <span className="text-sm font-semibold text-black hover:text-gray-700">
                 <Link to={"/profile"}>Profile</Link>
               </span>
             ) : (
-              <span className="text-sm font-medium">
+              <span className="text-sm font-medium hover:text-gray-700">
                 <Link to={"/login"}>Login</Link>
               </span>
             )}
@@ -253,11 +256,11 @@ export default function Productdetails() {
             {productdetails.description}
           </p>
 
-          <p className="mt-2 text-sm text-gray-900">
-            Status: {productdetails.inStock ? "in Stock" : "out of stock"}
+          <p className="mt-3 text-xs text-gray-500">
+            MRP INC. OF ALL TAXES
           </p>
 
-          <p className="mt-3 text-lg md:text-xl font-medium text-gray-800">
+          <p className="mt-2 text-lg md:text-xl font-medium text-gray-800">
             ₹{productdetails.price}
           </p>
           <p className="mt-2 text-sm text-gray-800">
@@ -284,6 +287,15 @@ export default function Productdetails() {
       </button>
     );
   })}
+
+  {productdetails.sizes?.length > 1 && (
+<p
+  onClick={() => setShowSizeChart(true)}
+  className="w-full mt-2 text-sm text-gray-700 underline cursor-pointer hover:text-black"
+>
+  Show Size Chart?
+</p>
+  )}
   {productdetails.sizes?.length === 0 && (
     <div className="w-full mt-5">
     <p className="text-red-500 text-sm ">Temporarily Out of stock</p>
@@ -291,11 +303,11 @@ export default function Productdetails() {
   )}
 </div>
 
-   <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-8">
+   <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-6">
   {productdetails.sizes?.length > 0 && (
     <button
       onClick={handleAddToCart}
-      className="px-6 py-2 text-white rounded-lg hover:bg-gray-800 border-2 border-gray-900 bg-black w-full sm:w-40">
+      className="px-6 py-2 text-white rounded-md hover:bg-gray-800 border-2 border-gray-900 bg-black w-full sm:w-40">
       Add to Cart
     </button>
   )}
@@ -313,6 +325,100 @@ export default function Productdetails() {
           />
         ))}
       </div>
+
+      {showSizeChart && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    
+    <div className="bg-white rounded-2xl p-8 w-[90%] max-w-2xl relative shadow-xl">
+      
+      <button
+        onClick={() => setShowSizeChart(false)}
+        className="absolute top-4 right-4 text-gray-600 hover:text-black"
+      >
+        <X size={20} />
+      </button>
+
+      <div className="flex justify-between items-center mb-4 mt-4">
+        <h2 className="text-lg font-semibold">Size Chart</h2>
+
+        <div className="flex items-center gap-2">
+          <span className={unit === "cm" ? "font-semibold" : "text-gray-800"}>
+            CM
+          </span>
+
+          <button
+            onClick={() => setUnit(unit === "cm" ? "inch" : "cm")}
+            className="w-12 h-6 flex items-center bg-gray-300 rounded-full p-1"
+          >
+            <div
+              className={`bg-black w-4 h-4 rounded-full transition ${
+                unit === "inch" ? "translate-x-6" : ""
+              }`}
+            />
+          </button>
+
+          <span className={unit === "inch" ? "font-semibold" : "text-gray-800"}>
+            IN
+          </span>
+        </div>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left border-collapse">
+          <thead>
+            <tr className="border-b">
+              <th className="py-2">Size</th>
+              <th className="py-2">Chest</th>
+              <th className="py-2">Waist</th>
+              <th className="py-2">Shoulder</th>
+              <th className="py-2">Sleeve</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {[
+              { size: "S", c: 96, w: 80, sh: 44, sl: 61 },
+              { size: "M", c: 102, w: 86, sh: 46, sl: 62 },
+              { size: "L", c: 108, w: 92, sh: 48, sl: 63 },
+              { size: "XL", c: 114, w: 98, sh: 50, sl: 64 },
+            ].map((item, i) => {
+              const toIn = (cm) => (cm / 2.54).toFixed(1);
+
+              return (
+                <tr key={i} className="border-b">
+                  <td className="py-2 font-medium">{item.size}</td>
+
+                  <td className="py-2">
+                    {unit === "cm"
+                      ? `${item.c} cm`
+                      : `${toIn(item.c)} in`}
+                  </td>
+
+                  <td className="py-2">
+                    {unit === "cm"
+                      ? `${item.w} cm`
+                      : `${toIn(item.w)} in`}
+                  </td>
+
+                  <td className="py-2">
+                    {unit === "cm"
+                      ? `${item.sh} cm`
+                      : `${toIn(item.sh)} in`}
+                  </td>
+
+                  <td className="py-2">
+                    {unit === "cm"
+                      ? `${item.sl} cm`
+                      : `${toIn(item.sl)} in`}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }

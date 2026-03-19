@@ -90,7 +90,7 @@ useEffect(() => {
 
   return (
     <>
-     <div className="w-full h-[500px] md:h-[880px] overflow-hidden  relative">
+  <div className="w-full h-[500px] md:h-[880px] overflow-hidden  relative">
   <video
     src="public/7319402-uhd_4096_2160_25fps.mp4"
     autoPlay
@@ -111,7 +111,7 @@ useEffect(() => {
   </div>
 </div>
 
-    <div className="w-full bg-gray-300 pt-25 text-center overflow-hidden">
+    <div className="w-full bg-gray-300 pt-25 text-center overflow-hidden ">
    <motion.div
   initial={isFirstLoad ? { opacity: 1, y: -250 } : { opacity: 1, y: 0 }}
   animate={{ opacity: 1, y: 0 }}
@@ -124,13 +124,13 @@ useEffect(() => {
 
         <div className="flex justify-center gap-3 mx-auto mt-5">
           <button
-            className="bg-black hover:bg-gray-700 text-white px-4 py-[5px] rounded-[20px] w-25 text-sm"
+            className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-[7px] rounded-[20px] w-28 text-sm"
             onClick={() => navigate("/allproducts")}
           >
             Shop now
           </button>
           <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-900 px-4 py-[5px] rounded-[20px] w-25 text-sm border-2 border-gray-900"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-900 px-4 py-[7px] rounded-[20px] w-28 text-sm border-2 border-gray-900"
             onClick={() => navigate("/explore")}
           >
             Explore

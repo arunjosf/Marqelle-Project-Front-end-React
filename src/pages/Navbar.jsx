@@ -65,13 +65,13 @@ export default function Navbar() {
 
              <button className="px-3 text-gray-900 text-sm">
   <Link to={"/wishlist"} className="flex items-center"><Bookmark size={17} />
-  <span className="text-xs">{wishlist.length}</span></Link>
+  {wishlist.length > 0 &&<span className="text-xs">{wishlist.length}</span>}</Link>
 </button>
 
                     <button className="px-3 text-gray-900 text-sm">
   <Link to="/cart" className="flex items-center">
     <ShoppingCart size={17} />
-    <span className="text-xs">{cart.length}</span>
+   {cart.length > 0 && <span className="text-xs">{cart.length}</span>}
   </Link>
 </button>
 

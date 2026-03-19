@@ -3,29 +3,35 @@ import axios from "axios";
 import AdminSidebar from "./sidebar";
 import { Search } from "lucide-react";
 
+const BASE = "https://localhost:7177/api/adminorder";
+
+const getAdminHeaders = () => {
+  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
+  return admin?.token ? { Authorization: `Bearer ${admin.token}` } : {};
+};
+
+// Map enum string to numeric value for backend
+const STATUS_MAP = {
+  "Pending": 0,
+  "Shipped": 1,
+  "OutForDelivery": 2,
+  "Delivered": 3,
+  "Cancelled": 4,
+};
+
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     try {
-      const [ordersRes, productsRes, usersRes] = await Promise.all([
-        axios.get("http://localhost:5000/orders"),
-        axios.get("http://localhost:5000/products"),
-        axios.get("http://localhost:5000/users"), ]);
-
-        const validOrders = (ordersRes.data || [])
-        .filter((o) => o && o.items && o.items.length > 0)
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-      setOrders(validOrders);
-      setProducts(productsRes.data.data || []);
-      setUsers(usersRes.data || []);
-
+      const res = await axios.get(`${BASE}/all-orders`, { withCredentials: true, headers: getAdminHeaders() });
+      const data = (res.data.data || [])
+        .filter((o) => (o.products ?? o.Products ?? []).length > 0)
+        .sort((a, b) => new Date(b.orderedDate ?? b.OrderedDate) - new Date(a.orderedDate ?? a.OrderedDate));
+      setOrders(data);
     } catch (err) {
-      console.error("Admin Orders fetch error:", err); 
+      console.error("Admin Orders fetch error:", err?.response?.status, err?.response?.data);
     }
   };
 
@@ -36,13 +42,17 @@ export default function AdminOrders() {
   }, []);
 
   const handleStatusChange = async (orderId, newStatus) => {
+    const statusValue = STATUS_MAP[newStatus];
     try {
-      await axios.patch(`http://localhost:5000/orders/${orderId}`, {
-        status: newStatus,
-      });
+      await axios.put(
+        `${BASE}/update-status?orderId=${orderId}&status=${statusValue}`,
+        {},
+        { withCredentials: true, headers: getAdminHeaders() }
+      );
       setOrders((prev) =>
-        prev.map((o) =>
-          o.id === orderId ? { ...o, status: newStatus } : o
+        prev.map((o) => (o.orderId === orderId || o.OrderId === orderId)
+          ? { ...o, status: newStatus, Status: newStatus }
+          : o
         )
       );
     } catch (err) {
@@ -53,26 +63,22 @@ export default function AdminOrders() {
   const filteredOrders = orders.filter((order) => {
     const ser = search.toLowerCase();
     if (!ser) return true;
+    const orderId = order.orderId ?? order.OrderId;
+    const userId = order.userId ?? order.UserId;
+    const products = order.products ?? order.Products ?? [];
     return (
-      String(order.id).toLowerCase().includes(ser) ||
-      String(order.userId).toLowerCase().includes(ser) ||
-      (order.items && order.items.some((items) =>
-      String(items.productId).toLowerCase().includes(ser)
-      ))
+      String(orderId).toLowerCase().includes(ser) ||
+      String(userId).toLowerCase().includes(ser) ||
+      products.some((p) => String(p.productId ?? p.ProductId).toLowerCase().includes(ser))
     );
   });
-
-  const getUserName = (userId) => {
-    const user = users.find((u) => String(u.id) === String(userId));
-    return user ? `${user.firstname} ${user.lastname}` : "Unknown User";
-  };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSidebar />
 
       <main className="flex-1 p-8 overflow-y-auto">
-  
+
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-semibold text-gray-900">Orders</h1>
           <div className="flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full text-sm">
@@ -92,133 +98,102 @@ export default function AdminOrders() {
         </div>
 
         {filteredOrders.length === 0 ? (
-          <p className="text-gray-500 text-center mt-20 text-sm">
-            No orders found.
-          </p>
+          <p className="text-gray-500 text-center mt-20 text-sm">No orders found.</p>
         ) : (
           <div className="space-y-6">
-            {filteredOrders.map((order) => (
-              <div
-                key={order.id}
-                className={`border border-gray-300 rounded-xl p-6 bg-white shadow-sm transition
-                  ${
-                    order.status === "Cancelled"
-                      ? "opacity-80 bg-gray-50"
-                      : ""
-                  }`}>
-        
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="font-medium text-gray-800">
-                      Order #{order.id}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                      User: {getUserName(order.userId)} (ID: {order.userId})
-                    </p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Payment Method:{" "} <span className="font-semibold text-gray-800"> {order.paymentMethod || "N/A"}
-                      </span>
+            {filteredOrders.map((order) => {
+              const orderId = order.orderId ?? order.OrderId;
+              const userId = order.userId ?? order.UserId;
+              const status = order.status ?? order.Status ?? "Pending";
+              const totalAmount = order.totalAmount ?? order.TotalAmount ?? 0;
+              const paymentMethod = order.paymentMethod ?? order.PaymentMethod ?? "N/A";
+              const orderedDate = order.orderedDate ?? order.OrderedDate;
+              const products = order.products ?? order.Products ?? [];
+
+              return (
+                <div
+                  key={orderId}
+                  className={`border border-gray-300 rounded-xl p-6 bg-white shadow-sm transition ${
+                    status === "Cancelled" ? "opacity-80 bg-gray-50" : ""
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-medium text-gray-800">Order #{orderId}</h3>
+                      <p className="text-sm text-gray-600 mt-1">User ID: {userId}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Payment Method:{" "}
+                        <span className="font-semibold text-gray-800">{paymentMethod}</span>
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-semibold text-gray-600">Date:</span>{" "}
+                      {orderedDate
+                        ? new Date(orderedDate).toLocaleDateString("en-GB", {
+                            day: "2-digit", month: "short", year: "numeric",
+                          })
+                        : "N/A"}
                     </p>
                   </div>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-semibold text-gray-600">Date:</span>{" "}
-                    {order.date
-                      ? new Date(order.date).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })
-                      : "N/A"}
-                  </p>
-                </div>
 
-                <div className="divide-y">
-                  {order.items.map((item, i) => {
-                    const product = products.find(
-                      (p) => Number(p.id) === Number(item.productId)
-                    );
-                    if (!product) return null;
+                  <div className="divide-y">
+                    {products.map((item, i) => {
+                      const img = item.productImage ?? item.ProductImage;
+                      const name = item.productName ?? item.ProductName ?? "Unknown Product";
+                      const productId = item.productId ?? item.ProductId;
+                      const quantity = item.quantity ?? item.Quantity;
+                      const price = item.price ?? item.Price ?? 0;
 
-                    const img = Array.isArray(product.image)
-                      ? product.image[0]
-                      : product.image;
-
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center justify-between py-3"
-                      >
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={img}
-                            alt={product.name}
-                            className="w-16 h-16 object-cover rounded-md"
-                          />
-                          <div>
-                            <p className="font-medium text-gray-900">
-                              {product.name || "Unknown Product"}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Product ID: {item.productId}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Quantity: {item.quantity}
-                            </p>
+                      return (
+                        <div key={i} className="flex items-center justify-between py-3">
+                          <div className="flex items-center gap-3">
+                            {img ? (
+                              <img src={img} alt={name} className="w-16 h-16 object-cover rounded-md" />
+                            ) : (
+                              <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-xs">No Img</div>
+                            )}
+                            <div>
+                              <p className="font-medium text-gray-900">{name}</p>
+                              <p className="text-sm text-gray-600">Product ID: {productId}</p>
+                              <p className="text-sm text-gray-600">Quantity: {quantity}</p>
+                            </div>
                           </div>
+                          <span className="text-gray-700 text-sm font-semibold">₹{price}</span>
                         </div>
+                      );
+                    })}
+                  </div>
 
-                        <span className="text-gray-700 text-sm font-semibold">
-                          ₹{product.price || 0}
+                  <div className="flex items-center justify-between mt-5">
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium text-gray-800">Status:</span>
+                      {status === "Cancelled" ? (
+                        <span className="text-red-600 font-bold text-sm bg-red-100 px-2 py-0.5 rounded-md shadow-sm">
+                          Cancelled
                         </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex items-center justify-between mt-5">
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium text-gray-800">Status:</span>
-
-                    {order.status === "Cancelled" ? (
-                      <span className="text-red-600 font-bold text-sm bg-red-100 px-2 py-0.5 rounded-md shadow-sm">
-                        Cancelled
-                      </span>
-                    ) : (
-                      <select
-                        value={order.status || "Pending"}
-                        onChange={(e) =>
-                          handleStatusChange(order.id, e.target.value)
-                        }
-                       className={`border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none transition
-                        ${order.status === "Pending" ? "text-yellow-600 font-medium"  : "text-green-600 font-medium"}`}>
-
-                        <option className="text-black" value="Pending">
-                          Pending
-                        </option>
-                        <option className="text-black" value="Shipped">
-                          Shipped
-                        </option>
-                        <option className="text-black" value="Out for Delivery">
-                          Out for Delivery
-                        </option>
-                        <option className="text-black" value="Delivered">
-                          Delivered
-                        </option>
-                      </select>
-                    )}
-                  </div>
-
-                  <div>
-                    <span className="font-medium text-gray-800 mr-2">
-                      Total:
-                    </span>
-                    <span className="font-semibold text-gray-900">
-                      ₹{order.total}
-                    </span>
+                      ) : (
+                        <select
+                          value={status}
+                          onChange={(e) => handleStatusChange(orderId, e.target.value)}
+                          className={`border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none transition ${
+                            status === "Pending" ? "text-yellow-600 font-medium" : "text-green-600 font-medium"
+                          }`}
+                        >
+                          <option className="text-black" value="Pending">Pending</option>
+                          <option className="text-black" value="Shipped">Shipped</option>
+                          <option className="text-black" value="OutForDelivery">Out for Delivery</option>
+                          <option className="text-black" value="Delivered">Delivered</option>
+                        </select>
+                      )}
+                    </div>
+                    <div>
+                      <span className="font-medium text-gray-800 mr-2">Total:</span>
+                      <span className="font-semibold text-gray-900">₹{totalAmount}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>

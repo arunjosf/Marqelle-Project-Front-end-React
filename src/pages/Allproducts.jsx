@@ -90,15 +90,18 @@ console.log("products:", products, Array.isArray(products));
       <div className="flex items-center justify-between px-55 mt-9">
         <Link to={"/home"}><h2 id="logo-text" className="text-7xl font-semibold text-black">Marqelle.</h2></Link>
         <div className="flex items-center gap-3">
+  
+                <Link className= "text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
+        
           <button
             className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
             onClick={() => navigate(user ? "/profile" : "/login")}>
             {user ? (
-              <span className="text-sm font-semibold">
+              <span className="text-sm font-semibold hover:text-gray-700">
                 <Link to={"/profile"}>Profile</Link>
               </span>
             ) : (
-              <span className="text-sm font-medium">
+              <span className="text-sm font-medium hover:text-gray-700">
                 <Link to={"/login"}>Login</Link>
               </span>
             )}
