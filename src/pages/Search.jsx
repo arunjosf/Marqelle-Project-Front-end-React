@@ -76,14 +76,12 @@ export default function Search() {
 
   return (
     <>
-      {/* Nav links — left side, one per line */}
       <div className="fixed left-10 mt-14 -translate-y-1/2 flex flex-col gap-5 text-sm tracking-widest text-gray-700 z-20">
         <Link to="/home" className="hover:text-black transition">Home</Link>
         <Link to="/cart" className="hover:text-black transition">Cart</Link>
         <Link to="/profile" className="hover:text-black transition">Profile</Link>
       </div>
 
-      {/* Search input */}
       <div className="max-w-2xl mx-auto mt-40 mb-12 px-4 flex flex-col items-center gap-6">
         <div className="w-full text-center">
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">What are you looking for?</p>
@@ -97,7 +95,6 @@ export default function Search() {
           />
         </div>
 
-        {/* Price sort */}
         <div className="flex gap-4 text-xs text-gray-400 uppercase tracking-widest">
           <button onClick={() => setFilter("all")} className={`transition ${filter === "all" ? "text-black font-medium" : "hover:text-black"}`}>All</button>
           <span className="text-gray-200">|</span>
@@ -107,7 +104,6 @@ export default function Search() {
         </div>
       </div>
 
-      {/* Product grid */}
       <div className="w-full flex justify-center mt-15 md:mt-20 mb-30 px-4 md:px-0">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {products.map((prod) => (

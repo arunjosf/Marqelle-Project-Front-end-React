@@ -5,15 +5,10 @@ import toast from "react-hot-toast";
 import AdminSidebar from "./sidebar";
 
 const BASE = "https://localhost:7177/api/adminproduct";
-const SIZES = ["S", "M", "L", "XL"]; // Only 4 sizes
+const SIZES = ["S", "M", "L", "XL"]; 
 const LOW_STOCK_THRESHOLD = 5;
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd" },
-};
-
-const getAdminHeaders = () => {
-  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
-  return admin?.token ? { Authorization: `Bearer ${admin.token}` } : {};
 };
 
 const emptyForm = {
@@ -22,7 +17,6 @@ const emptyForm = {
 };
 
 const emptyAddStock = { sizes: [] };
-
 
 function StockBadge({ sizeStocks }) {
   const total = (sizeStocks || []).reduce((sum, s) => sum + (s.stock ?? s.Stock ?? 0), 0);
@@ -78,12 +72,11 @@ export default function AdminProducts() {
   const [addStockProductId, setAddStockProductId] = useState(null);
   const [addStockForm, setAddStockForm] = useState(emptyAddStock);
   const [addStockLoading, setAddStockLoading] = useState(false);
-
-  const headers = getAdminHeaders();
+ 
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`${BASE}/all-products`, { withCredentials: true, headers });
+      const res = await axios.get(`${BASE}/all-products`, { withCredentials: true, });
       setProducts(res.data.data || []);
     } catch (err) { console.error("Fetch products error:", err); }
   };
@@ -109,7 +102,16 @@ export default function AdminProducts() {
   const addImageSlot = () => {
     setForm((prev) => ({ ...prev, previewImages: [...prev.previewImages, null], images: [...prev.images, null] }));
   };
-
+  
+  const handleRemoveImage = (index) => {
+  setForm((prev) => {
+    const previews = [...prev.previewImages];
+    const images = [...prev.images];
+    previews[index] = null;
+    images[index] = null;
+    return { ...prev, previewImages: previews, images };
+  });
+};
 
   const handleSizeToggle = (size) => {
     setForm((prev) => {
@@ -141,45 +143,50 @@ export default function AdminProducts() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!form.images.some(Boolean) && editingId === "new") { toast.error("Please upload at least one image.", TOAST_STYLE); return; }
-    if (!form.sizes.length) { toast.error("Please select at least one size.", TOAST_STYLE); return; }
-    if (form.sizes.some((s) => !s.stock || Number(s.stock) <= 0)) { toast.error("Stock must be greater than 0 for all selected sizes.", TOAST_STYLE); return; }
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!form.images.some(Boolean) && editingId === "new") { toast.error("Please upload at least one image.", TOAST_STYLE); return; }
+  if (!form.sizes.length) { toast.error("Please select at least one size.", TOAST_STYLE); return; }
+  if (form.sizes.some((s) => !s.stock || Number(s.stock) <= 0)) { toast.error("Stock must be greater than 0 for all selected sizes.", TOAST_STYLE); return; }
 
-    setLoading(true);
-    try {
-      if (editingId === "new") {
-        const fd = new FormData();
-        fd.append("Name", form.name); fd.append("Category", form.category);
-        fd.append("Price", form.price); fd.append("Color", form.color);
-        fd.append("Description", form.description); fd.append("Rating", form.rating || 0);
-        form.images.forEach((img) => { if (img) fd.append("Images", img); });
-        const res = await axios.post(`${BASE}/add-product`, fd, { withCredentials: true, headers: { ...headers, "Content-Type": "multipart/form-data" } });
-        const productId = res.data.data?.productId;
-        await axios.post(`${BASE}/add-stock?productId=${productId}`, { sizes: form.sizes }, { withCredentials: true, headers });
-        toast.success("Product added successfully!", TOAST_STYLE);
-      } else {
-        const fd = new FormData();
-        if (form.name) fd.append("Name", form.name); if (form.category) fd.append("Category", form.category);
-        if (form.price) fd.append("Price", form.price); if (form.color) fd.append("Color", form.color);
-        if (form.description) fd.append("Description", form.description); if (form.rating) fd.append("Rating", form.rating);
-        form.images.forEach((img) => { if (img) fd.append("Images", img); });
-        await axios.put(`${BASE}/update-product?productId=${editingId}`, fd, { withCredentials: true, headers: { ...headers, "Content-Type": "multipart/form-data" } });
-        await axios.put(`${BASE}/update-stock?productId=${editingId}`, { sizes: form.sizes }, { withCredentials: true, headers });
-        toast.success("Product updated successfully!", TOAST_STYLE);
-      }
-      setEditingId(null); setForm(emptyForm); fetchProducts();
-    } catch (err) { toast.error(err.response?.data?.message || "Failed to save product.", TOAST_STYLE); }
-    finally { setLoading(false); }
-  };
-
+  setLoading(true);
+  try {
+    if (editingId === "new") {
+      const fd = new FormData();
+      fd.append("Name", form.name); fd.append("Category", form.category);
+      fd.append("Price", form.price); fd.append("Color", form.color);
+      fd.append("Description", form.description); fd.append("Rating", form.rating || 0);
+      form.images.forEach((img) => { if (img) fd.append("Images", img); });
+      const res = await axios.post(`${BASE}/add-product`, fd, { withCredentials: true });
+      const productId = res.data.data?.productId;
+      await axios.post(`${BASE}/add-stock?productId=${productId}`, { sizes: form.sizes }, { withCredentials: true });
+      toast.success("Product added successfully!", TOAST_STYLE);
+    } else {
+      const fd = new FormData();
+      if (form.name) fd.append("Name", form.name);
+      if (form.category) fd.append("Category", form.category);
+      if (form.price) fd.append("Price", form.price);
+      if (form.color) fd.append("Color", form.color);
+      if (form.description) fd.append("Description", form.description);
+      if (form.rating) fd.append("Rating", form.rating);  
+      const newImages = form.images.filter(Boolean);
+      newImages.forEach((img) => fd.append("Images", img));
+      const keepImages = form.previewImages.filter(Boolean);
+      keepImages.forEach((url) => fd.append("KeepImages", url));
+      await axios.put(`${BASE}/update-product?productId=${editingId}`, fd, { withCredentials: true });
+      await axios.put(`${BASE}/update-stock?productId=${editingId}`, { sizes: form.sizes }, { withCredentials: true });
+      toast.success("Product updated successfully!", TOAST_STYLE);
+    }
+    setEditingId(null); setForm(emptyForm); fetchProducts();
+  } catch (err) { toast.error(err.response?.data?.message || "Failed to save product.", TOAST_STYLE); }
+  finally { setLoading(false); }
+};
   const handleAddStockSubmit = async () => {
     const sizesToUpdate = addStockForm.sizes.filter((s) => s.stock && Number(s.stock) > 0);
     if (!sizesToUpdate.length) { toast.error("Please enter stock for at least one size.", TOAST_STYLE); return; }
     setAddStockLoading(true);
     try {
-      await axios.post(`${BASE}/add-stock?productId=${addStockProductId}`, { sizes: sizesToUpdate }, { withCredentials: true, headers });
+      await axios.post(`${BASE}/add-stock?productId=${addStockProductId}`, { sizes: sizesToUpdate }, { withCredentials: true, });
       toast.success("Stock added successfully!", TOAST_STYLE);
       setAddStockProductId(null); setAddStockForm(emptyAddStock);
       fetchProducts();
@@ -189,13 +196,13 @@ export default function AdminProducts() {
 
   const handleDelete = (id) => {
     toast((t) => (
-      <div className="flex flex-col gap-2">
-        <span className="font-medium">Delete this product?</span>
-        <div className="flex justify-end gap-2">
-          <button className="px-3 py-1 bg-gray-200 rounded-lg text-sm" onClick={() => toast.dismiss(t.id)}>Cancel</button>
-          <button className="px-3 py-1 bg-red-600 text-white rounded-lg text-sm" onClick={async () => {
+      <div className="flex flex-col gap-5">
+        <span className="font-medium text-center">Delete this product?</span>
+        <div className="flex justify-center gap-2 w-70">
+          <button className="px-10 py-1 bg-gray-200 rounded-lg text-sm" onClick={() => toast.dismiss(t.id)}>Cancel</button>
+          <button className="px-10 py-1 bg-red-600 text-white rounded-lg text-sm" onClick={async () => {
             try {
-              await axios.delete(`${BASE}/delete-product?productId=${id}`, { withCredentials: true, headers });
+              await axios.delete(`${BASE}/delete-product?productId=${id}`, { withCredentials: true,});
               setProducts((prev) => prev.filter((p) => p.id !== id));
               toast.success("Product deleted!", TOAST_STYLE);
             } catch { toast.error("Failed to delete.", TOAST_STYLE); }
@@ -318,21 +325,30 @@ export default function AdminProducts() {
               <div className="mb-6">
                 <label className="block text-xs text-gray-800 mb-2">Images *</label>
                 <div className="flex gap-3 flex-wrap">
-                  {imageSlots.map((preview, idx) => (
-                    <label key={idx} className={`relative w-30 h-40 flex items-center justify-center border-2 border-dashed rounded-xl cursor-pointer transition-colors flex-shrink-0
-                      ${preview ? "border-black" : "border-gray-200 hover:border-gray-400"}`}>
-                      {preview ? <img src={preview} className="w-full h-full object-cover rounded-xl" />
-                        : <span className="text-xs text-gray-400 text-center leading-tight px-1">+ Image {idx + 1}</span>}
-                      <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageChange(e, idx)} />
-                    </label>
-                  ))}
+                {imageSlots.map((preview, idx) => (
+  <div key={idx} className="relative w-30 h-40 flex-shrink-0 group">
+    <label className={`w-full h-full flex items-center justify-center border-2 border-dashed rounded-xl cursor-pointer transition-colors
+      ${preview ? "border-black" : "border-gray-200 hover:border-gray-400"}`}>
+      {preview ? <img src={preview} className="w-full h-full object-cover rounded-xl" />
+        : <span className="text-xs text-gray-400 text-center leading-tight px-1">+ Image {idx + 1}</span>}
+      <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageChange(e, idx)} />
+    </label>
+    {preview && (
+      <button type="button" onClick={() => handleRemoveImage(idx)}
+        className="absolute -top-2 -right-2 w-5 h-5 bg-black text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 z-10">
+        ×
+      </button>
+    )}  
+  </div>
+))}
                   <button type="button" onClick={addImageSlot}
                     className="w-30 h-40 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl hover:border-black hover:bg-gray-50 transition-colors flex-shrink-0 text-gray-400 hover:text-black">
                     <span className="text-2xl leading-none">+</span>
                     <span className="text-xs mt-1">Add More</span>
                   </button>
-                </div>
-              </div>
+</div>
+
+             </div>
 
               <div className="flex gap-3">
                 <button type="submit" disabled={loading}
@@ -522,7 +538,7 @@ export default function AdminProducts() {
                 </div>
 
                 {isExpanded && (p.images ?? p.Images ?? []).filter(Boolean).length > 0 && (
-                  <div className="px-4 pb-4 border-t border-gray-100 pt-3">
+                  <div className="px-4 pb-4 border-t border-gray-100 pt-3 pl-13">
                     <p className="text-xs text-gray-400 mb-2">Product Images</p>
                     <div className="flex gap-2 overflow-x-auto pb-1">
                       {(p.images ?? p.Images).filter(Boolean).map((imgUrl, idx) => (

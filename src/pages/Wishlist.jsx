@@ -12,7 +12,6 @@ const TOAST_STYLE = {
   iconTheme: { primary: "#111", secondary: "#fff" },
 };
 
-// ── Size Selector Popup ───────────────────────────────────────────────────────
 function SizePopup({ product, onClose, onAdded }) {
   const [selectedSize, setSelectedSize] = useState(null);
   const [adding, setAdding] = useState(false);
@@ -42,7 +41,6 @@ function SizePopup({ product, onClose, onAdded }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
-        {/* Product info */}
         <div className="flex items-center gap-4 mb-5">
           <img
             src={Array.isArray(product.productImage) ? product.productImage[0] : product.productImage}
@@ -54,8 +52,6 @@ function SizePopup({ product, onClose, onAdded }) {
             <p className="text-sm text-gray-500 mt-0.5">₹{product.productPrice}</p>
           </div>
         </div>
-
-        {/* Size selector */}
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Select Size</p>
         {product.sizes && product.sizes.length > 0 ? (
           <div className="flex flex-wrap gap-2 mb-6">
@@ -76,7 +72,6 @@ function SizePopup({ product, onClose, onAdded }) {
           <p className="text-sm text-gray-400 mb-6">No sizes available</p>
         )}
 
-        {/* Buttons */}
         <div className="flex gap-2">
           <button
             onClick={handleAddToCart}
@@ -97,10 +92,9 @@ function SizePopup({ product, onClose, onAdded }) {
   );
 }
 
-// ── Wishlist Page ─────────────────────────────────────────────────────────────
 export default function Wishlist() {
   const { user, setCart, wishlist, setWishlist } = useContext(context);
-  const [popupProduct, setPopupProduct] = useState(null); // product shown in size popup
+  const [popupProduct, setPopupProduct] = useState(null); 
 
   useEffect(() => {
     if (!user) return;
@@ -110,12 +104,10 @@ export default function Wishlist() {
       .catch((err) => console.error("Wishlist fetch error:", err));
   }, [user]);
 
-  // Fetch product sizes then open popup
   async function handleAddToCartClick(prod) {
     try {
       const res = await axios.get(`${PRODUCT_URL}/id?productId=${prod.productId}`);
       const productData = res.data.data;
-      // Merge wishlist info with sizes from product details
       setPopupProduct({
         productId: prod.productId,
         productName: prod.productName,
@@ -128,13 +120,11 @@ export default function Wishlist() {
     }
   }
 
-  // Called after cart add succeeds — remove from wishlist
   async function handleAddedToCart(productId) {
     try {
       await axios.delete(`${WISHLIST_URL}/Delete?productId=${productId}`, { withCredentials: true });
       setWishlist((prev) => prev.filter((w) => w.productId !== productId));
     } catch {
-      // Non-critical — wishlist remove failed but cart add succeeded
     }
     setPopupProduct(null);
   }
@@ -151,7 +141,6 @@ export default function Wishlist() {
 
   return (
     <>
-      {/* Size popup */}
       {popupProduct && (
         <SizePopup
           product={popupProduct}

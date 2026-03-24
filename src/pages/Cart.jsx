@@ -6,13 +6,11 @@ import { context } from "../App";
 
 const CART_URL = "https://localhost:7177/api/usercart";
 
-// ── Out-of-Stock Popup ────────────────────────────────────────────────────────
 function OutOfStockPopup({ items, onContinue, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 animate-fade-in">
 
-        {/* Header */}
         <div className="flex items-start gap-3 mb-5">
           <div className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-full bg-red-50 flex items-center justify-center">
             <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -28,7 +26,6 @@ function OutOfStockPopup({ items, onContinue, onCancel }) {
           </div>
         </div>
 
-        {/* Out-of-stock item list */}
         <div className="flex flex-col gap-3 mb-6 max-h-56 overflow-y-auto pr-1">
           {items.map((item) => (
             <div key={item.cartId} className="flex items-center gap-3 border border-red-100 bg-red-50/50 rounded-xl px-3 py-2.5">
@@ -48,7 +45,6 @@ function OutOfStockPopup({ items, onContinue, onCancel }) {
           ))}
         </div>
 
-        {/* Action buttons */}
         <div className="flex flex-col gap-2">
           <button
             onClick={onContinue}
@@ -69,7 +65,6 @@ function OutOfStockPopup({ items, onContinue, onCancel }) {
   );
 }
 
-// ── Cart Page ─────────────────────────────────────────────────────────────────
 export default function Cart() {
   const { cart, setCart, user } = useContext(context);
   const [loading, setLoading] = useState(true);
@@ -122,14 +117,12 @@ export default function Cart() {
       await axios.put(`${CART_URL}/updateQuantity/${cartId}?quantity=${newQty}`, {}, { withCredentials: true });
     } catch (err) {
       console.error("Error updating quantity:", err);
-      // revert on API error
       setCart((prev) =>
         prev.map((i) => i.cartId === cartId ? { ...i, quantity: item?.quantity ?? newQty } : i)
       );
     }
   }
 
-  // ── Checkout button click ────────────────────────────────────────────────
   function handleCheckout() {
     const oos = cart.filter((item) => item.isOutOfStock);
     if (oos.length > 0) {
@@ -140,16 +133,13 @@ export default function Cart() {
     navigate("/checkout");
   }
 
-  // ── User clicks "Continue without these items" ───────────────────────────
   async function handleContinueWithoutOOS() {
     try {
-      // Remove each out-of-stock item using the existing cart remove API
       await Promise.all(
         outOfStockItems.map((item) =>
           axios.delete(`${CART_URL}/remove/${item.cartId}`, { withCredentials: true })
         )
       );
-      // Update local cart state
       const removedIds = new Set(outOfStockItems.map((i) => i.cartId));
       setCart((prev) => prev.filter((item) => !removedIds.has(item.cartId)));
 
@@ -199,7 +189,6 @@ export default function Cart() {
 
   return (
     <>
-      {/* Out-of-stock popup */}
       {outOfStockPopup && (
         <OutOfStockPopup
           items={outOfStockItems}

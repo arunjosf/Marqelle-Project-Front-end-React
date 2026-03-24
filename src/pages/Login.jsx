@@ -16,12 +16,10 @@ export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useContext(context);
 
-  // ── Login fields ──
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // ── Forgot password steps: null | "email" | "otp" ──
   const [forgotStep, setForgotStep] = useState(null);
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotOtp, setForgotOtp] = useState("");
@@ -30,7 +28,6 @@ export default function Login() {
   const [forgotError, setForgotError] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
 
-  // ── Login ─────────────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,22 +43,17 @@ export default function Login() {
 
       const res = await axios.post(`${AUTH_URL}/login`, formData, { withCredentials: true });
 
-      if (res.data.success) {
-        const userData = res.data.data;
-        const token = userData.token;
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        const roleId = payload.role;
-
-        if (roleId == 2) {
-          localStorage.setItem("admin", JSON.stringify({ email, token }));
-          toast.success("Admin Login Successful!", TOAST_STYLE);
-          setTimeout(() => navigate("/admin/dashboard"), 1000);
-        } else {
-          localStorage.setItem("user", JSON.stringify({ email, token }));
-          setUser({ email, token });
-          toast.success("Login Successful!", TOAST_STYLE);
-          setTimeout(() => navigate("/"), 1000);
-        }
+      if (res.data.success) { 
+        const profileRes = await axios.get("https://localhost:7177/api/userprofile/userprofile", { withCredentials: true });
+        const d = profileRes.data.data;
+        setUser({ id: d.id, firstName: d.firstName, lastName: d.lastName, email: d.email, roleId: d.roleId });
+        if (d.roleId == 2) {
+        toast.success("Admin Login Successful!", TOAST_STYLE);
+        setTimeout(() => navigate("/admin/dashboard"), 1000);
+      } else {
+        toast.success("Login Successful!", TOAST_STYLE);
+        setTimeout(() => navigate("/"), 1000);
+}
       } else {
         setError(res.data.message || "Invalid email or password");
       }
@@ -70,7 +62,6 @@ export default function Login() {
     }
   };
 
-  // ── Forgot Password — Step 1: Send OTP ───────────────────────────────────
   const handleSendOtp = async (e) => {
     e.preventDefault();
     setForgotError("");
@@ -93,7 +84,6 @@ export default function Login() {
     }
   };
 
-  // ── Forgot Password — Step 2: Verify OTP & Reset ─────────────────────────
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setForgotError("");
@@ -113,7 +103,6 @@ export default function Login() {
         `${AUTH_URL}/forgot-password/verify-otp-reset?otpCode=${forgotOtp.trim()}&newPassword=${newPassword}`
       );
       toast.success("Password reset successfully! Please log in.", TOAST_STYLE);
-      // Reset all forgot state and go back to login
       setForgotStep(null);
       setForgotEmail(""); setForgotOtp(""); setNewPassword(""); setConfirmNewPassword("");
     } catch (err) {
@@ -123,14 +112,12 @@ export default function Login() {
     }
   };
 
-  // ── Google Login ──────────────────────────────────────────────────────────
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         const accessToken = tokenResponse.access_token;
-        const googleUserRes = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const googleUserRes = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", 
+        );
         const googleUser = {
           id: googleUserRes.data.sub,
           name: googleUserRes.data.name,
@@ -182,7 +169,6 @@ export default function Login() {
             <p className="text-gray-500 text-1xl text-sm leading-loose">Where class meets comfort.</p>
           </div>
 
-          {/* ── Normal Login ── */}
           {!forgotStep && (
             <>
               <div className="flex justify-center mb-6 bg-gray-200 rounded-full p-1 w-75 h-10 mx-auto gap-1">

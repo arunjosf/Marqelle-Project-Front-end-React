@@ -15,7 +15,6 @@ const TOAST_STYLE = {
   },
 };
 
-// ── Step Bar ──────────────────────────────────────────────────────────────────
 function StepBar({ step }) {
   const steps = ["Address", "Order Summary", "Payment"];
   return (
@@ -31,7 +30,7 @@ function StepBar({ step }) {
                 <div className="flex items-center gap-1.5">
                   <div className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition-all
                     ${done ? "bg-black border-black text-white"
-                      : active ? "bg-white border-black text-black"
+                      : active ? "bg-white border-gray-600 border-2 text-black"
                       : "bg-white border-gray-300 text-gray-300"}`}>
                     {done ? (
                       <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -57,7 +56,6 @@ function StepBar({ step }) {
   );
 }
 
-// ── Loading Skeleton (darker) ─────────────────────────────────────────────────
 function Skeleton() {
   return (
     <div className="min-h-screen bg-gray-50/80">
@@ -107,7 +105,6 @@ function Skeleton() {
   );
 }
 
-// ── Out-of-Stock Popup ────────────────────────────────────────────────────────
 function OutOfStockPopup({ items, onContinue, onCancel, allOutOfStock }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -179,8 +176,6 @@ function OutOfStockPopup({ items, onContinue, onCancel, allOutOfStock }) {
   );
 }
 
-// ── Add Address Form ──────────────────────────────────────────────────────────
-// ── Address Field — defined OUTSIDE form to prevent focus loss on re-render ──
 function AddressField({ label, name, value, onChange, placeholder, type = "text", half, error }) {
   return (
     <div className={half ? "" : "md:col-span-2"}>
@@ -198,7 +193,6 @@ function AddressField({ label, name, value, onChange, placeholder, type = "text"
   );
 }
 
-// AddAddressForm: handles both new address creation and editing
 function AddAddressForm({ onSaved, onCancel, showCancel, editAddress }) {
   const empty = {
     addressType: "Home", fullName: "", phoneNumber: "", email: "",
@@ -271,7 +265,6 @@ function AddAddressForm({ onSaved, onCancel, showCancel, editAddress }) {
       });
 
       if (isEdit) {
-        // PUT — update existing address
         await axios.put(
           `${BASE}/address/update?addressId=${editAddress.addressId}&${params}`,
           {},
@@ -279,7 +272,6 @@ function AddAddressForm({ onSaved, onCancel, showCancel, editAddress }) {
         );
         toast.success("Address updated!", { ...TOAST_STYLE, iconTheme: { primary: "#111", secondary: "#fff" } });
       } else {
-        // POST — add new address
         await axios.post(`${BASE}/address/add?${params}`, {}, { withCredentials: true });
         toast.success("Address saved!", { ...TOAST_STYLE, iconTheme: { primary: "#111", secondary: "#fff" } });
       }
@@ -343,7 +335,7 @@ function AddAddressForm({ onSaved, onCancel, showCancel, editAddress }) {
   );
 }
 
-// ── Address Card ──────────────────────────────────────────────────────────────
+
 function AddressCard({ address, selected, onSelect, onDelete, onEdit }) {
   const [confirming, setConfirming] = useState(false);
 
@@ -372,7 +364,6 @@ function AddressCard({ address, selected, onSelect, onDelete, onEdit }) {
         ${selected ? "border-black bg-gray-50" : "border-gray-200 hover:border-gray-400 bg-white"}`}
     >
       <div className="flex items-start justify-between gap-3">
-        {/* Left: radio + address details */}
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
             ${selected ? "border-black" : "border-gray-300"}`}>
@@ -394,7 +385,6 @@ function AddressCard({ address, selected, onSelect, onDelete, onEdit }) {
           </div>
         </div>
 
-        {/* Right: edit + delete buttons */}
         <div className="flex items-center gap-3 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
           {!confirming ? (
             <>
@@ -432,25 +422,21 @@ function AddressCard({ address, selected, onSelect, onDelete, onEdit }) {
   );
 }
 
-// ── Price Summary Sidebar ─────────────────────────────────────────────────────
 function PriceSummary({ checkoutData, step, onContinue }) {
   if (!checkoutData) return null;
   const count = checkoutData.products?.length ?? 0;
   return (
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden sticky top-6">
-      {/* Header */}
       <div className="px-5 pt-5 pb-4 border-b border-gray-100">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Price Details</h3>
       </div>
 
       <div className="px-5 py-4 flex flex-col gap-3">
-        {/* Item count */}
         <div className="flex justify-between items-center text-sm text-gray-600">
           <span>Price ({count} item{count !== 1 ? "s" : ""})</span>
           <span className="font-medium text-gray-800">₹{checkoutData.subTotal?.toLocaleString()}</span>
         </div>
 
-        {/* Delivery */}
         <div className="flex justify-between items-center text-sm text-gray-600">
           <span>Delivery Charges</span>
           {checkoutData.shippingCharge === 0 ? (
@@ -460,27 +446,22 @@ function PriceSummary({ checkoutData, step, onContinue }) {
           )}
         </div>
 
-        {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-1" />
 
-        {/* Total */}
         <div className="flex justify-between items-center">
           <span className="text-sm font-bold text-gray-900">Total Amount</span>
           <span className="text-lg font-bold text-gray-900">₹{checkoutData.totalAmount?.toLocaleString()}</span>
         </div>
 
-        {/* Savings note */}
         {checkoutData.shippingCharge > 0 && (
           <div className="bg-green-50 border border-green-100 rounded-xl px-3 py-2 flex items-center gap-2">
-            <span className="text-green-600 text-sm">🎉</span>
-            <p className="text-xs text-green-700 font-medium">
-              You're saving ₹{checkoutData.shippingCharge} on delivery with this order!
+            <p className="text-xs text-green-700 font-medium mx-auto">
+              You're just few clicks away from this order!
             </p>
           </div>
         )}
       </div>
 
-      {/* Continue button — only shown on step 2 */}
       {step === 2 && onContinue && (
         <div className="px-5 pb-5">
           <button
@@ -498,14 +479,12 @@ function PriceSummary({ checkoutData, step, onContinue }) {
   );
 }
 
-// ── Main Checkout Page ────────────────────────────────────────────────────────
 export default function Checkout() {
   const { user, setCart } = useContext(context);
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
 
-// Normalize API response to camelCase regardless of server casing
   function normalizeCheckout(d) {
     return {
       products: (d.products || d.Products || []).map((p) => ({
@@ -524,22 +503,15 @@ export default function Checkout() {
   }
   const [checkoutData, setCheckoutData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Address state
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showAllAddresses, setShowAllAddresses] = useState(false);
-  const [editingAddress, setEditingAddress] = useState(null); // address being edited
-
-  // Out-of-stock popup
+  const [editingAddress, setEditingAddress] = useState(null); 
   const [oosPopup, setOosPopup] = useState(false);
   const [oosItems, setOosItems] = useState([]);
   const [allOos, setAllOos] = useState(false);
 
-  // ── Initial load ────────────────────────────────────────────────────────
-  // Addresses and cart totals load independently.
-  // checkout-page API (stock validation) is only called on Continue.
   useEffect(() => {
     if (!user) { navigate("/login"); return; }
     loadInitial();
@@ -548,13 +520,10 @@ export default function Checkout() {
   async function loadInitial() {
     setLoading(true);
     try {
-      // Load addresses and cart totals in parallel
       const [addrRes, cartRes] = await Promise.all([
         axios.get(`${BASE}/address/user-addresses`, { withCredentials: true }),
         axios.get(`${BASE}/usercart/Cartitems`, { withCredentials: true }),
       ]);
-
-      // Set addresses — normalize to camelCase
       const raw = addrRes.data.data || [];
       const addrs = raw.map((a) => ({
         addressId: a.addressId ?? a.AddressId,
@@ -579,7 +548,6 @@ export default function Checkout() {
         setShowAddForm(false);
       }
 
-      // Build checkoutData from cart for price sidebar (no stock validation yet)
       const cartItems = cartRes.data.data || [];
       const subTotal = cartItems.reduce((sum, i) => sum + (i.productPrice * i.quantity), 0);
       const shippingCharge = 40;
@@ -607,8 +575,6 @@ export default function Checkout() {
     try {
       const res = await axios.get(`${BASE}/address/user-addresses`, { withCredentials: true });
       const raw = res.data.data || [];
-
-      // Normalize to camelCase regardless of server casing
       const addrs = raw.map((a) => ({
         addressId: a.addressId ?? a.AddressId,
         addressType: a.addressType ?? a.AddressType ?? "Home",
@@ -637,7 +603,6 @@ export default function Checkout() {
     }
   }
 
-  // ── Stock polling every 5 seconds ───────────────────────────────────────
   const checkStock = useCallback(async () => {
     if (oosPopup || loading) return;
     try {
@@ -657,7 +622,6 @@ export default function Checkout() {
             setOosPopup(true);
           }
         } catch {
-          // silent
         }
       }
     }
@@ -676,7 +640,6 @@ export default function Checkout() {
     };
   }, [user, checkStock]);
 
-  // ── Continue without OOS items ──────────────────────────────────────────
   async function handleOosContinue() {
     try {
       await Promise.all(
@@ -696,7 +659,6 @@ export default function Checkout() {
     }
   }
 
-  // ── Cancel popup → go to cart ───────────────────────────────────────────
   function handleOosCancel() {
     setOosPopup(false);
     navigate("/cart");
@@ -711,7 +673,7 @@ export default function Checkout() {
   function handleEditAddress(address) {
     setEditingAddress(address);
     setShowAddForm(true);
-    setShowAllAddresses(true); // make sure expanded view is open
+    setShowAllAddresses(true); 
   }
 
   async function handleAddressSavedOrUpdated() {
@@ -719,7 +681,6 @@ export default function Checkout() {
     setEditingAddress(null);
     setShowAddForm(false);
     setShowAllAddresses(false);
-    // Force reload addresses and refresh selectedAddress
     try {
       const res = await axios.get(`${BASE}/address/user-addresses`, { withCredentials: true });
       const raw = res.data.data || [];
@@ -738,11 +699,9 @@ export default function Checkout() {
       }));
       setAddresses(addrs);
       if (wasEditing) {
-        // After edit, update selectedAddress with the fresh version of the same address
         const updated = addrs.find((a) => a.addressId === wasEditing.addressId);
         if (updated) setSelectedAddress(updated);
       } else {
-        // After add, select the newest address
         const mostRecent = addrs.reduce((a, b) => (a.addressId > b.addressId ? a : b));
         setSelectedAddress(mostRecent);
       }
@@ -755,7 +714,6 @@ export default function Checkout() {
     try {
       await axios.delete(`${BASE}/address/delete?addressId=${addressId}`, { withCredentials: true });
       toast.success("Address removed", { ...TOAST_STYLE, iconTheme: { primary: "#111", secondary: "#fff" } });
-      // If the deleted address was selected, clear selection
       if (selectedAddress?.addressId === addressId) {
         setSelectedAddress(null);
       }
@@ -774,7 +732,6 @@ export default function Checkout() {
       const res = await axios.get(`${BASE}/checkout/checkout-page`, { withCredentials: true });
       const d = res.data.data;
 
-      // Normalize to camelCase regardless of what the API returns
       const normalized = {
         products: (d.products || d.Products || []).map((p) => ({
           productId: p.productId ?? p.ProductId,
@@ -837,11 +794,9 @@ export default function Checkout() {
 
         <div className="lg:col-span-2 flex flex-col gap-2">
 
-          {/* ── STEP 1: Address ─────────────────────────────────────────── */}
           {step === 1 && (
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
 
-              {/* Header */}
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-base font-semibold text-gray-900">Delivery Address</h2>
                 {addresses.length > 0 && (
@@ -854,14 +809,12 @@ export default function Checkout() {
                 )}
               </div>
 
-              {/* No addresses — show form directly */}
               {addresses.length === 0 && (
                 <AddAddressForm onSaved={handleAddressSavedOrUpdated} showCancel={false} />
               )}
 
               {addresses.length > 0 && (
                 <>
-                  {/* COLLAPSED: only selected address + small "+ Add New Address" text link */}
                   {!showAllAddresses && (
                     <div className="flex flex-col gap-3">
                       {selectedAddress && (
@@ -883,7 +836,6 @@ export default function Checkout() {
                     </div>
                   )}
 
-                  {/* EXPANDED: all addresses + dashed add button */}
                   {showAllAddresses && (
                     <div className="flex flex-col gap-3">
                       {addresses.map((addr) => (
@@ -933,10 +885,8 @@ export default function Checkout() {
             </div>
           )}
 
-          {/* ── STEP 2: Order Summary ────────────────────────────────────── */}
           {step === 2 && (
             <>
-              {/* Card 1 — Deliver To */}
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
                 <div className="flex items-start justify-between">
                   <div>
@@ -962,7 +912,6 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {/* Card 2 — Order Items */}
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
                 <div className="flex flex-col divide-y divide-gray-50">
                   {checkoutData?.products?.map((item) => {

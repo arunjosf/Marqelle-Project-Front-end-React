@@ -5,12 +5,6 @@ import { Search } from "lucide-react";
 
 const BASE = "https://localhost:7177/api/adminorder";
 
-const getAdminHeaders = () => {
-  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
-  return admin?.token ? { Authorization: `Bearer ${admin.token}` } : {};
-};
-
-// Map enum string to numeric value for backend
 const STATUS_MAP = {
   "Pending": 0,
   "Shipped": 1,
@@ -25,7 +19,7 @@ export default function AdminOrders() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${BASE}/all-orders`, { withCredentials: true, headers: getAdminHeaders() });
+      const res = await axios.get(`${BASE}/all-orders`, { withCredentials: true });
       const data = (res.data.data || [])
         .filter((o) => (o.products ?? o.Products ?? []).length > 0)
         .sort((a, b) => new Date(b.orderedDate ?? b.OrderedDate) - new Date(a.orderedDate ?? a.OrderedDate));
@@ -47,7 +41,7 @@ export default function AdminOrders() {
       await axios.put(
         `${BASE}/update-status?orderId=${orderId}&status=${statusValue}`,
         {},
-        { withCredentials: true, headers: getAdminHeaders() }
+        { withCredentials: true }
       );
       setOrders((prev) =>
         prev.map((o) => (o.orderId === orderId || o.OrderId === orderId)
@@ -79,8 +73,8 @@ export default function AdminOrders() {
 
       <main className="flex-1 p-8 overflow-y-auto">
 
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-semibold text-gray-900">Orders</h1>
+        <div className="flex justify-between items-center mb-6 mt-1">
+          <h1 className="text-2xl font-semibold text-gray-900">Manage Orders</h1>
           <div className="flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full text-sm">
             Total Orders: {filteredOrders.length}
           </div>

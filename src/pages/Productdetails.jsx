@@ -59,7 +59,7 @@ export default function Productdetails() {
     try {
       if (isFilled) {
         const itemToRemove = wishlist.find(
-          (w) => w.productId === prod.id && w.userId === user.id
+        (w) => w.productId === prod.id
         );
         if (itemToRemove) {
           await axios.delete(`${WISHLIST_URL}/Delete?productId=${prod.id}`, {withCredentials: true,});
@@ -223,20 +223,20 @@ export default function Productdetails() {
         </div>
       </div>
 
-      <hr className="border-t border-gray-900 w-[81%] mx-5 md:w-267 mx-auto mt-5 md:mt-7" />
+      <hr className="border-t border-gray-500 w-[81%] mx-5 md:w-267 mx-auto mt-5 md:mt-7" />
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 mt-10 md:mt-15 px-4 md:px-10 w-full md:w-267 mx-auto md:ml-47">
         <div className="flex-1 flex justify-center">
           <img
             src={productdetails.images && productdetails.images.length > 0 ? productdetails.images[0] : "/placeholder.png"}
             alt={productdetails.name}
-            className=" mx-5 h-[420px] w-[350px] sm:h-[450px] sm:w-[350px] md:h-[500px] md:w-[420px] object-cover rounded-lg shadow-lg"
+            className=" mx-5 h-[420px] w-[350px] sm:h-[450px] sm:w-[350px] md:h-[600px] md:w-[520px] object-cover rounded-md shadow-lg"
           />
         </div>
 
         <div className="flex-1 mt-6 md:mt-0 text-left mx-5 md:text-left">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
+          <div className="flex items-start">
+            <h1 className="text-2xl md:text-2xl font-semibold text-gray-900">
               {productdetails.name}
             </h1>
 
@@ -287,7 +287,7 @@ export default function Productdetails() {
       </button>
     );
   })}
-
+  
   {productdetails.sizes?.length > 1 && (
 <p
   onClick={() => setShowSizeChart(true)}
@@ -312,16 +312,18 @@ export default function Productdetails() {
     </button>
   )}
 </div>
+
+
     </div>
    </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-7  mt-15 md:mt-20 mb-40 place-items-center md:mx-62">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-7  mt-15 md:mt-20 mb-40 place-items-center md:mx-58">
         {productdetails.images?.slice(1, 5).map((img, index) => (
           <img
             key={index}
             src={img}
             alt={productdetails.name}
-            className="h-[400px] w-[320px] sm:h-[450px] sm:w-[350px] md:h-[580px] md:w-[500px] object-cover rounded-lg shadow-lg"
+            className="h-[400px] w-[320px] sm:h-[450px] sm:w-[350px] md:h-[580px] md:w-[520px] object-cover rounded-md shadow-lg"
           />
         ))}
       </div>

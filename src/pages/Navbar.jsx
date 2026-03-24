@@ -35,16 +35,16 @@ export default function Navbar() {
             <NavLink to="/">Marqelle. </NavLink>
           </div>
 
-          <div className="hidden md:flex gap-8 text-gray-900 font-medium md:ml-15">
-            <NavLink to="/home" className="hover:text-gray-800">Home</NavLink>
-            <NavLink to="/allproducts" className="hover:text-gray-800">Shop</NavLink>
-            <NavLink to="/explore" className="hover:text-gray-800">Explore</NavLink>
-            <NavLink to="/about" className="hover:text-gray-800">About</NavLink>
+          <div className="hidden md:flex gap-8 text-gray-800 font-medium md:ml-15">
+            <NavLink to="/home" className={({isActive}) => isActive ? "text-black" : "hover:text-black"}>Home</NavLink>
+            <NavLink to="/allproducts" className={({isActive}) => isActive ? "text-black" : "hover:text-black"}>Shop</NavLink>
+            <NavLink to="/explore" className={({isActive}) => isActive ? "text-black" : "hover:text-black"}>Explore</NavLink>
+            <NavLink to="/about" className={({isActive}) => isActive ? "text-black" : "hover:text-black"}>About</NavLink>
           </div>
-
+    
           <div className="flex items-center">
           <button
-         className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
+         className="px-3 py-2 rounded-[15px] text-black text-sm flex items-center gap-1"
          onClick={() => navigate(user ? "/profile" : "/login")}>
         {user ? (
        <span className="text-sm font-semibold">
@@ -58,17 +58,17 @@ export default function Navbar() {
      </button>
 
               <button
-              className="px-3 py-2 rounded-[15px] text-gray-900 text-sm"
+              className="px-3 py-2 rounded-[15px] text-black text-sm"
               onClick={() => navigate("/search")}>
               <Link><Search size={17} /></Link>
             </button>
 
-             <button className="px-3 text-gray-900 text-sm">
+             <button className="px-3 text-black text-sm">
   <Link to={"/wishlist"} className="flex items-center"><Bookmark size={17} />
   {wishlist.length > 0 &&<span className="text-xs">{wishlist.length}</span>}</Link>
 </button>
 
-                    <button className="px-3 text-gray-900 text-sm">
+                    <button className="px-3 text-black text-sm">
   <Link to="/cart" className="flex items-center">
     <ShoppingCart size={17} />
    {cart.length > 0 && <span className="text-xs">{cart.length}</span>}

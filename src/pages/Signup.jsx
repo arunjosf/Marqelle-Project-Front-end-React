@@ -13,9 +13,8 @@ const TOAST_STYLE = {
 
 export default function Signup() {
   const navigate = useNavigate();
-  const { setUser, setCart } = useContext(context);
+  const { setUser } = useContext(context);
 
-  // ── Step 1: Registration fields ──
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -23,14 +22,12 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  // ── Step 2: OTP verification ──
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [resending, setResending] = useState(false);
 
-  // ── Step 1: Register ─────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -67,7 +64,6 @@ export default function Signup() {
       return;
     }
 
-    // Show OTP screen immediately for fast navigation
     setShowOtp(true);
     setSubmitting(true);
     try {
@@ -83,7 +79,6 @@ export default function Signup() {
       if (res.data.success) {
         toast.success("OTP sent to your email!", TOAST_STYLE);
       } else {
-        // Go back to form if failed
         setShowOtp(false);
         setError(res.data.message || "Registration failed. Please try again.");
       }
@@ -95,7 +90,6 @@ export default function Signup() {
     }
   };
 
-  // ── Step 2: Verify OTP ───────────────────────────────────────────────────
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setOtpError("");
@@ -113,16 +107,9 @@ export default function Signup() {
       );
 
       if (res.data.success) {
-        // Auto-login — backend returns user + token
-        const userData = res.data.data;
-        const user = {
-          id: userData.id,
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          email: userData.email,
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
+        const profileRes = await axios.get("https://localhost:7177/api/userprofile/userprofile", { withCredentials: true });
+        const d = profileRes.data.data;
+        setUser({ id: d.id, firstName: d.firstName, lastName: d.lastName, email: d.email, roleId: d.roleId });
 
         toast.success("Email verified! Welcome to Marqelle.", TOAST_STYLE);
         navigate("/home");
@@ -134,7 +121,6 @@ export default function Signup() {
     }
   };
 
-  // ── Resend OTP ───────────────────────────────────────────────────────────
   const handleResendOtp = async () => {
     setResending(true);
     setOtpError("");
@@ -165,7 +151,6 @@ export default function Signup() {
             <p className="text-gray-500 text-1xl text-sm leading-loose">Experience the perfect fit</p>
           </div>
 
-          {/* ── Step 1: Signup Form ── */}
           {!showOtp && (
             <>
               <div className="flex justify-center mb-8 bg-gray-200 rounded-full p-1 w-75 h-10 mx-auto gap-1">

@@ -1,34 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { context } from "../App";
 import axios from "axios";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import AdminSidebar from "./sidebar";
 
 const BASE = "https://localhost:7177/api";
 
-const getAdminHeaders = () => {
-  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
-  return admin?.token ? { Authorization: `Bearer ${admin.token}` } : {};
-};
-
 export default function AdminDashboard() {
   const [dashboard, setDashboard] = useState(null);
-  const [admin, setAdmin] = useState(null);
   const navigate = useNavigate();
+  const { user } = useContext(context);
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${BASE}/admindashboard`, { withCredentials: true, headers: getAdminHeaders() });
+      const res = await axios.get(`${BASE}/admindashboard`, { withCredentials: true,});
       setDashboard(res.data.data);
     } catch (err) {
       console.error("Admin dashboard fetch error:", err);
     }
   };
 
-  useEffect(() => {
-    const storedAdmin = JSON.parse(localStorage.getItem("admin"));
-    if (storedAdmin) setAdmin(storedAdmin);
-  }, []);
 
   useEffect(() => {
     fetchData();
@@ -56,19 +49,18 @@ export default function AdminDashboard() {
             <p className="text-gray-500 text-sm">Let's see an overview</p>
           </div>
 
-          {admin && (
-            <div className="flex items-center gap-3 bg-white p-2 rounded-full shadow-sm pr-7">
-              <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-700 font-bold">
-                {admin.email?.charAt(0).toUpperCase()}
-              </div>
-              <div className="text-left">
-                <p className="text-xs text-gray-500">{admin.email}</p>
-              </div>
-            </div>
-          )}
+      {user && (
+      <div className="flex items-center gap-3 bg-white p-2 rounded-full shadow-sm pr-7">
+      <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-700 font-bold">
+      {user.email?.charAt(0).toUpperCase()}
+      </div>
+     <div className="text-left">
+       <p className="text-xs text-gray-500">{user.email}</p>
+        </div>
+         </div>
+        )}
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-2xl shadow-sm p-4">
             <h4 className="text-gray-500 text-sm">Total Orders</h4>
@@ -88,7 +80,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Sales by Category */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
           <h4 className="font-semibold text-gray-800 mb-4">Sales by Category</h4>
 
@@ -139,7 +130,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Top Selling Products */}
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex justify-between items-center mb-4">
             <h4 className="font-semibold text-gray-800">Top Selling Products</h4>

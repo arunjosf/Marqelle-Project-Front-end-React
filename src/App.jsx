@@ -35,10 +35,21 @@ export default function App(){
   const [cart, setCart] = useState([])
   const [orders, setOrders] = useState([]);
   const [wishlist, setWishlist] = useState([])
+  const [authLoading, setAuthLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-  const [user, setUser] = useState(() => {
-  const stored = localStorage.getItem("user");
-  return stored ? JSON.parse(stored) : null;});
+useEffect(() => {
+  if (!user) return;
+  const interval = setInterval(() => {
+    axios.post("https://localhost:7177/api/usersauth/refresh", {}, { withCredentials: true })
+      .catch(() => {
+        setUser(null);
+        window.location.href = "/login";
+      });
+  }, 14 * 60 * 1000); 
+
+  return () => clearInterval(interval);
+}, [user]);
 
   useEffect(() => {
   if (user) {
@@ -47,6 +58,13 @@ export default function App(){
       .catch(err => console.log(err));
   }
 }, [user]);
+
+useEffect(() => {
+  axios.get("https://localhost:7177/api/userprofile/userprofile", { withCredentials: true })
+    .then((res) => { const d = res.data.data; setUser({ id: d.id, firstName: d.firstName, lastName: d.lastName, email: d.email, roleId: d.roleId }); })
+    .catch(() => setUser(null))
+    .finally(() => setAuthLoading(false));
+}, []);
 
   useEffect(() => {
   const interceptor = axios.interceptors.response.use(
@@ -69,8 +87,6 @@ export default function App(){
           );
           return axios(originalRequest);
         } catch (err) {
-          localStorage.removeItem("user");
-          localStorage.removeItem("admin");
           setUser(null);
           window.location.href = "/login";
         }
@@ -82,6 +98,8 @@ export default function App(){
 
   return () => axios.interceptors.response.eject(interceptor);
 }, []);
+
+ if (authLoading) return null;
 
   return(
     <>

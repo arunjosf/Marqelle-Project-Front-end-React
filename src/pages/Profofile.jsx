@@ -1,5 +1,5 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import { context } from "../App";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -53,8 +53,6 @@ export default function Profile() {
                 try {
                   await axios.post(`${AUTH_URL}/logout`, {}, { withCredentials: true });
                 } catch {}
-                localStorage.removeItem("token");
-                localStorage.removeItem("user");
                 setUser(null);
                 toast.dismiss(t.id);
                 toast.success("Logged out successfully", TOAST_STYLE);
@@ -94,8 +92,7 @@ export default function Profile() {
         {},
         { withCredentials: true }
       );
-      const updatedUser = { ...user, firstName: firstName.trim(), lastName: lastName.trim() };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      const updatedUser = { ...user, firstName: firstName.trim(), lastName: lastName.trim() };  
       setUser(updatedUser);
       toast.success("Profile updated successfully!", TOAST_STYLE);
       setEditMode(false);
@@ -147,6 +144,24 @@ export default function Profile() {
 
   const inputClass = "w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-black transition-colors";
 
+  useEffect(() => {
+  axios.get(`${PROFILE_URL}/userprofile`, { withCredentials: true })
+    .then((res) => {
+      const data = res.data.data;
+      const updated = {
+        ...user,
+        firstName: data.firstName ?? data.FirstName,
+        lastName: data.lastName ?? data.LastName,
+        email: data.email ?? data.Email,
+      };
+      setUser(updated);
+      setFirstName(updated.firstName || "");
+      setLastName(updated.lastName || "");
+      setEmail(updated.email || "");
+    })
+    .catch(() => {});
+}, []);
+
   const handleSendEmailOtp = async () => {
     setEmailError("");
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -181,7 +196,6 @@ export default function Profile() {
         { withCredentials: true }
       );
       const updatedUser = { ...user, email: newEmail.trim() };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
       toast.success("Email updated successfully!", TOAST_STYLE);
       setShowEmailChange(false);
@@ -196,32 +210,26 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white  px-6 py-4 pl-52 mt-15">
-        <h1 id="logo-text" className="text-4xl font-semibold text-gray-800">Marqelle</h1>
+      <div className="bg-white  px-6 py-4 pl-52 mt-15 flex">
+        <Link to={"/home"}><h1 id="logo-text" className="text-4xl font-semibold text-gray-800">Marqelle</h1></Link>
+        <Link className="text-sm font-semibold ml-212 hover:text-gray-700" to={"/home"}>Home</Link> 
+        <Link className="text-sm font-semibold ml-7 hover:text-gray-700" to={"/allproducts"}>Shop</Link> 
       </div>
 
-      <div>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-8">
-            <button
-              onClick={() => navigate("/profile")}
-              className={`py-3 border-b-2 text-sm font-semibold transition ${
-                isAccountPage ? "border-black text-gray-900" : "border-transparent text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              Account Details
-            </button>
-            <button
-              onClick={() => navigate("/profile/orders")}
-              className={`py-3 border-b-2 text-sm font-semibold transition ${
-                isOrdersPage ? "border-black text-gray-900" : "border-transparent text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              My Orders
-            </button>
-          </div>
-        </div>
-      </div>
+      <div className="flex mx-0 bg-gray-200 rounded-full p-1 w-75 h-10 mx-auto gap-1 ml-51 mt-7">
+      <button
+      onClick={() => navigate("/profile")}
+       className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
+      ${isAccountPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}>
+      Account Details
+     </button>
+     <button
+    onClick={() => navigate("/profile/orders")}
+    className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
+      ${isOrdersPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}>
+    Your Orders
+  </button>
+</div>
 
       <div className="max-w-6xl mx-auto">
         {isAccountPage && (
@@ -229,9 +237,9 @@ export default function Profile() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
 
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <h2 className="text-2xl font-semibold text-gray-900">Account Details</h2>
-            </div>
+            </div> */}
 
         
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
@@ -250,8 +258,8 @@ export default function Profile() {
               {!editMode ? (
                 <div className="space-y-4">
                   <div>
-                    <p className="text-xs text-gray-400 mb-0.5">Full Name</p>
-                    <p className="text-sm font-semibold text-gray-900">{fullName}</p>
+                    <p className="text-xs text-gray-400 mb-1">Full Name</p>
+                    <p className="text-sm font-semibold text-gray-800">{fullName}</p>
                   </div>
                 </div>
               ) : (
@@ -349,7 +357,7 @@ export default function Profile() {
 
             </div>
 
-            <div className="flex flex-col gap-4 mt-14">
+            <div className="flex flex-col gap-4 ">
               <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-sm font-semibold text-gray-500 tracking-wide">Email Address</h3>
@@ -365,8 +373,8 @@ export default function Profile() {
 
                 {!showEmailChange ? (
                   <div>
-                    <p className="text-xs text-gray-400 mb-0.5">Current Email</p>
-                    <p className="text-sm font-semibold text-gray-900">{userEmail}</p>
+                    <p className="text-xs text-gray-400 mb-1">Current Email</p>
+                    <p className="text-sm font-semibold text-gray-800 tracking-wide">{userEmail}</p>
                   </div>
                 ) : emailOtpSent ? (
                   <div className="space-y-3">
