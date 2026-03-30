@@ -1,6 +1,6 @@
 
 import { useNavigate, Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { context } from "../App";
 import { Bookmark } from "lucide-react";
@@ -13,8 +13,10 @@ export default function Home() {
   const [filledHearts, setFilledHearts] = useState({});
   const [isFirstLoad, setIsFirstLoad] = useState(() => {
   return sessionStorage.getItem("hasVisitedHome") ? false : true;
-});
 
+});
+const nextSectionRef = useRef(null);
+const videoRef = useRef(null);
 const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
 const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
 
@@ -46,6 +48,25 @@ useEffect(() => {
       })
       .catch((err) => console.log(err));
   }, [user]);
+
+  
+  useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          videoRef.current.currentTime = 0;
+          videoRef.current.play();
+        }
+      });
+    },
+    { threshold: 0.5 } 
+  );
+
+  if (videoRef.current) observer.observe(videoRef.current);
+
+  return () => observer.disconnect();
+}, []);
 
   const toggleHeart = async (prod) => {
     if (!user) {
@@ -90,13 +111,16 @@ useEffect(() => {
 
   return (
     <>
-  <div className="w-full h-[500px] md:h-[880px] overflow-hidden  relative">
+  <div className="w-full h-[500px] md:h-[800px] overflow-hidden  relative">
   <video
-    src="public/7319402-uhd_4096_2160_25fps.mp4"
+   ref={videoRef}
+    src="public/MarqelleHomevideo.mp4"
     autoPlay
-    loop
     muted
     playsInline
+    onEnded={() => {
+    nextSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  }}
     className="w-full h-full object-cover"
   />
    <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
@@ -111,7 +135,7 @@ useEffect(() => {
   </div>
 </div>
 
-    <div className="w-full bg-gray-300 pt-25 text-center overflow-hidden ">
+    <div ref={nextSectionRef} className="w-full bg-gray-300 pt-25 text-center overflow-hidden ">
    <motion.div
   initial={isFirstLoad ? { opacity: 1, y: -250 } : { opacity: 1, y: 0 }}
   animate={{ opacity: 1, y: 0 }}

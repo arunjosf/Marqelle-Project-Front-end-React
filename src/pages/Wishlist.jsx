@@ -3,6 +3,7 @@ import { context } from "../App";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ShoppingCart } from "lucide-react";
 
 const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
 const CART_URL = "https://localhost:7177/api/usercart";
@@ -93,7 +94,7 @@ function SizePopup({ product, onClose, onAdded }) {
 }
 
 export default function Wishlist() {
-  const { user, setCart, wishlist, setWishlist } = useContext(context);
+  const { user, setCart, wishlist, setWishlist,cart } = useContext(context);
   const [popupProduct, setPopupProduct] = useState(null); 
 
   useEffect(() => {
@@ -149,16 +150,33 @@ export default function Wishlist() {
         />
       )}
 
-      <h2 className="text-4xl md:text-5xl font-semibold text-black text-left md:ml-62 mt-8 ml-9">
+      <div className="flex justify-between items-center">
+      <Link to={"/home"}> <h2 className="text-4xl md:text-5xl font-semibold text-black text-left md:ml-62 mt-8 ml-9">
         Marqelle.
-      </h2>
-      <hr className="border-t border-gray-900 w-[81%] mx-5 md:w-[67%] mx-auto mt-5 md:mt-7" />
+      </h2></Link>
+      <div className="flex items-center gap-5 pr-60 mt-8">
+          <Link className="text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
 
+          <button className="px-3 text-gray-900 text-sm mt-1">
+            <Link to="/cart" className="flex items-center gap-1">
+              <ShoppingCart size={17} />
+              <span className="text-xs">{cart.length}</span>
+            </Link>
+          </button>
+      </div>
+      </div>
+      <hr className="border-t border-gray-900 w-[81%] mx-5 md:w-[67%] mx-auto mt-5 md:mt-7" />
+    
       <div className="max-w-7xl mx-auto mt-10 mb-16">
-        <h1 className="text-2xl font-semibold text-left mb-10 ml-32">Your Wishlist</h1>
+        {wishlist.length > 0 ? (
+        <h1 className="text-2xl font-semibold text-left mb-8 ml-32">Your Wishlist</h1>
+        ): (<div></div>)}
 
         {wishlist.length === 0 ? (
-          <p className="text-center text-gray-600 mt-20">Your wishlist is empty.</p>
+          <div className="items-center">
+          <p className="text-center text-gray-900 mt-65 text-lg tracking-wide font-light">Your wishlist is empty.</p>
+          <p className="text-xs  mt-3 text-gray-700 text-center">The items you add will be shown here</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-6 mx-25">
             {wishlist.map((prod, index) => (

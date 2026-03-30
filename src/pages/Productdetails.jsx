@@ -137,7 +137,7 @@ export default function Productdetails() {
         setCart(cartRes.data.data || []);
       }
       } catch (err) {
-  const msg = err.response?.data?.message || "Something went wrong while adding to cart!";
+  const msg = err.response?.data?.Message || "Something went wrong while adding to cart!";
   
   if (err.response?.status === 400 && msg === "Item already in cart") {
     toast("Item already in cart!", {
@@ -180,7 +180,7 @@ export default function Productdetails() {
           Marqelle.
         </h2></Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mt-4  ">
           <Link className= "text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
           <button
             className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"

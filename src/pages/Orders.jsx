@@ -91,7 +91,7 @@ export default function Orders() {
   if (loading) return <p className="text-center text-gray-600 mt-10">Loading your orders...</p>;
   if (!orders.length) return <p className="text-center text-gray-600 mt-10">You haven't placed any orders yet.</p>;
 
-  const statusSteps = ["Pending", "Shipped", "Out for Delivery", "Delivered"];
+  const statusSteps = ["Pending", "Shipped", "OutForDelivery", "Delivered"];
 
   return (
     <div className="space-y-6 p-6">
@@ -170,7 +170,10 @@ export default function Orders() {
                             </svg>
                           )}
                         </div>
-                        <span className={`text-xs mt-2 text-center ${isCompleted || isCurrent ? "text-gray-800 font-medium" : "text-gray-400"}`}>{step}</span>
+                        <span className={`text-xs mt-2 text-center ${isCompleted || isCurrent ? "text-gray-800 font-medium" : "text-gray-400"}`}>
+                        {step === "OutForDelivery" ? "Out for Delivery" : step}
+                        </span>
+                        
                       </div>
                     );
                   })}

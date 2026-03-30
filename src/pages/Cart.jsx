@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { context } from "../App";
+import { ShoppingBag } from "lucide-react";
 
 const CART_URL = "https://localhost:7177/api/usercart";
 
@@ -85,7 +86,7 @@ export default function Cart() {
     try {
       await axios.delete(`${CART_URL}/remove/${cartId}`, { withCredentials: true });
       setCart((prev) => prev.filter((item) => item.cartId !== cartId));
-      toast.success("Removed from cart", {
+      toast.success("Removed item from cart", {
         style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
         iconTheme: { primary: "#111", secondary: "#fff" },
       });
@@ -95,6 +96,23 @@ export default function Cart() {
         style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
       });
     }
+  }
+ 
+  async function clearAllCart()
+  {
+   try {
+    await axios.delete(`${CART_URL}/clearAll/`, {withCredentials: true});
+    setCart([]);
+    toast.success("Removed all cart items", {
+        style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
+        iconTheme: { primary: "#111", secondary: "#fff" },
+    });
+   }catch (err)
+   {
+    toast.error("Failed to remove all item", {
+        style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
+      });
+   }
   }
 
   async function handleQuantityChange(cartId, newQty) {
@@ -198,34 +216,48 @@ export default function Cart() {
       )}
 
       <div className="min-h-screen bg-gray-100 py-10 px-6 pt-15">
-        <h1 className="text-3xl font-semibold text-center mb-8">Your Cart</h1>
 
         {cart.length === 0 ? (
-          <div className="flex flex-col items-center">
-            <p className="text-gray-700 text-lg">Your cart is empty.</p>
+          <div className="flex flex-col items-center mt-65">
+            <ShoppingBag className="text-gray-700 font-light border-none"/>
+            <p className="text-black font-light text-lg tracking-wide mt-5">Your shopping basket is empty</p>
+            <p className="text-xs  mt-3 text-gray-700">The items you add will be shown here</p>
+            <div className="flex justify-between gap-4 mt-5">
+            <Link to={"/allproducts"} className="py-0.5 text-sm font-medium hover:text-gray-700">Shop</Link>
+            <p className="text-gray-800 text-xs font-light mt-1 ">|</p>
+            <Link to={"/home"}className="py-0.5  text-sm font-medium hover:text-gray-700" >Home</Link>
+            </div>
           </div>
         ) : (
-          <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+          <div className="">
+          <div className="max-w-5xl mx-auto bg-white border-1 border-gray-200 shadow-lg rounded-2xl p-6">
+            <div className="flex justify-between">
+             <h1 className="text-2xl font-semibold text-left mb-6">Cart <span className="pl-1 text-xs text-gray-600">({cart.length} products)</span></h1>
+            <Link className="text-xs mt-2 font-medium text-gray-800 hover:text-gray-500" onClick={clearAllCart}>Clear all</Link>
+            </div>
             <div className="flex flex-col gap-6">
               {cart.map((item) => (
-                <div
+                <div  
                   key={item.cartId}
-                  className="flex flex-col md:flex-row items-center justify-between border-b pb-4"
+                  className="flex flex-col md:flex-row items-center justify-between border-1 border-gray-200 p-3 shadow-sm shadow-gray-200 rounded-2xl pr-7"
                 >
                   <Link to={`/productdetails/${item.productId}`}>
                     <div className="flex items-center gap-4">
                       <img
                         src={item.productImage}
                         alt={item.productName}
-                        className="w-32 h-32 object-cover rounded-lg"
+                        className="w-21 h-20 object-cover rounded-lg"
                       />
                       <div>
-                        <h2 className="text-lg font-medium text-gray-900">{item.productName}</h2>
-                        <p className="text-gray-500 text-sm">Size: {item.size}</p>
-                        <p className="text-gray-800 font-semibold">₹{item.productPrice}</p>
+                        <h2 className="text-base font-medium text-gray-900">{item.productName}</h2>
+                        <p className="text-gray-600 font-medium text-xs tracking-wide ">Size: {item.size}</p>
                         {item.stockWarning && (
                           <p className="text-orange-500 text-xs">{item.stockWarning}</p>
                         )}
+                        {item.availableStock > 0  && (item.quantity || 1) >= item.availableStock && (
+                          <p className="text-orange-500 text-xs">Maximum stock reached</p>
+                        )}
+
                         {item.isOutOfStock && (
                           <p className="text-red-500 text-xs font-medium">Out of stock</p>
                         )}
@@ -234,7 +266,9 @@ export default function Cart() {
                   </Link>
 
                   <div className="flex items-center gap-3 mt-4 md:mt-0">
-                    <div className="flex items-center border rounded-lg px-3 py-1">
+                    <p className="text-gray-800 font-semibold pr-20">₹{item.productPrice}</p>
+
+                    <div className="flex items-center bg-gray-100 rounded-2xl px-2">
                       <button
                         onClick={() => handleQuantityChange(item.cartId, (item.quantity || 1) - 1)}
                         className="px-2 text-lg text-gray-700 hover:text-black"
@@ -252,7 +286,7 @@ export default function Cart() {
                     </div>
                     <button
                       onClick={() => handleRemove(item.cartId)}
-                      className="text-gray-700 hover:underline"
+                      className=" text-xs tracking-wide text-medium text-gray-700 hover:underline pl-2"
                     >
                       Remove
                     </button>
@@ -271,7 +305,12 @@ export default function Cart() {
               </button>
             </div>
           </div>
+          </div>
         )}
+        {/* <div className="mx-auto h-40 w-256 mt-5 rounded-2xl " style={{backgroundImage: "url('public/Rectangle 10.png')", backgroundSize: "cover",  backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"}}>
+        
+        </div> */}
       </div>
     </>
   );

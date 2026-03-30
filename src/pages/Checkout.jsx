@@ -826,6 +826,7 @@ export default function Checkout() {
                           onEdit={handleEditAddress}
                         />
                       )}
+                      {!showAddForm && !editingAddress && (
                       <button
                         onClick={() => { setShowAllAddresses(true); setShowAddForm(true); }}
                         className="flex items-center gap-1 text-sm text-gray-400 hover:text-black transition-colors mt-1"
@@ -833,12 +834,13 @@ export default function Checkout() {
                         <span className="text-base leading-none">+</span>
                         Add New Address
                       </button>
+                       )}
                     </div>
                   )}
 
                   {showAllAddresses && (
                     <div className="flex flex-col gap-3">
-                      {addresses.map((addr) => (
+                      {!showAddForm && !editingAddress && addresses.map((addr) => (
                         <AddressCard
                           key={addr.addressId}
                           address={addr}
@@ -866,7 +868,7 @@ export default function Checkout() {
                       {showAddForm && (
                         <AddAddressForm
                           onSaved={handleAddressSavedOrUpdated}
-                          onCancel={() => { setShowAddForm(false); setEditingAddress(null); }}
+                          onCancel={() => { setEditingAddress(null); setShowAddForm(false); setShowAllAddresses(false) }}
                           showCancel={true}
                           editAddress={editingAddress}
                         />

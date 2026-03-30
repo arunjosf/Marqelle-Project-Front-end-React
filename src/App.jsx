@@ -100,6 +100,10 @@ useEffect(() => {
 }, []);
 
  if (authLoading) return null;
+ if (user?.roleId == 2 && !window.location.pathname.startsWith("/admin")) {
+  window.location.href = "/admin/dashboard";
+  return null;
+}
 
   return(
     <>

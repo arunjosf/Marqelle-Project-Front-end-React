@@ -58,7 +58,7 @@ export default function Login() {
         setError(res.data.message || "Invalid email or password");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong. Try again later.");
+       setError(err.response?.data?.message || err.response?.data?.Message || "Something went wrong. Try again later.");
     }
   };
 
