@@ -150,11 +150,11 @@ export default function Wishlist() {
         />
       )}
 
-      <div className="flex justify-between items-center">
-      <Link to={"/home"}> <h2 className="text-4xl md:text-5xl font-semibold text-black text-left md:ml-62 mt-8 ml-9">
+      <div className="flex justify-between items-center px-4 md:px-0">
+      <Link to={"/home"}> <h2 className="text-3xl md:text-5xl font-semibold text-black text-left md:ml-62 mt-6 md:mt-8">
         Marqelle.
       </h2></Link>
-      <div className="flex items-center gap-5 pr-60 mt-8">
+      <div className="flex items-center gap-5 md:pr-60 mt-6 md:mt-8">
           <Link className="text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
 
           <button className="px-3 text-gray-900 text-sm mt-1">
@@ -167,41 +167,41 @@ export default function Wishlist() {
       </div>
       <hr className="border-t border-gray-900 w-[81%] mx-5 md:w-[67%] mx-auto mt-5 md:mt-7" />
     
-      <div className="max-w-7xl mx-auto mt-10 mb-16">
+      <div className="max-w-7xl mx-auto mt-6 md:mt-10 mb-16 px-4 md:px-0">
         {wishlist.length > 0 ? (
-        <h1 className="text-2xl font-semibold text-left mb-8 ml-32">Your Wishlist</h1>
+        <h1 className="text-[16px] md:text-2xl font-semibold text-center md:text-left mb-6 md:mb-8 md:ml-32">Your Wishlist</h1>
         ): (<div></div>)}
 
         {wishlist.length === 0 ? (
           <div className="items-center">
-          <p className="text-center text-gray-900 mt-65 text-lg tracking-wide font-light">Your wishlist is empty.</p>
+          <p className="text-center text-gray-900 mt-32 md:mt-65 text-lg tracking-wide font-light">Your wishlist is empty.</p>
           <p className="text-xs  mt-3 text-gray-700 text-center">The items you add will be shown here</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-6 mx-25">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-5 px-0 md:px-6 md:mx-25">
             {wishlist.map((prod, index) => (
-              <div key={prod.productId || index} className="text-left rounded-2xl">
+              <div key={prod.productId || index} className="text-left rounded-2xl w-[230px] mx-auto">
                 <Link to={`/productdetails/${prod.productId}`}>
                   <img
                     src={Array.isArray(prod.productImage) ? prod.productImage[0] : prod.productImage}
                     alt={prod.productName}
-                    className="h-[300px] w-[230px] object-cover rounded-lg mx-auto"
+                    className="h-[300px] w-[230px] object-cover rounded-lg"
                   />
                 </Link>
 
-                <h1 className="mt-3 font-serif text-gray-900 ml-2">{prod.productName}</h1>
-                <h1 className="mt-1 ml-2 text-gray-800 text-sm font-medium">₹{prod.productPrice}</h1>
+                <h1 className="mt-3 font-serif text-gray-900 ml-1">{prod.productName}</h1>
+                <h1 className="mt-1 ml-1 text-gray-800 text-sm font-medium">₹{prod.productPrice}</h1>
 
-                <div className="flex justify-center gap-3 mt-4">
+                <div className="flex justify-between gap-1 mt-4">
                   <button
                     onClick={() => handleAddToCartClick(prod)}
-                    className="bg-gray-900 text-white text-sm px-3 py-2 rounded hover:bg-gray-800 w-28"
+                    className="bg-gray-900 text-white text-sm px-3 py-2 rounded hover:bg-gray-800 w-[110px]"
                   >
                     Add to Cart
                   </button>
                   <button
                     onClick={() => handleRemoveWishlist(prod.productId)}
-                    className="text-gray-700 text-sm font-medium hover:underline w-28 border rounded px-3"
+                    className="text-gray-700 text-sm font-medium hover:underline w-[110px] border border-gray-300 rounded px-3"
                   >
                     Remove
                   </button>

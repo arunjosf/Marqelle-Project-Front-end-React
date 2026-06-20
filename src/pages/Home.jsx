@@ -51,21 +51,41 @@ useEffect(() => {
 
   
   useEffect(() => {
+  const video = videoRef.current;
+  if (!video) return;
+
+  let userScrolledAway = false;
+
+  const handleEnded = () => {
+    userScrolledAway = true;
+    const next = nextSectionRef.current;
+    if (next) {
+      const top = next.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+
+  video.addEventListener("ended", handleEnded);
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          videoRef.current.currentTime = 0;
-          videoRef.current.play();
+        if (entry.isIntersecting && userScrolledAway) {
+          userScrolledAway = false;
+          video.currentTime = 0;
+          video.play();
         }
       });
     },
-    { threshold: 0.5 } 
+    { threshold: 0.5 }
   );
 
-  if (videoRef.current) observer.observe(videoRef.current);
+  observer.observe(video);
 
-  return () => observer.disconnect();
+  return () => {
+    video.removeEventListener("ended", handleEnded);
+    observer.unobserve(video);
+  };
 }, []);
 
   const toggleHeart = async (prod) => {
@@ -118,9 +138,6 @@ useEffect(() => {
     autoPlay
     muted
     playsInline
-    onEnded={() => {
-    nextSectionRef.current?.scrollIntoView({ behavior: "smooth" });
-  }}
     className="w-full h-full object-cover"
   />
    <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
@@ -129,24 +146,24 @@ useEffect(() => {
                    leading-tight tracking-wide">
       Marqelle.
     </h1>
-    <p className="typing-text mt-7 text-gray-300 text-xs md:text-base tracking-wide">
+    <p className="typing-text mt-4 sm:mt-7 text-gray-300 text-[10px] sm:text-xs md:text-base tracking-wide max-w-[90vw] sm:max-w-none">
       <i>Designed with purpose, crafted with precision, and worn with confidence</i>
     </p>
   </div>
 </div>
 
     <div ref={nextSectionRef} className="w-full bg-gray-300 pt-25 text-center overflow-hidden ">
+
    <motion.div
   initial={isFirstLoad ? { opacity: 1, y: -250 } : { opacity: 1, y: 0 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.9, ease: "easeOut" }}>
 
-
-        <h1 className="text-4xl md:text-6xl font-serif font-light text-gray-900 leading-snug">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-light text-gray-900 leading-snug px-4">
           Bespoke Suits <br /> for the Modern Era!
         </h1>
 
-        <div className="flex justify-center gap-3 mx-auto mt-5">
+        <div className="flex justify-center gap-3 mx-auto mt-5 pb-10">
           <button
             className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-[7px] rounded-[20px] w-28 text-sm"
             onClick={() => navigate("/allproducts")}
@@ -167,39 +184,37 @@ useEffect(() => {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.9, ease: "easeOut", delay: isFirstLoad ? 0.4 : 0 }}
 
-
-
-        className="w-100 h-120 bg-cover mx-auto mt-4"
+        className="w-full md:w-100 h-[450px] sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
         style={{ backgroundImage: "url('src/assets/home2.png')" }}
       ></motion.div>
     </div>
    
 
-<div className="bg-gray-200 mt-2 py-10 md:py-20">
+<div className="bg-gray-200 py-10 md:py-20 -mt-1 relative z-10">
   <div className="px-4">
     <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-light text-black leading-snug text-center">
       Luxury Redefined
     </h2>
     <p className="text-center text-sm sm:text-base leading-snug text-gray-800 mt-2">
       Rediscover the power of simplicity with timeless designs tailored
-      for <br className="hidden sm:block" /> today’s modern man. Subtle, sleek, and undeniably classy.
+      for <br className="hidden sm:block" /> today's modern man. Subtle, sleek, and undeniably classy.
     </p>
   </div>
 
   <div className="w-full flex justify-center mt-10 md:mt-15 px-4">
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
       {products.map((prod) => (
         <div key={prod.id} className="text-center">
           <Link to={`/productdetails/${prod.id}`}>
             <img
               src={prod.images && prod.images.length > 0 ? prod.images[0] : "/placeholder.png"}
               alt={prod.name}
-              className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto"
+              className="h-[200px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto"
             />
           </Link>
 
           <div className="flex items-center justify-center gap-2 mt-2">
-            <h1 className="font-light font-serif text-gray-900 text-sm sm:text-base">
+            <h1 className="font-light font-serif text-gray-900 text-xs sm:text-sm md:text-base lg:text-base">
               {prod.name}
             </h1>
 
@@ -216,7 +231,7 @@ useEffect(() => {
             </button>
           </div>
 
-          <h1 className="mt-1 text-gray-900 text-sm sm:text-base">
+          <h1 className="mt-1 text-gray-900 text-xs sm:text-sm md:text-base lg:text-base">
             ₹{prod.price}
           </h1>
         </div>
@@ -225,8 +240,8 @@ useEffect(() => {
   </div>
 </div>
 
-  <div className="flex flex-col md:flex-row mt-2 w-full gap-2 mb-2">
-  <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden">
+  <div className="flex flex-col sm:mt-10 md:flex-row w-full gap-0 md:gap-2 mb-0 md:mb-2 -mt-1 relative z-10">
+  <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden min-h-[100px] sm:min-h-[320px]">
   <video
       src="videofinalsh.mp4"
       autoPlay
@@ -239,13 +254,13 @@ useEffect(() => {
 
   </div>
   <div
-    className="w-full md:w-1/2 h-[200px] sm:h-[250px] md:h-130 bg-cover bg-center"
+    className="w-full md:w-1/2 h-[240px] sm:h-[320px] md:h-130 bg-cover bg-center"
     style={{ backgroundImage: "url('public/herovop.png')" }}></div>
 </div>
 
 {/* <div className="w-full h-140"  style={{ backgroundImage: "url('src/assets/m3.png')" }}></div> */}
 
-<div className="bg-gray-200 mt-2 py-10 md:py-20">
+<div className="bg-gray-200 mt-0 md:mt-2 py-10 md:py-20">
   <div className="px-4">
     <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-light text-black leading-snug text-center">
       Signature Identity
@@ -285,25 +300,25 @@ useEffect(() => {
     </div>
   </div> */}
 
-  <div className="w-full flex justify-center mt-10 md:mt-15 px-4">
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <div className="w-full flex justify-center mt-10 md:mt-15 px-2 sm:px-4">
+  <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
 
     <img
       src="public/Group 42.png"
       alt="img1"
-      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+      className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />
 
     <img
       src="public/Rectangle 69png.png"
       alt="img2"
-      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+      className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />
 
     <img
       src="public/Rectangle 8.png"
       alt="img3"
-      className="h-[280px] sm:h-[320px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
+      className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />
 
   </div>

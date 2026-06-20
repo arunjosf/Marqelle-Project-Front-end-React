@@ -210,26 +210,30 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white  px-6 py-4 pl-52 mt-15 flex">
+            <div className="bg-white px-6 py-4 md:pl-52 mt-6 md:mt-15 flex flex-col md:flex-row items-center gap-4 md:gap-0">
         <Link to={"/home"}><h1 id="logo-text" className="text-4xl font-semibold text-gray-800">Marqelle</h1></Link>
-        <Link className="text-sm font-semibold ml-212 hover:text-gray-700" to={"/home"}>Home</Link> 
-        <Link className="text-sm font-semibold ml-7 hover:text-gray-700" to={"/allproducts"}>Shop</Link> 
+        <div className="flex gap-6 md:contents">
+          <Link className="text-sm font-semibold md:ml-212 hover:text-gray-700" to={"/home"}>Home</Link> 
+          <Link className="text-sm font-semibold md:ml-7 hover:text-gray-700" to={"/allproducts"}>Shop</Link> 
+        </div>
       </div>
 
-      <div className="flex mx-0 bg-gray-200 rounded-full p-1 w-75 h-10 mx-auto gap-1 ml-51 mt-7">
-      <button
-      onClick={() => navigate("/profile")}
-       className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
-      ${isAccountPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}>
-      Account Details
-     </button>
-     <button
-    onClick={() => navigate("/profile/orders")}
-    className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
-      ${isOrdersPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}>
-    Your Orders
-  </button>
-</div>
+      <div className="flex mx-auto md:mx-0 bg-gray-200 rounded-full p-1 w-[90%] sm:w-[350px] md:w-75 h-10 md:mx-auto gap-1 md:ml-51 mt-7">
+        <button
+          onClick={() => navigate("/profile")}
+          className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
+          ${isAccountPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}
+        >
+          Account Details
+        </button>
+        <button
+          onClick={() => navigate("/profile/orders")}
+          className={`w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300
+          ${isOrdersPage ? "bg-black text-white shadow-md" : "text-black hover:bg-gray-300"}`}
+        >
+          Your Orders
+        </button>
+      </div>
 
       <div className="max-w-6xl mx-auto">
         {isAccountPage && (

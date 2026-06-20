@@ -76,13 +76,13 @@ export default function Search() {
 
   return (
     <>
-      <div className="fixed left-10 mt-14 -translate-y-1/2 flex flex-col gap-5 text-sm tracking-widest text-gray-700 z-20">
+        <div className="absolute top-4 left-0 w-full flex flex-row justify-center gap-8 mt-20 md:fixed md:top-auto md:left-10 md:w-auto md:flex-col md:gap-5 md:mt-14 md:-translate-y-1/2 text-sm tracking-widest text-gray-700 z-20">
         <Link to="/home" className="hover:text-black transition">Home</Link>
         <Link to="/cart" className="hover:text-black transition">Cart</Link>
         <Link to="/profile" className="hover:text-black transition">Profile</Link>
       </div>
 
-      <div className="max-w-2xl mx-auto mt-40 mb-12 px-4 flex flex-col items-center gap-6">
+          <div className="max-w-2xl mx-auto mt-40 sm:mt-20 mb-12 px-4 flex flex-col items-center gap-6">
         <div className="w-full text-center">
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">What are you looking for?</p>
           <input
@@ -91,7 +91,7 @@ export default function Search() {
             placeholder=""
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-120 border-b border-gray-300 bg-transparent text-center text-sm text-gray-700 tracking-wide py-2 focus:outline-none transition-colors placeholder-transparent"
+            className="w-full sm:w-120 border-b border-gray-300 bg-transparent text-center text-sm text-gray-700 tracking-wide py-2 focus:outline-none transition-colors placeholder-transparent"
           />
         </div>
 

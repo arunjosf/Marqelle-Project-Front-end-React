@@ -266,13 +266,13 @@ export default function AdminProducts() {
   const addStockProduct = products.find((p) => p.id === addStockProductId);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <AdminSidebar />
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main className="flex-1 p-4 md:p-6 overflow-y-auto">
 
   
-        <div className="flex justify-between items-center mb-6 mt-4">
-          <h2 className="text-2xl font-semibold text-gray-900">Manage Products</h2>
+        <div className="flex justify-between items-center mb-4 md:mb-6 mt-2 md:mt-4">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-900">Manage Products</h2>
           <button onClick={() => { if (editingId === "new") { setEditingId(null); setForm(emptyForm); } else { setEditingId("new"); setForm(emptyForm); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
             className="px-4 py-2 bg-black text-white rounded-xl hover:bg-gray-800 transition text-sm font-medium">
             {editingId === "new" ? "✕ Cancel" : "+ Add Product"}
@@ -366,7 +366,7 @@ export default function AdminProducts() {
 
         {addStockProductId && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-4 md:p-6 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   {(addStockProduct?.images ?? addStockProduct?.Images)?.[0] && (
@@ -442,7 +442,7 @@ export default function AdminProducts() {
           </select>
 
 
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 md:gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
             {[
               { key: "in", label: "In Stock", count: stockCounts.in, dot: "bg-green-500", active: "bg-green-100 text-green-700 border-green-300" },
               { key: "low", label: "Low Stock", count: stockCounts.low, dot: "bg-orange-400", active: "bg-orange-100 text-orange-700 border-orange-300" },
@@ -450,29 +450,29 @@ export default function AdminProducts() {
             ].map(({ key, label, count, dot, active }) => (
               <button key={key}
                 onClick={() => setFilter((f) => ({ ...f, stock: f.stock === key ? "" : key }))}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium border transition
+                className={`flex items-center justify-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-xl text-[10px] md:text-xs font-medium border transition flex-shrink-0
                   ${filter.stock === key ? active : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
-                {label}
-                <span className={`font-bold text-xs px-1.5 py-0.5 rounded-full ${filter.stock === key ? "bg-white/60" : "bg-gray-100"}`}>{count}</span>
+                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dot}`} />
+                <span className="whitespace-nowrap">{label}</span>
+                <span className={`font-bold text-[9px] md:text-xs px-1 md:px-1.5 py-0.5 rounded-full ${filter.stock === key ? "bg-white/60" : "bg-gray-100"}`}>{count}</span>
               </button>
             ))}
+            <button onClick={() => setFilter({ category: "", color: "", stock: "" })}
+              className="px-3 md:px-3 py-1 md:py-1.5 border border-gray-300 rounded-xl text-[10px] md:text-sm hover:bg-gray-50 transition flex-shrink-0">
+              Reset
+            </button>
           </div>
 
-          <button onClick={() => setFilter({ category: "", color: "", stock: "" })}
-            className="px-3 py-1.5 border border-gray-300 rounded-xl text-sm hover:bg-gray-50 transition">
-            Reset
-          </button>
-
-          <div className="ml-auto flex flex-col items-center" style={{ width: 260 }}>
+          <div className="w-full md:ml-auto md:w-[260px] flex flex-col items-center mt-2 md:mt-0">
             <input type="text" placeholder="Search products" value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full border-b border-gray-400 bg-transparent text-sm text-gray-900 tracking-wide py-1 focus:outline-none focus:border-black transition-colors" />
           </div>
         </div>
 
-        <div className="space-y-2">
-          <div className="bg-gray-200 rounded-2xl p-4 flex items-center text-xs font-semibold text-gray-600 gap-3 tracking-wide">
+        <div className="overflow-x-auto pb-4">
+        <div className="space-y-4 md:space-y-2 md:min-w-[900px]">
+          <div className="hidden md:flex bg-gray-200 rounded-2xl p-4 items-center text-xs font-semibold text-gray-600 gap-3 tracking-wide">
             <span className="w-6">#</span>
             <span className="w-16">Image</span>
             <span className="flex-1">Name</span>
@@ -492,53 +492,109 @@ export default function AdminProducts() {
 
             return (
               <div key={p.id} className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div className="p-4 flex items-center gap-3 hover:bg-gray-50 transition cursor-pointer"
+                <div className="p-4 hover:bg-gray-50 transition cursor-pointer relative"
                   onClick={() => setExpandedId(isExpanded ? null : p.id)}>
-                  <span className="w-6 text-sm text-gray-500">{p.id}</span>
-                  {firstImage ? <img src={firstImage} alt={p.name} className="h-12 w-16 object-cover rounded-xl flex-shrink-0" />
-                    : <div className="h-12 w-16 bg-gray-100 rounded-xl flex items-center justify-center text-xs text-gray-400 flex-shrink-0">No img</div>}
-                  <span className="flex-1 text-sm text-gray-800 font-medium truncate">{p.name}</span>
-                  <span className="w-28 text-sm text-gray-500 truncate">{p.categoryName ?? p.category}</span>
-                  <span className="w-20 text-sm text-gray-700 font-medium">₹{p.price}</span>
+                  
+                  {/* MOBILE PORTRAIT VIEW */}
+                  <div className="md:hidden flex flex-col gap-3">
+                    <div className="flex justify-between items-start">
+                      <div className="flex gap-3">
+                        {firstImage ? <img src={firstImage} alt={p.name} className="h-20 w-20 object-cover rounded-xl flex-shrink-0" />
+                          : <div className="h-20 w-20 bg-gray-100 rounded-xl flex items-center justify-center text-xs text-gray-400 flex-shrink-0">No img</div>}
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-gray-500 mb-1">ID: {p.id}</span>
+                          <span className="text-base text-gray-800 font-semibold leading-tight">{p.name}</span>
+                          <span className="text-xs text-gray-500 mt-1">{p.categoryName ?? p.category}</span>
+                          <span className="text-sm text-gray-900 font-bold mt-1">₹{p.price}</span>
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="w-52 flex flex-wrap gap-1">
-                    {sizeStocks.length === 0 ? <span className="text-xs text-gray-400">No stock</span> :
-                      sizeStocks.map((s) => {
-                        const sz = s.size ?? s.Size;
-                        const st = s.stock ?? s.Stock ?? 0;
-                        return (
-                          <span key={sz} className={`text-xs px-1.5 py-0.5 rounded-md font-medium
-                            ${st === 0 ? "bg-red-50 text-red-400" : st <= LOW_STOCK_THRESHOLD ? "bg-orange-50 text-orange-500" : "bg-gray-100 text-gray-700"}`}>
-                            {sz}: {st}
-                          </span>
-                        );
-                      })}
+                    <div className="flex flex-wrap gap-1.5 items-center mt-2 bg-gray-50 p-2 rounded-lg">
+                      <StockBadge sizeStocks={sizeStocks} />
+                      <div className="w-px h-4 bg-gray-300 mx-0.5"></div>
+                      <span className="text-xs font-semibold text-gray-600 ml-1">Stock:</span>
+                      {sizeStocks.length === 0 ? <span className="text-xs text-gray-400">No stock</span> :
+                        sizeStocks.map((s) => {
+                          const sz = s.size ?? s.Size;
+                          const st = s.stock ?? s.Stock ?? 0;
+                          return (
+                            <span key={sz} className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium
+                              ${st === 0 ? "bg-red-50 text-red-400" : st <= LOW_STOCK_THRESHOLD ? "bg-orange-50 text-orange-500" : "bg-white border border-gray-200 text-gray-700"}`}>
+                              {sz}: {st}
+                            </span>
+                          );
+                        })}
+                    </div>
+
+                    <div className="flex gap-2 items-center justify-between border-t border-gray-100 pt-3 mt-1" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => handleEdit(p)} title="Edit"
+                        className="flex-1 flex justify-center items-center gap-1.5 p-2 rounded-lg bg-gray-100 hover:bg-black hover:text-white text-gray-600 text-xs font-medium transition-colors">
+                        <Pencil size={12} /> Edit
+                      </button>
+                      <button onClick={() => {
+                        setAddStockProductId(p.id);
+                        const ss = getSizeStocks(p);
+                        setAddStockForm({ sizes: ss.map((s) => ({ size: s.size ?? s.Size, stock: 0 })) });
+                      }} title="Add Stock"
+                        className="flex-1 flex justify-center items-center gap-1.5 p-2 rounded-lg bg-gray-100 hover:bg-gray-800 hover:text-white text-gray-600 text-xs font-medium transition-colors">
+                        <PackagePlus size={12} /> Stock
+                      </button>
+                      <button onClick={() => handleDelete(p.id)} title="Delete"
+                        className="flex-1 flex justify-center items-center gap-1.5 p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-medium transition-colors">
+                        <Trash2 size={12} /> Del
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="w-24"><StockBadge sizeStocks={sizeStocks} /></div>
+                  {/* DESKTOP ROW VIEW */}
+                  <div className="hidden md:flex items-center gap-3">
+                    <span className="w-6 text-sm text-gray-500">{p.id}</span>
+                    {firstImage ? <img src={firstImage} alt={p.name} className="h-12 w-16 object-cover rounded-xl flex-shrink-0" />
+                      : <div className="h-12 w-16 bg-gray-100 rounded-xl flex items-center justify-center text-xs text-gray-400 flex-shrink-0">No img</div>}
+                    <span className="flex-1 text-sm text-gray-800 font-medium truncate">{p.name}</span>
+                    <span className="w-28 text-sm text-gray-500 truncate">{p.categoryName ?? p.category}</span>
+                    <span className="w-20 text-sm text-gray-700 font-medium">₹{p.price}</span>
 
-                  <div className="w-28 flex gap-1.5 items-center" onClick={(e) => e.stopPropagation()}>
-                    <button onClick={() => handleEdit(p)} title="Edit"
-                      className="p-2 rounded-lg bg-gray-100 hover:bg-black hover:text-white text-gray-600 transition-colors">
-                      <Pencil size={14} />
-                    </button>
-                    <button onClick={() => {
-                      setAddStockProductId(p.id);
-                      const ss = getSizeStocks(p);
-                      setAddStockForm({ sizes: ss.map((s) => ({ size: s.size ?? s.Size, stock: 0 })) });
-                    }} title="Add Stock"
-                      className="p-2 rounded-lg bg-gray-100 hover:bg-gray-800 hover:text-white text-gray-600 transition-colors">
-                      <PackagePlus size={14} />
-                    </button>
-                    <button onClick={() => handleDelete(p.id)} title="Delete"
-                      className="p-2 rounded-lg bg-gray-100 hover:bg-red-600 hover:text-white text-gray-600 transition-colors">
-                      <Trash2 size={14} />
-                    </button>
+                    <div className="w-52 flex flex-wrap gap-1">
+                      {sizeStocks.length === 0 ? <span className="text-xs text-gray-400">No stock</span> :
+                        sizeStocks.map((s) => {
+                          const sz = s.size ?? s.Size;
+                          const st = s.stock ?? s.Stock ?? 0;
+                          return (
+                            <span key={sz} className={`text-xs px-1.5 py-0.5 rounded-md font-medium
+                              ${st === 0 ? "bg-red-50 text-red-400" : st <= LOW_STOCK_THRESHOLD ? "bg-orange-50 text-orange-500" : "bg-gray-100 text-gray-700"}`}>
+                              {sz}: {st}
+                            </span>
+                          );
+                        })}
+                    </div>
+
+                    <div className="w-24"><StockBadge sizeStocks={sizeStocks} /></div>
+
+                    <div className="w-28 flex gap-1.5 items-center" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => handleEdit(p)} title="Edit"
+                        className="p-2 rounded-lg bg-gray-100 hover:bg-black hover:text-white text-gray-600 transition-colors">
+                        <Pencil size={14} />
+                      </button>
+                      <button onClick={() => {
+                        setAddStockProductId(p.id);
+                        const ss = getSizeStocks(p);
+                        setAddStockForm({ sizes: ss.map((s) => ({ size: s.size ?? s.Size, stock: 0 })) });
+                      }} title="Add Stock"
+                        className="p-2 rounded-lg bg-gray-100 hover:bg-gray-800 hover:text-white text-gray-600 transition-colors">
+                        <PackagePlus size={14} />
+                      </button>
+                      <button onClick={() => handleDelete(p.id)} title="Delete"
+                        className="p-2 rounded-lg bg-gray-100 hover:bg-red-600 hover:text-white text-gray-600 transition-colors">
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
                 {isExpanded && (p.images ?? p.Images ?? []).filter(Boolean).length > 0 && (
-                  <div className="px-4 pb-4 border-t border-gray-100 pt-3 pl-13">
+                  <div className="px-4 pb-4 border-t border-gray-100 pt-3 pl-4 md:pl-13">
                     <p className="text-xs text-gray-400 mb-2">Product Images</p>
                     <div className="flex gap-2 overflow-x-auto pb-1">
                       {(p.images ?? p.Images).filter(Boolean).map((imgUrl, idx) => (
@@ -550,6 +606,7 @@ export default function AdminProducts() {
               </div>
             );
           })}
+        </div>
         </div>
       </main>
     </div>

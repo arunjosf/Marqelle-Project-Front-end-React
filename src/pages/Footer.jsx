@@ -11,8 +11,10 @@ export default function Footer() {
   return (
     <>
     <footer className={`${footerBg} text-gray-300 pt-10`}>
-        <hr className="border-t border-gray-400  w-202 mx-auto pt-10"/>
-      <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-4 ml-83">
+        <hr className="border-t border-gray-400 w-full max-w-5xl mx-auto pt-10"/>
+
+      {/* Top section: 4 link columns */}
+      <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-4">
 
         <div>
           <h3 className="text-sm font-semibold text-black mb-3">Quick Links</h3>
@@ -29,7 +31,7 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-black mb-3">Customer</h3>
           <div className="space-y-2 text-sm text-gray-700">
             <Link className="block hover:text-gray-500">Shipping policy</Link>
-            <Link className="block hover:text-gray-500">Returns & Refunds</Link>
+            <Link className="block hover:text-gray-500">Returns &amp; Refunds</Link>
             <Link className="block hover:text-gray-500">Privacy Policy</Link>
             <Link className="block hover:text-gray-500">Terms of Service</Link>
             </div>
@@ -52,27 +54,29 @@ export default function Footer() {
             </div>
         </div>
 
-<div className="flex flex-col md:flex-row justify-between items-start gap-10 mt-10">
+      </div>
 
-   <div className="w-full md:w-1/2 md:text-left">
-    <h2 id="logo-text" className="text-2xl font-bold text-black">Marqelle.</h2>
-    <p className="mt-3 text-sm text-gray-700 leading-loose">
-      Your one-stop shop for quality products and exclusive deals.
-    </p>
-  </div>
+      {/* Bottom section: Brand + Social */}
+      <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-start gap-8 mt-10">
 
-    <div className="w-full md:w-1/2 ml-25 mt-2">
-    <h3 className="text-sm font-semibold text-black mb-5">Social</h3>
-    <Link className="block text-sm mb-2 text-gray-700 whitespace-nowrap">Instagram</Link>
-    <Link className="block text-sm mb-2 text-gray-700 whitespace-nowrap">Twitter</Link>
-    <Link className="block text-sm mb-2 text-gray-700 whitespace-nowrap">Facebook</Link>
-    <Link className="block text-sm mb-2 text-gray-700 whitespace-nowrap">Youtube</Link>
-    </div>
+        <div className="w-full sm:w-1/2">
+          <h2 id="logo-text" className="text-2xl font-bold text-black">Marqelle.</h2>
+          <p className="mt-3 text-sm text-gray-700 leading-loose">
+            Your one-stop shop for quality products and exclusive deals.
+          </p>
+        </div>
 
-</div>
+        <div className="w-full sm:w-auto">
+          <h3 className="text-sm font-semibold text-black mb-5">Social</h3>
+          <Link className="block text-sm mb-2 text-gray-700">Instagram</Link>
+          <Link className="block text-sm mb-2 text-gray-700">Twitter</Link>
+          <Link className="block text-sm mb-2 text-gray-700">Facebook</Link>
+          <Link className="block text-sm mb-2 text-gray-700">Youtube</Link>
+        </div>
 
-</div>
-      <div className="border-t border-gray-400 mt-8 pt-4 text-center text-sm text-gray-700 w-202 mx-auto pb-8">
+      </div>
+
+      <div className="border-t border-gray-400 mt-8 pt-4 text-center text-sm text-gray-700 max-w-5xl mx-auto pb-8">
         ©Marqelle. All rights reserved.
       </div>
     </footer>

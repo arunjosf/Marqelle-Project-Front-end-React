@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { context } from "../App";
-import { Bookmark, Search, ShoppingCart, Menu, X, SlidersHorizontal } from "lucide-react";
+import { Bookmark, Search, ShoppingCart, Menu, X, SlidersHorizontal, User } from "lucide-react";
 import toast from "react-hot-toast";
 
 const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
@@ -135,29 +135,35 @@ export default function Allproducts() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-55 mt-9">
-        <Link to={"/home"}><h2 id="logo-text" className="text-7xl font-semibold text-black">Marqelle.</h2></Link>
-        <div className="flex items-center gap-3">
-          <Link className="text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
-          <button className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
+      <div className="flex items-center justify-between px-4 sm:px-10 lg:px-55 mt-4 sm:mt-9">
+        <Link to={"/home"}><h2 id="logo-text" className="text-3xl sm:text-1xl md:text-7xl font-semibold text-black">Marqelle.</h2></Link>
+        <div className="flex items-center gap-1 sm:gap-3">
+          <Link className="hidden sm:inline text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
+          <button className="px-1.5 sm:px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
             onClick={() => navigate(user ? "/profile" : "/login")}>
             {user ? (
-              <span className="text-sm font-semibold hover:text-gray-700"><Link to={"/profile"}>Profile</Link></span>
+              <>
+                <User size={17} className="sm:hidden" />
+                <span className="hidden sm:inline text-sm font-semibold hover:text-gray-700"><Link to={"/profile"}>Profile</Link></span>
+              </>
             ) : (
-              <span className="text-sm font-medium hover:text-gray-700"><Link to={"/login"}>Login</Link></span>
+              <>
+                <User size={17} className="sm:hidden" />
+                <span className="hidden sm:inline text-sm font-medium hover:text-gray-700"><Link to={"/login"}>Login</Link></span>
+              </>
             )}
           </button>
-          <button className="px-2 py-2 rounded-[15px] text-gray-900 text-sm">
+          <button className="px-1.5 sm:px-2 py-2 rounded-[15px] text-gray-900 text-sm">
             <Link to={"/search"}><Search size={17} /></Link>
           </button>
-          <button onClick={() => navigate("/wishlist")} className="flex items-center px-3 text-gray-900 text-sm gap-1">
+          <button onClick={() => navigate("/wishlist")} className="flex items-center px-1.5 sm:px-3 text-gray-900 text-sm gap-1">
             <Bookmark size={17} />
-            <span className="text-xs">{wishlist.length}</span>
+            {wishlist.length > 0 && <span className="text-xs">{wishlist.length}</span>}
           </button>
-          <button className="px-3 text-gray-900 text-sm">
+          <button className="px-1.5 sm:px-3 text-gray-900 text-sm">
             <Link to="/cart" className="flex items-center gap-1">
               <ShoppingCart size={17} />
-              <span className="text-xs">{cart.length}</span>
+              {cart.length > 0 && <span className="text-xs">{cart.length}</span>}
             </Link>
           </button>
           <div className="md:hidden flex items-center justify-center">
@@ -166,9 +172,18 @@ export default function Allproducts() {
         </div>
       </div>
 
-      <hr className="border-t border-gray-900 w-267 mx-auto mt-7" />
+      {open && (
+        <div className="md:hidden bg-gray-200 px-5 py-4 space-y-3 text-gray-800 font-medium">
+          <Link to="/home" className="block" onClick={() => setOpen(false)}>Home</Link>
+          <Link to="/about" className="block" onClick={() => setOpen(false)}>About</Link>
+          <Link to="/men" className="block" onClick={() => setOpen(false)}>Men</Link>
+          <Link to="/vintage" className="block" onClick={() => setOpen(false)}>Vintage</Link>
+        </div>
+      )}
 
-      <div className="flex justify-end w-267 mx-auto mt-6 mb-2">
+      <hr className="border-t border-gray-900 w-[90%] lg:w-267 mx-auto mt-4 sm:mt-7" />
+
+      <div className="flex justify-end w-[90%] lg:w-267 mx-auto mt-4 sm:mt-6 mb-2">
         <button onClick={() => setShowFilter(true)}
           className="flex items-center gap-2 text-sm text-gray-700 border border-gray-300 px-4 py-1.5 rounded-full hover:border-black transition-colors">
           <SlidersHorizontal size={14} />
@@ -179,22 +194,22 @@ export default function Allproducts() {
         </button>
       </div>
 
-      <div className="w-full flex justify-center mt-10 mb-30">
-        <div className="grid grid-cols-4 gap-6">
+      <div className="w-full flex justify-center mt-6 sm:mt-10 mb-30 px-4 lg:px-0">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((prod) => (
             <div key={prod.id} className="text-center cursor-pointer"
               onClick={() => navigate(`/productdetails/${prod.id}`)}>
               <img
                 src={prod.images && prod.images.length > 0 ? prod.images[0] : "/placeholder.png"}
                 alt={prod.name}
-                className="h-[350px] w-[250px] object-cover rounded-lg mx-auto" />
+                className="h-[200px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto" />
               <div className="flex items-center justify-center gap-2 mt-2">
-                <h1 className="font-light font-serif text-gray-900">{prod.name}</h1>
+                <h1 className="font-light font-serif text-gray-900 text-xs sm:text-sm md:text-base">{prod.name}</h1>
                 <button onClick={(e) => { e.stopPropagation(); toggleIcon(prod); }} className="hover:scale-110 transition">
                   <Bookmark size={15} className={`cursor-pointer transition ${filledIcon[prod.id] ? "fill-black" : "text-gray-500"}`} />
                 </button>
               </div>
-              <h1 className="mt-1 text-gray-900 text-sm">₹{prod.price}</h1>
+              <h1 className="mt-1 text-gray-900 text-xs sm:text-sm md:text-base">₹{prod.price}</h1>
             </div>
           ))}
           {products.length === 0 && (

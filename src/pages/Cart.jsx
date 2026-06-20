@@ -218,11 +218,11 @@ export default function Cart() {
       <div className="min-h-screen bg-gray-100 py-10 px-6 pt-15">
 
         {cart.length === 0 ? (
-          <div className="flex flex-col items-center mt-65">
+          <div className="flex flex-col items-center mt-32 md:mt-65 px-4 text-center">
             <ShoppingBag className="text-gray-700 font-light border-none"/>
-            <p className="text-black font-light text-lg tracking-wide mt-5">Your shopping basket is empty</p>
+            <p className="text-black font-light text-base md:text-lg tracking-wide mt-5">Your shopping basket is empty</p>
             <p className="text-xs  mt-3 text-gray-700">The items you add will be shown here</p>
-            <div className="flex justify-between gap-4 mt-5">
+            <div className="flex justify-center gap-4 mt-5">
             <Link to={"/allproducts"} className="py-0.5 text-sm font-medium hover:text-gray-700">Shop</Link>
             <p className="text-gray-800 text-xs font-light mt-1 ">|</p>
             <Link to={"/home"}className="py-0.5  text-sm font-medium hover:text-gray-700" >Home</Link>
@@ -230,27 +230,27 @@ export default function Cart() {
           </div>
         ) : (
           <div className="">
-          <div className="max-w-5xl mx-auto bg-white border-1 border-gray-200 shadow-lg rounded-2xl p-6">
-            <div className="flex justify-between">
-             <h1 className="text-2xl font-semibold text-left mb-6">Cart <span className="pl-1 text-xs text-gray-600">({cart.length} products)</span></h1>
-            <Link className="text-xs mt-2 font-medium text-gray-800 hover:text-gray-500" onClick={clearAllCart}>Clear all</Link>
+          <div className="max-w-5xl mx-auto bg-white border-1 border-gray-200 shadow-lg rounded-2xl p-4 md:p-6">
+            <div className="flex justify-between items-center mb-4 md:mb-6">
+             <h1 className="text-xl md:text-2xl font-semibold text-left">Cart <span className="pl-1 text-xs text-gray-600">({cart.length} products)</span></h1>
+            <button className="text-xs font-medium text-gray-800 hover:text-gray-500" onClick={clearAllCart}>Clear all</button>
             </div>
             <div className="flex flex-col gap-6">
               {cart.map((item) => (
                 <div  
                   key={item.cartId}
-                  className="flex flex-col md:flex-row items-center justify-between border-1 border-gray-200 p-3 shadow-sm shadow-gray-200 rounded-2xl pr-7"
+                  className="flex flex-col md:flex-row items-start md:items-center justify-between border-1 border-gray-200 p-3 md:pr-7 shadow-sm shadow-gray-200 rounded-xl md:rounded-2xl gap-4 md:gap-0"
                 >
-                  <Link to={`/productdetails/${item.productId}`}>
-                    <div className="flex items-center gap-4">
+                  <Link to={`/productdetails/${item.productId}`} className="w-full md:w-auto">
+                    <div className="flex items-center gap-3 md:gap-4">
                       <img
                         src={item.productImage}
                         alt={item.productName}
-                        className="w-21 h-20 object-cover rounded-lg"
+                        className="w-16 h-16 md:w-21 md:h-20 object-cover rounded-lg"
                       />
                       <div>
-                        <h2 className="text-base font-medium text-gray-900">{item.productName}</h2>
-                        <p className="text-gray-600 font-medium text-xs tracking-wide ">Size: {item.size}</p>
+                        <h2 className="text-sm md:text-base font-medium text-gray-900">{item.productName}</h2>
+                        <p className="text-gray-600 font-medium text-xs tracking-wide">Size: {item.size}</p>
                         {item.stockWarning && (
                           <p className="text-orange-500 text-xs">{item.stockWarning}</p>
                         )}
@@ -265,28 +265,28 @@ export default function Cart() {
                     </div>
                   </Link>
 
-                  <div className="flex items-center gap-3 mt-4 md:mt-0">
-                    <p className="text-gray-800 font-semibold pr-20">₹{item.productPrice}</p>
+                  <div className="flex items-center justify-between w-full md:w-auto gap-2 md:gap-3 mt-1 md:mt-0">
+                    <p className="text-gray-800 font-semibold md:pr-20 text-sm md:text-base">₹{item.productPrice}</p>
 
-                    <div className="flex items-center bg-gray-100 rounded-2xl px-2">
+                    <div className="flex items-center bg-gray-100 rounded-2xl px-1 md:px-2">
                       <button
                         onClick={() => handleQuantityChange(item.cartId, (item.quantity || 1) - 1)}
-                        className="px-2 text-lg text-gray-700 hover:text-black"
+                        className="px-2 text-base md:text-lg text-gray-700 hover:text-black"
                       >
                         −
                       </button>
-                      <span className="px-3 text-gray-800 text-sm font-medium">{item.quantity || 1}</span>
+                      <span className="px-2 md:px-3 text-gray-800 text-sm font-medium">{item.quantity || 1}</span>
                       <button
                         onClick={() => handleQuantityChange(item.cartId, (item.quantity || 1) + 1)}
                         disabled={item.availableStock > 0 && (item.quantity || 1) >= item.availableStock}
-                        className="px-2 text-lg text-gray-700 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="px-2 text-base md:text-lg text-gray-700 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         +
                       </button>
                     </div>
                     <button
                       onClick={() => handleRemove(item.cartId)}
-                      className=" text-xs tracking-wide text-medium text-gray-700 hover:underline pl-2"
+                      className="text-xs tracking-wide font-medium text-red-500 md:text-gray-700 hover:underline md:pl-2"
                     >
                       Remove
                     </button>

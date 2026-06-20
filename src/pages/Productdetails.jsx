@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { context } from "../App";
-import { Menu, X, ShoppingCart, Bookmark, Search } from "lucide-react";
+import { Menu, X, ShoppingCart, Bookmark, Search, User } from "lucide-react";
 
 export default function Productdetails() {
   const { id } = useParams();
@@ -175,45 +175,50 @@ export default function Productdetails() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-55 mt-8">
-       <Link to={"/home"}><h2 id="logo-text" className="text-5xl md:text-5xl font-semibold text-black text-left md:text-left md:ml-1 mt-8">
-          Marqelle.
-        </h2></Link>
+      <div className="flex items-center justify-between px-4 sm:px-10 lg:px-55 mt-4 sm:mt-9">
+        <Link to={"/home"}><h2 id="logo-text" className="text-3xl sm:text-5xl md:text-7xl font-semibold text-black">Marqelle.</h2></Link>
 
-        <div className="flex items-center gap-3 mt-4  ">
-          <Link className= "text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
+        <div className="flex items-center gap-1 sm:gap-3">
+          <Link className="hidden sm:inline text-sm font-semibold hover:text-gray-700" to={"/home"}>Home</Link>
+          
           <button
-            className="px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
+            className="px-1 md:px-3 py-2 rounded-[15px] text-gray-900 text-sm flex items-center gap-1"
             onClick={() => navigate(user ? "/profile" : "/login")}>
             {user ? (
-              <span className="text-sm font-semibold text-black hover:text-gray-700">
-                <Link to={"/profile"}>Profile</Link>
-              </span>
+              <>
+                <User size={17} className="sm:hidden" />
+                <span className="hidden sm:block text-sm font-semibold text-black hover:text-gray-700">
+                  <Link to={"/profile"}>Profile</Link>
+                </span>
+              </>
             ) : (
-              <span className="text-sm font-medium hover:text-gray-700">
-                <Link to={"/login"}>Login</Link>
-              </span>
+              <>
+                <User size={17} className="sm:hidden" />
+                <span className="hidden sm:block text-sm font-medium hover:text-gray-700">
+                  <Link to={"/login"}>Login</Link>
+                </span>
+              </>
             )}
           </button>
 
-          <button className="px-2 py-2 rounded-[15px] text-gray-900 text-sm">
+          <button className="px-1 md:px-2 py-2 rounded-[15px] text-gray-900 text-sm">
             <Link to={"/search"}>
               <Search size={17} />
             </Link>
           </button>
 
           <button onClick={() => navigate("/wishlist")}
-  className="flex items-center px-3 text-gray-900 text-sm gap-1">
-  <Bookmark size={17} />
-  <span className="text-xs">{wishlist.length}</span>
-</button>
+            className="flex items-center px-1.5 md:px-3 text-gray-900 text-sm gap-1">
+            <Bookmark size={17} />
+            <span className="text-xs">{wishlist.length}</span>
+          </button>
 
-          <button className="px-3 text-gray-900 text-sm">
-  <Link to="/cart" className="flex items-center gap-1">
-    <ShoppingCart size={17} />
-    <span className="text-xs">{cart.length}</span>
-  </Link>
-</button>
+          <button className="px-1 md:px-3 text-gray-900 text-sm">
+            <Link to="/cart" className="flex items-center gap-1">
+              <ShoppingCart size={17} />
+              <span className="text-xs">{cart.length}</span>
+            </Link>
+          </button>
 
           <div className="md:hidden flex items-center justify-center">
             <button onClick={() => setOpen(!open)}>
@@ -223,7 +228,16 @@ export default function Productdetails() {
         </div>
       </div>
 
-      <hr className="border-t border-gray-500 w-[81%] mx-5 md:w-267 mx-auto mt-5 md:mt-7" />
+      {open && (
+        <div className="md:hidden bg-gray-200 px-5 py-4 space-y-3 text-gray-800 font-medium">
+          <Link to="/home" className="block" onClick={() => setOpen(false)}>Home</Link>
+          <Link to="/about" className="block" onClick={() => setOpen(false)}>About</Link>
+          <Link to="/men" className="block" onClick={() => setOpen(false)}>Men</Link>
+          <Link to="/vintage" className="block" onClick={() => setOpen(false)}>Vintage</Link>
+        </div>
+      )}
+
+      <hr className="border-t border-gray-500 w-[90%] mx-5 md:w-267 mx-auto mt-5 md:mt-7" />
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 mt-10 md:mt-15 px-4 md:px-10 w-full md:w-267 mx-auto md:ml-47">
         <div className="flex-1 flex justify-center">

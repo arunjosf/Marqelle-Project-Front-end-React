@@ -1,9 +1,11 @@
-import { LayoutDashboard, Package, ShoppingBag, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, Users, LogOut, Menu, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function AdminSidebar() {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
     { to: "/admin/dashboard", label: "Dashboard", Icon: LayoutDashboard },
@@ -28,10 +30,30 @@ export default function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 bg-white text-black flex flex-col p-6 min-h-screen ml-5 mt-5 mb-5 rounded-xl">
-      <h2 className="text-xl font-bold mb-8 text-left tracking-wide">
-        Marqelle
-      </h2>
+    <>
+      <div className="md:hidden flex items-center justify-between p-4 bg-white mb-4 shadow-sm mx-4 mt-4 rounded-xl">
+        <h2 className="text-xl font-bold tracking-wide">Marqelle Admin</h2>
+        <button onClick={() => setIsOpen(true)}>
+          <Menu size={24} />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      <aside className={`w-64 bg-white text-black flex flex-col p-6 min-h-[calc(100vh-40px)] md:sticky md:top-5 ml-5 mt-5 mb-5 rounded-xl max-md:fixed max-md:top-0 max-md:left-0 max-md:h-full max-md:ml-0 max-md:mt-0 max-md:mb-0 max-md:rounded-none max-md:z-50 max-md:transition-transform max-md:duration-300 max-md:-translate-x-full ${isOpen ? "max-md:translate-x-0" : ""} z-40`}>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-xl font-bold text-left tracking-wide">
+            Marqelle
+          </h2>
+          <button className="md:hidden text-gray-500" onClick={() => setIsOpen(false)}>
+            <X size={24} />
+          </button>
+        </div>
 
       <nav className="flex flex-col gap-2">
         {navLinks.map((link) => (
@@ -64,5 +86,6 @@ export default function AdminSidebar() {
         © 2025 Marqelle Admin
       </div>
     </aside>
+    </>
   );
 }

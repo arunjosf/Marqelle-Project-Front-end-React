@@ -68,22 +68,22 @@ export default function Users() {
   });
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <AdminSidebar />
 
-      <main className="flex-1 p-6 overflow-y-auto">
-        <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+      <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 md:mb-6 gap-2 sm:gap-4">
           <div>
-            <h2 className="text-2xl font-semibold text-gray-800 mt-4">Manage Users</h2>
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mt-2 md:mt-4">Manage Users</h2>
           </div>
 
-          <div className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 mt-4 rounded-full text-sm">
+          <div className="flex items-center gap-2 bg-gray-900 text-white px-4 py-1.5 md:py-2 mt-0 md:mt-4 rounded-full text-xs md:text-sm self-start sm:self-auto">
             <User className="w-4 h-4" />
             Total: {filteredUsers.length}
           </div>
         </div>
 
-        <div className="mb-6 flex items-center gap-2 bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm w-full sm:w-96">
+        <div className="mb-4 md:mb-6 flex items-center gap-2 bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm w-full sm:w-96">
           <Search className="w-4 h-4 text-gray-500" />
           <input
             type="text"
@@ -94,8 +94,9 @@ export default function Users() {
           />
         </div>
 
+        <div className="pb-4">
         <div className="space-y-3">
-          <div className="bg-gray-200 rounded-xl px-4 py-2 flex items-center text-xs font-semibold text-gray-500 tracking-wide gap-0 ">
+          <div className="hidden md:flex bg-gray-200 rounded-xl px-4 py-2 items-center text-xs font-semibold text-gray-500 tracking-wide gap-0 ">
             <span className="w-100 pl-2">Name</span>
             <span className="w-100">Email</span>
             <span className="w-69">ID</span>
@@ -106,45 +107,45 @@ export default function Users() {
             filteredUsers.map((u, index) => (
               <div
                 key={u.id}
-                className={`flex justify-between items-center border rounded-xl p-4 shadow-sm transition ${
+                className={`flex max-md:flex-col justify-between max-md:items-start items-center border rounded-xl p-4 max-md:pb-12 shadow-sm transition relative ${
                   u.blocked
                     ? "bg-red-50 border-red-300"
                     : "bg-white border-gray-200"
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-semibold">
+                <div className="flex items-center gap-3 w-full md:w-auto max-w-full">
+                  <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-semibold flex-shrink-0">
                     {u.firstname.charAt(0).toUpperCase() || "?"}
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center text-sm gap-0">
-                    <h4 className="font-semibold text-gray-800 w-85 truncate">
+                  <div className="flex flex-col md:flex-row md:items-center text-sm gap-1 md:gap-0 max-w-[calc(100%-60px)] md:max-w-none">
+                    <h4 className="font-semibold text-gray-800 w-85 max-md:w-full truncate text-sm md:text-base">
                       {u.firstname} {u.lastname}
                     </h4>
-                    <p className="text-gray-500 w-100 truncate">
+                    <p className="text-gray-500 w-100 max-md:w-full truncate text-xs md:text-sm">
                       {u.email}
                     </p>
-                    <p className="text-gray-500 w-28">
+                    <p className="text-gray-500 w-28 max-md:w-full text-xs md:text-sm">
                       <span className="text-gray-600 font-semibold">ID: </span>
                       {u.id}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 max-md:absolute max-md:bottom-4 max-md:right-4">
                   <button
                     onClick={() => handleBlockToggle(u)}
-                    className={`px-4 py-1 rounded-full text-sm font-medium flex items-center gap-2 cursor-pointer ${
+                    className={`px-3 md:px-4 py-1 rounded-full text-xs md:text-sm font-medium flex items-center gap-1.5 md:gap-2 cursor-pointer ${
                       u.blocked
                         ? "bg-green-600 text-white hover:bg-green-700"
                         : "bg-red-600 text-white hover:bg-red-700"
                     }`}>
                     {u.blocked ? (
                       <>
-                        <Unlock className="w-4 h-4 cursor-pointer" /> Unblock
+                        <Unlock className="w-4 h-4 cursor-pointer flex-shrink-0" /> Unblock
                       </>
                     ) : (
                       <>
-                        <Lock className="w-4 h-4 cursor-pointer" /> Block
+                        <Lock className="w-4 h-4 cursor-pointer flex-shrink-0" /> Block
                       </>
                     )}
                   </button>
@@ -156,6 +157,7 @@ export default function Users() {
           ) : (
             <p className="text-gray-500 text-center py-10">No users found</p>
           )}
+        </div>
         </div>
       </main>
     </div>
