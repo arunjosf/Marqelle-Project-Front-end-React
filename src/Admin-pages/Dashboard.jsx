@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { context } from "../App";
 import axios from "axios";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import AdminSidebar from "./sidebar";
+import AdminSidebar from "./Sidebar";
 
 const BASE = "https://localhost:7177/api";
 

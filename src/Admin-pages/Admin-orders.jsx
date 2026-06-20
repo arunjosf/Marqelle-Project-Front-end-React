@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AdminSidebar from "./sidebar";
+import AdminSidebar from "./Sidebar";
 import { Search } from "lucide-react";
 
 const BASE = "https://localhost:7177/api/adminorder";

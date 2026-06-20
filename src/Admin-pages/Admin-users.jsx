@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AdminSidebar from "./sidebar";
+import AdminSidebar from "./Sidebar";
 import { User, Search, Lock, Unlock } from "lucide-react";
 import toast from "react-hot-toast";
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Pencil, Trash2, PackagePlus } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import AdminSidebar from "./sidebar";
+import AdminSidebar from "./Sidebar";
 
 const BASE = "https://localhost:7177/api/adminproduct";
 const SIZES = ["S", "M", "L", "XL"]; 
