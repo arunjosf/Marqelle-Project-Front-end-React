@@ -127,7 +127,7 @@ export default function Login() {
         );
         const googleUser = {
           id: googleUserRes.data.sub,
-          name: googleUserRes.data.name,
+          name: googleUserRes.data.name,  
           email: googleUserRes.data.email,
           picture: googleUserRes.data.picture,
         };
@@ -163,7 +163,7 @@ export default function Login() {
       <div className="relative w-[800px] rounded-3xl shadow-2xl overflow-hidden flex gap-2 bg-white">
         <div
           className="hidden md:flex w-[420px] flex flex-col items-center justify-center text-center text-white relative overflow-hidden bg-cover rounded-3xl"
-          style={{ backgroundImage: "url('src/assets/login3.png')" }}
+          style={{ backgroundImage: "url('login3.png')" }}
         >
           <div className="mt-10 px-4 py-2 text-xs text-gray-300 bg-white/10 backdrop-blur-md rounded-full shadow-md border border-white/20 mt-110">
             © 2025 Marqelle. All rights reserved.
@@ -205,7 +205,7 @@ export default function Login() {
 
                 {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-                <button type="submit" disabled={loading}
+                <button type="button" disabled={loading}
   className="text-sm font-medium w-full bg-black text-white py-2 rounded-full disabled:opacity-70 flex items-center justify-center gap-2">
   {loading ? (
     <>

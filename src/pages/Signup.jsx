@@ -142,7 +142,7 @@ export default function Signup() {
       <div className="relative w-[800px] rounded-3xl shadow-2xl overflow-hidden flex gap-2 bg-white">
         <div
           className="hidden md:flex w-[420px] flex flex-col items-center justify-center text-center text-white relative overflow-hidden bg-cover rounded-3xl"
-          style={{ backgroundImage: "url('src/assets/signup2.png')" }}>
+          style={{ backgroundImage: "url('signup2.png')" }}>
           <div className="mt-15 px-4 py-2 text-xs text-gray-300 bg-white/10 backdrop-blur-md rounded-full shadow-md border border-white/20 mt-110">
             © 2025 Marqelle. All rights reserved.
           </div>

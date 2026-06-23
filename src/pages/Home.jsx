@@ -137,7 +137,7 @@ useEffect(() => {
   <div className="w-full h-[500px] md:h-[800px] overflow-hidden  relative">
   <video
    ref={videoRef}
-    src="public/MarqelleHomevideo.mp4"
+    src="MarqelleHomevideo.mp4"
     autoPlay
     muted
     playsInline

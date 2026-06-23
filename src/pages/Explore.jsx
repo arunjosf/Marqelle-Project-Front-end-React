@@ -3,19 +3,19 @@ import { useState, useEffect, useRef } from "react";
 
 const slides = [
   {
-    src: "public/9563511-uhd_4096_2160_25fps.mp4",
+    src: "9563511-uhd_4096_2160_25fps.mp4",
     description: "Effortless style meets seasonal comfort in a suit made for modern work life.",
     category: "Casual",
     link: "/allproducts?category=Casual",
   },
   {
-    src: "public/explore1.mp4",
+    src: "explore1.mp4",
     description: "A refined winter essential that delivers both comfort and a polished appearance.",
     category: "Winter",
     link: "/allproducts?category=Winter",
   },
   {
-    src: "public/e3.mp4",
+    src: "e3.mp4",
     description: "An expression of confidence, tailored for the modern professional.",
     category: "Formal",
     link: "/allproducts?category=Formal",
