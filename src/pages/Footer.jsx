@@ -14,7 +14,7 @@ export default function Footer() {
         <hr className="border-t border-gray-400 w-full max-w-5xl mx-auto pt-10"/>
 
       {/* Top section: 4 link columns */}
-      <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-4">
+      <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-5 gap-8 sm:gap-4">
 
         <div>
           <h3 className="text-sm font-semibold text-black mb-3">Quick Links</h3>
@@ -54,6 +54,15 @@ export default function Footer() {
             </div>
         </div>
 
+      <div className="hidden sm:block">
+          <h3 className="text-sm font-semibold text-black mb-3">Social</h3>
+          <div className="space-y-2 text-sm text-gray-700">
+            <Link className="block hover:text-gray-500">Instagram</Link>
+            <Link className="block hover:text-gray-500">Twitter</Link>
+            <Link className="block hover:text-gray-500">Facebook</Link>
+            <Link className="block hover:text-gray-500">Youtube</Link>
+          </div>
+        </div>  
       </div>
 
       {/* Bottom section: Brand + Social */}
@@ -65,15 +74,6 @@ export default function Footer() {
             Your one-stop shop for quality products and exclusive deals.
           </p>
         </div>
-
-        <div className="w-full sm:w-auto">
-          <h3 className="text-sm font-semibold text-black mb-5">Social</h3>
-          <Link className="block text-sm mb-2 text-gray-700">Instagram</Link>
-          <Link className="block text-sm mb-2 text-gray-700">Twitter</Link>
-          <Link className="block text-sm mb-2 text-gray-700">Facebook</Link>
-          <Link className="block text-sm mb-2 text-gray-700">Youtube</Link>
-        </div>
-
       </div>
 
       <div className="border-t border-gray-400 mt-8 pt-4 text-center text-sm text-gray-700 max-w-5xl mx-auto pb-8">

@@ -61,10 +61,15 @@ useEffect(() => {
 
   const handleEnded = () => {
     userScrolledAway = true;
-    const next = nextSectionRef.current;
-    if (next) {
-      const top = next.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top, behavior: "smooth" });
+    
+    // Check if the user is still looking at the top section!
+    // If they scrolled down past the first screen, don't auto-scroll.
+    if (window.scrollY < window.innerHeight / 2) {
+      const next = nextSectionRef.current;
+      if (next) {
+        const top = next.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     }
   };
 
