@@ -22,9 +22,9 @@ export default function Navbar() {
   }, []);
 
   return (
- <nav className="sm:pt-0 pt-5 fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-transparent">
+ <nav className="pt-0 sm:pt-5 fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-transparent">
   <div className={"max-w-7xl mx-0 sm:mx-auto px-3 sm:px-2 sm:px-2 lg:px-8 sm:rounded-2xl transition-all duration-300 backdrop-blur-lg bg-white/45 sm:shadow-md"}>
-    <div className="flex justify-between items-center h-16">
+    <div className="flex justify-between items-center h-12 sm:h-16">
 
           
           <div id="logo-text" className="flex-shrink-0 font-bold text-xl sm:text-2xl md:text-3xl ">

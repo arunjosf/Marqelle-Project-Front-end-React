@@ -134,7 +134,7 @@ useEffect(() => {
 
   return (
     <>
-  <div className="w-full h-[380px] md:h-[800px] overflow-hidden  relative">
+  <div className="w-full h-[480px] md:h-[800px] overflow-hidden  relative">
   <video
    ref={videoRef}
     src="MarqelleHomevideo.mp4"
@@ -257,7 +257,7 @@ useEffect(() => {
 
   </div>
   <div
-    className="w-full md:w-1/2 h-[280px] sm:h-[320px] md:h-130 bg-cover bg-center"
+    className="w-full md:w-1/2 h-[280px] sm:h-[280px] md:h-130 bg-cover bg-center"
     style={{ backgroundImage: "url('herovop.png')" }}></div>
 </div>
 
