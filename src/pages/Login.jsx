@@ -212,7 +212,7 @@ export default function Login() {
                   <hr className="flex-grow border-gray-300" />
                 </div>
 
-                <button className="w-full flex items-center justify-center border border-gray-300 py-1 rounded-full hover:bg-gray-100 gap-2"
+                <button type="button" className="w-full flex items-center justify-center border border-gray-300 py-1 rounded-full hover:bg-gray-100 gap-2"
                   onClick={() => loginWithGoogle()}>
                   <lord-icon src="https://cdn.lordicon.com/dbvisxjw.json" trigger="hover"
                     style={{ width: "30px", height: "30px", primary: "#ffffff", secondary: "#2ca58d", tertiary: "#ffc738", quaternary: "#4bb3fd", quinary: "#f24c00" }}>
