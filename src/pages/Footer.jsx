@@ -54,7 +54,7 @@ export default function Footer() {
             </div>
         </div>
 
-      <div className="hidden sm:block">
+      <div>
           <h3 className="text-sm font-semibold text-black mb-3">Social</h3>
           <div className="space-y-2 text-sm text-gray-700">
             <Link className="block hover:text-gray-500">Instagram</Link>
