@@ -187,7 +187,7 @@ useEffect(() => {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.9, ease: "easeOut", delay: isFirstLoad ? 0.4 : 0 }}
 
-        className="w-full md:w-100 h-[480px]sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
+        className="w-full md:w-100 h-[480px] sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
         style={{ backgroundImage: "url('home2.png')" }}
       ></motion.div>
     </div>
