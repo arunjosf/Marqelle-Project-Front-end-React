@@ -110,7 +110,7 @@ export default function Signup() {
       );
 
       if (res.data.success) {
-        const profileRes = await axios.get("https://localhost:7177/api/userprofile/userprofile", { withCredentials: true });
+        const profileRes = await axios.get("https://marqelle-net-ecommerce-project-1.onrender.com/api/userprofile/userprofile", { withCredentials: true });
         const d = profileRes.data.data;
         setUser({ id: d.id, firstName: d.firstName, lastName: d.lastName, email: d.email, roleId: d.roleId });
 
