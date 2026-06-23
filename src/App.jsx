@@ -73,6 +73,12 @@ useEffect(() => {
     async (error) => {
       const originalRequest = error.config;
 
+        if (originalRequest.url?.includes("/usersauth/login") ||
+          originalRequest.url?.includes("/usersauth/register") ||
+          originalRequest.url?.includes("/usersauth/forgot-password")) {
+        return Promise.reject(error);
+      }
+
       if (originalRequest.url?.includes("/usersauth/refresh")) {
         return Promise.reject(error);
       }
@@ -141,4 +147,4 @@ useEffect(() => {
     <Toaster position="top-center" reverseOrder={false} />
     </>
   )
-}
+} 
