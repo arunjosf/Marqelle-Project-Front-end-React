@@ -243,7 +243,7 @@ useEffect(() => {
   </div>
 </div>
 
-  <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-0 mt-2 md:mb-2  relative z-10">
+  <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-2 mt-2 md:mb-2  relative z-10">
   <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden min-h-[100px] sm:min-h-[320px]">
   <video
       src="videofinalsh.mp4"
@@ -257,7 +257,7 @@ useEffect(() => {
 
   </div>
   <div
-    className="w-full md:w-1/2 h-[320px] sm:h-[320px] sm:mt-2 sm:mb-2 md:h-130 bg-cover bg-center"
+    className="w-full md:w-1/2 h-[320px] sm:h-[320px] md:h-130 bg-cover bg-center"
     style={{ backgroundImage: "url('herovop.png')" }}></div>
 </div>
 

@@ -30,6 +30,7 @@ export default function Signup() {
   const [otpError, setOtpError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [resending, setResending] = useState(false);
+  const [verifying, setVerifying] = useState(false); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,6 +122,8 @@ export default function Signup() {
       }
     } catch (err) {
       setOtpError(err.response?.data?.message || "Invalid or expired OTP.");
+    } finally {
+      setVerifying(false); 
     }
   };
 
@@ -225,9 +228,10 @@ export default function Signup() {
               {otpError && <p className="text-red-500 text-sm text-center">{otpError}</p>}
 
               <button type="submit"
-                className="text-sm font-medium w-full bg-black text-white py-2 rounded-full mt-5">
-                Verify Email
-              </button>
+  disabled={verifying}
+  className="text-sm font-medium w-full bg-black text-white py-2 rounded-full mt-5 disabled:opacity-60 disabled:cursor-not-allowed">
+  {verifying ? "Verifying..." : "Verify Email"}
+</button>
 
               <div className="flex justify-between items-center mt-2">
                 <button
