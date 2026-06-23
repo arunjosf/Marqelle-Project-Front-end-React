@@ -5,9 +5,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { ShoppingCart } from "lucide-react";
 
-const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
-const CART_URL = "https://localhost:7177/api/usercart";
-const PRODUCT_URL = "https://localhost:7177/api/userproducts";
+// const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+// const CART_URL = "https://localhost:7177/api/usercart";
+// const PRODUCT_URL = "https://localhost:7177/api/userproducts";
+
+const PRODUCTS_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userproducts";
+const WISHLIST_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userwishlist";
+const CART_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/usercart";
+
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
   iconTheme: { primary: "#111", secondary: "#fff" },

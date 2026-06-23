@@ -6,7 +6,7 @@ import axios from "axios";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import AdminSidebar from "./Sidebar";
 
-const BASE = "https://localhost:7177/api";
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api";
 
 export default function AdminDashboard() {
   const [dashboard, setDashboard] = useState(null);

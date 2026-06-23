@@ -5,7 +5,10 @@ import toast from "react-hot-toast";
 import { context } from "../App";
 import { CreditCard, Smartphone, Wallet, Truck } from "lucide-react";
 
-const BASE = "https://localhost:7177/api";
+// const BASE = "https://localhost:7177/api";
+
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api";
+
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
 };

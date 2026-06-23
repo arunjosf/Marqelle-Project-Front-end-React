@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import { Bookmark } from "lucide-react";
 import toast from "react-hot-toast";
 
-const BASE = "https://localhost:7177/api/userproducts";
-const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+// const BASE = "https://localhost:7177/api/userproducts";
+// const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api";
+const WISHLIST_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userwishlist";
+
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
 };

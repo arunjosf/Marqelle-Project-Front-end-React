@@ -3,7 +3,7 @@ import axios from "axios";
 import AdminSidebar from "./Sidebar";
 import { Search } from "lucide-react";
 
-const BASE = "https://localhost:7177/api/adminorder";
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api/adminorder";
 
 const STATUS_MAP = {
   "Pending": 0,

@@ -5,7 +5,9 @@ import toast from "react-hot-toast";
 import { context } from "../App";
 import { ShoppingBag } from "lucide-react";
 
-const CART_URL = "https://localhost:7177/api/usercart";
+// const CART_URL = "https://localhost:7177/api/usercart";
+
+const CART_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/usercart";
 
 function OutOfStockPopup({ items, onContinue, onCancel }) {
   return (

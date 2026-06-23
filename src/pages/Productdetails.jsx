@@ -16,9 +16,13 @@ export default function Productdetails() {
   const [showSizeChart, setShowSizeChart] = useState(false);
   const [unit, setUnit] = useState("cm");
 
-  const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
-  const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
-  const CART_URL = "https://localhost:7177/api/usercart";
+  // const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
+  // const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+  // const CART_URL = "https://localhost:7177/api/usercart";
+
+  const PRODUCTS_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userproducts";
+  const WISHLIST_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userwishlist";
+  const CART_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/usercart";
 
   useEffect(() => {
     axios

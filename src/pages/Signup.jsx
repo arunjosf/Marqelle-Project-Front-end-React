@@ -5,7 +5,10 @@ import toast from "react-hot-toast";
 import { useContext } from "react";
 import { context } from "../App";
 
-const AUTH_URL = "https://localhost:7177/api/usersauth";
+// const AUTH_URL = "https://localhost:7177/api/usersauth";
+
+const AUTH_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userauth";
+
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
   iconTheme: { primary: "#111", secondary: "#fff" },

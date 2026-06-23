@@ -3,7 +3,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { context } from "../App";
 
-const BASE = "https://localhost:7177/api";
+// const BASE = "https://localhost:7177/api";
+
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api";
+
 const TOAST_STYLE = {
   style: {
     borderRadius: "10px",

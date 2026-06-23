@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import AdminSidebar from "./Sidebar";
 
-const BASE = "https://localhost:7177/api/adminproduct";
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api/adminproduct";
 const SIZES = ["S", "M", "L", "XL"]; 
 const LOW_STOCK_THRESHOLD = 5;
 const TOAST_STYLE = {

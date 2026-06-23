@@ -4,7 +4,7 @@ import AdminSidebar from "./Sidebar";
 import { User, Search, Lock, Unlock } from "lucide-react";
 import toast from "react-hot-toast";
 
-const BASE = "https://localhost:7177/api/adminuser";
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api/adminuser";
 const TOAST_STYLE = {
   style: { borderRadius: "10px", background: "#fff", color: "#111", border: "1px solid #ddd", fontWeight: "normal" },
   iconTheme: { primary: "#111", secondary: "#fff" },

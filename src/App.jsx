@@ -41,7 +41,7 @@ export default function App(){
 useEffect(() => {
   if (!user) return;
   const interval = setInterval(() => {
-    axios.post("https://localhost:7177/api/usersauth/refresh", {}, { withCredentials: true })
+    axios.post("https://marqelle-net-ecommerce-project-1.onrender.com/api/usersauth/refresh", {}, { withCredentials: true })
       .catch(() => {
         setUser(null);
         window.location.href = "/login";
@@ -51,16 +51,17 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [user]);
 
+
   useEffect(() => {
   if (user) {
-    axios.get(`https://localhost:7177/api/usercart/Cartitems`, { withCredentials: true })
+    axios.get(`https://marqelle-net-ecommerce-project-1.onrender.com/api/usercart/Cartitems`, { withCredentials: true })
       .then(res => setCart(res.data.data || []))
       .catch(err => console.log(err));
   }
 }, [user]);
 
 useEffect(() => {
-  axios.get("https://localhost:7177/api/userprofile/userprofile", { withCredentials: true })
+  axios.get("https://marqelle-net-ecommerce-project-1.onrender.com/api/userprofile/userprofile", { withCredentials: true })
     .then((res) => { const d = res.data.data; setUser({ id: d.id, firstName: d.firstName, lastName: d.lastName, email: d.email, roleId: d.roleId }); })
     .catch(() => setUser(null))
     .finally(() => setAuthLoading(false));
@@ -81,7 +82,7 @@ useEffect(() => {
 
         try {
           await axios.post(
-            "https://localhost:7177/api/usersauth/refresh",
+            "https://marqelle-net-ecommerce-project-1.onrender.com/api/usersauth/refresh",
             {},
             { withCredentials: true }
           );

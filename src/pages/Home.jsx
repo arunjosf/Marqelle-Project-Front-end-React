@@ -17,8 +17,11 @@ export default function Home() {
 });
 const nextSectionRef = useRef(null);
 const videoRef = useRef(null);
-const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
-const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+// const PRODUCTS_URL = "https://localhost:7177/api/userproducts";
+// const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
+
+const PRODUCTS_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userproducts";
+const WISHLIST_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userwishlist";
 
 useEffect(() => {
   if (isFirstLoad) {
