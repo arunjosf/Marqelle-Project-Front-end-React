@@ -206,7 +206,7 @@ export default function Login() {
 
                 {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-                <button type="button" disabled={loading}
+                <button type="submit" disabled={loading}
   className="text-sm font-medium w-full bg-black text-white py-2 rounded-full disabled:opacity-70 flex items-center justify-center gap-2">
   {loading ? (
     <>
