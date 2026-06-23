@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 // const BASE = "https://localhost:7177/api/userproducts";
 // const WISHLIST_URL = "https://localhost:7177/api/userwishlist";
 
-const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api";
+const BASE = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userproducts";
 const WISHLIST_URL = "https://marqelle-net-ecommerce-project-1.onrender.com/api/userwishlist";
 
 const TOAST_STYLE = {
