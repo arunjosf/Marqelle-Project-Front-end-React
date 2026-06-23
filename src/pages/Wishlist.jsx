@@ -112,7 +112,7 @@ export default function Wishlist() {
 
   async function handleAddToCartClick(prod) {
     try {
-      const res = await axios.get(`${PRODUCT_URL}/id?productId=${prod.productId}`);
+      const res = await axios.get(`${PRODUCTS_URL}/id?productId=${prod.productId}`);
       const productData = res.data.data;
       setPopupProduct({
         productId: prod.productId,
