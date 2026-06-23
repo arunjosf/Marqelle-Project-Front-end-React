@@ -187,7 +187,7 @@ useEffect(() => {
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.9, ease: "easeOut", delay: isFirstLoad ? 0.4 : 0 }}
 
-        className="w-full md:w-100 sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
+        className="w-full md:w-100 h-[480px]sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
         style={{ backgroundImage: "url('home2.png')" }}
       ></motion.div>
     </div>
@@ -243,7 +243,7 @@ useEffect(() => {
   </div>
 </div>
 
-  <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-0 md:mb-2 -mt-1 relative z-10">
+  <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-0 md:mb-2 md:mt-2 relative z-10">
   <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden min-h-[100px] sm:min-h-[320px]">
   <video
       src="videofinalsh.mp4"
