@@ -34,7 +34,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+     e.stopPropagation();
     if (!email || !password) { setError("Please fill in all fields"); return; }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -71,6 +71,7 @@ export default function Login() {
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setForgotError("");
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
