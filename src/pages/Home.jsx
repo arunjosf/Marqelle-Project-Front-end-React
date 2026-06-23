@@ -188,7 +188,7 @@ useEffect(() => {
   transition={{ duration: 0.9, ease: "easeOut", delay: isFirstLoad ? 0.4 : 0 }}
 
         className="w-full md:w-100 h-[450px] sm:h-[480px] md:h-[480px] bg-cover bg-top mx-auto"
-        style={{ backgroundImage: "url('src/assets/home2.png')" }}
+        style={{ backgroundImage: "url('home2.png')" }}
       ></motion.div>
     </div>
    
@@ -252,13 +252,13 @@ useEffect(() => {
       muted
       playsInline
       className="w-full h-full object-cover"
-    ></video>
+    ></video> 
 
 
   </div>
   <div
     className="w-full md:w-1/2 h-[240px] sm:h-[320px] md:h-130 bg-cover bg-center"
-    style={{ backgroundImage: "url('public/herovop.png')" }}></div>
+    style={{ backgroundImage: "url('herovop.png')" }}></div>
 </div>
 
 {/* <div className="w-full h-140"  style={{ backgroundImage: "url('src/assets/m3.png')" }}></div> */}
@@ -307,19 +307,19 @@ useEffect(() => {
   <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
 
     <img
-      src="public/Group 42.png"
+      src="Group 42.png"
       alt="img1"
       className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />
 
     <img
-      src="public/Rectangle 69png.png"
+      src="Rectangle 69png.png"
       alt="img2"
       className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />
 
     <img
-      src="public/Rectangle 8.png"
+      src="Rectangle 8.png"
       alt="img3"
       className="h-[160px] sm:h-[280px] md:h-[350px] w-full sm:w-[250px] object-cover rounded-lg mx-auto shadow-lg"
     />

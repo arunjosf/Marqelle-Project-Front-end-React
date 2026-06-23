@@ -30,6 +30,7 @@ export default function Login() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [forgotError, setForgotError] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +44,7 @@ export default function Login() {
       const formData = new FormData();
       formData.append("Email", email.trim());
       formData.append("Password", password);
-
+      setLoading(true);
       const res = await axios.post(`${AUTH_URL}/login`, formData, { withCredentials: true });
 
       if (res.data.success) { 
@@ -63,6 +64,9 @@ export default function Login() {
     } catch (err) {
        setError(err.response?.data?.message || err.response?.data?.Message || "Something went wrong. Try again later.");
     }
+    finally {
+    setLoading(false);
+}
   };
 
   const handleSendOtp = async (e) => {
@@ -177,7 +181,7 @@ export default function Login() {
               <div className="flex justify-center mb-6 bg-gray-200 rounded-full p-1 w-75 h-10 mx-auto gap-1">
                 <button className="w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full transition-all duration-300 bg-black text-white shadow-md"
                   onClick={() => navigate("/login")}>LogIn</button>
-                <button className="w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full text-black hover:bg-gray-300"
+                <button type="button" className="w-1/2 flex items-center justify-center text-center py-1 text-sm font-medium rounded-full text-black hover:bg-gray-300"
                   onClick={() => navigate("/signup")}>Sign Up</button>
               </div>
 
@@ -201,10 +205,18 @@ export default function Login() {
 
                 {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-                <button type="submit"
-                  className="text-sm font-medium w-full bg-black text-white py-2 rounded-full w-75">
-                  Login
-                </button>
+                <button type="submit" disabled={loading}
+  className="text-sm font-medium w-full bg-black text-white py-2 rounded-full disabled:opacity-70 flex items-center justify-center gap-2">
+  {loading ? (
+    <>
+      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      Logging in...
+    </>
+  ) : "Login"}
+</button>
 
                 <div className="flex items-center gap-2">
                   <hr className="flex-grow border-gray-300" />
