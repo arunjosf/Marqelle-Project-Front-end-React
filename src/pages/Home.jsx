@@ -155,8 +155,7 @@ useEffect(() => {
   </div>
 </div>
 
-    <div ref={nextSectionRef} className="w-full bg-gray-300 pt-25 text-center overflow-hidden ">
-
+    <div ref={nextSectionRef} className="w-full bg-gray-300 pt-17 md:pt-25 text-center overflow-hidden ">
    <motion.div
   initial={isFirstLoad ? { opacity: 1, y: -250 } : { opacity: 1, y: 0 }}
   animate={{ opacity: 1, y: 0 }}
@@ -243,7 +242,7 @@ useEffect(() => {
   </div>
 </div>
 
-  <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-2 mt-2 md:mb-2  relative z-10">
+  {/* <div className="flex flex-col md:flex-row w-full gap-0 md:gap-2 mb-2 mt-2 md:mb-2  relative z-10">
   <div className="w-full md:w-1/2 bg-gray-300 flex justify-center overflow-hidden min-h-[100px] sm:min-h-[320px]">
   <video
       src="videofinalsh.mp4"
@@ -259,8 +258,28 @@ useEffect(() => {
   <div
     className="w-full md:w-1/2 h-[280px] sm:h-[280px] md:h-130 bg-cover bg-center"
     style={{ backgroundImage: "url('herovop.png')" }}></div>
-</div>
+</div> */}
+<div className="flex flex-col md:flex-row w-full gap-[2px] md:gap-2 mb-2 mt-2 md:mb-2 relative z-10">
+  
+  {/* Video Section: Fixed mobile height to match the image */}
+  <div className="w-full md:w-1/2 h-[250px] md:h-130 bg-gray-300 flex justify-center overflow-hidden">
+    <video
+      src="videofinalsh.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="w-full h-full object-cover"
+    ></video> 
+  </div>
 
+  {/* Image Section: Matched the mobile height to 250px */}
+  <div
+    className="w-full md:w-1/2 h-[250px] md:h-130 bg-cover bg-center"
+    style={{ backgroundImage: "url('herovop.png')" }}
+  ></div>
+
+</div>
 {/* <div className="w-full h-140"  style={{ backgroundImage: "url('src/assets/m3.png')" }}></div> */}
 
 <div className="bg-gray-200 mt-0 md:mt-2 py-10 md:py-20">
