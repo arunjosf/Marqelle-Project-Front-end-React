@@ -134,7 +134,7 @@ useEffect(() => {
 
   return (
     <>
-  <div className="w-full h-[500px] md:h-[800px] overflow-hidden  relative">
+  <div className="w-full h-[380px] md:h-[800px] overflow-hidden  relative">
   <video
    ref={videoRef}
     src="MarqelleHomevideo.mp4"
