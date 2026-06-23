@@ -257,7 +257,7 @@ useEffect(() => {
 
   </div>
   <div
-    className="w-full md:w-1/2 h-[320px] sm:h-[320px] md:h-130 bg-cover bg-center"
+    className="w-full md:w-1/2 h-[280px] sm:h-[320px] md:h-130 bg-cover bg-center"
     style={{ backgroundImage: "url('herovop.png')" }}></div>
 </div>
 

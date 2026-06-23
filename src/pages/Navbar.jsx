@@ -22,8 +22,8 @@ export default function Navbar() {
   }, []);
 
   return (
- <nav className="pt-5 fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-transparent">
-  <div className={"max-w-7xl mx-0 sm:mx-auto px-3 sm:px-4 sm:px-6 lg:px-8 sm:rounded-2xl transition-all duration-300 backdrop-blur-lg bg-white/45 sm:shadow-md"}>
+ <nav className="sm:pt-0 pt-5 fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-transparent">
+  <div className={"max-w-7xl mx-0 sm:mx-auto px-3 sm:px-2 sm:px-2 lg:px-8 sm:rounded-2xl transition-all duration-300 backdrop-blur-lg bg-white/45 sm:shadow-md"}>
     <div className="flex justify-between items-center h-16">
 
           
@@ -87,8 +87,8 @@ export default function Navbar() {
         <div className="md:hidden bg-gray-200 px-4 pb-4 space-y-3 text-gray-800 font-medium">
           <NavLink to="/home" className="block" onClick={() => setOpen(false)}>Home</NavLink>
           <NavLink to="/about" className="block" onClick={() => setOpen(false)}>About</NavLink>
-          <NavLink to="/men" className="block" onClick={() => setOpen(false)}>Men</NavLink>
-          <NavLink to="/vintage" className="block" onClick={() => setOpen(false)}>Vintage</NavLink>
+          <NavLink to="/allproducts" className="block" onClick={() => setOpen(false)}>Shop</NavLink>
+          <NavLink to="/explore" className="block" onClick={() => setOpen(false)}>Explore</NavLink>
         </div>
       )}
     </nav>
