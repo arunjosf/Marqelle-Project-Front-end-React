@@ -1,16 +1,43 @@
-# React + Vite
+# Marqelle - E-Commerce Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the official React frontend for the **Marqelle** E-Commerce platform. It features a modern, responsive, and luxury-inspired user interface tailored for both customers and administrators.
 
-Currently, two official plugins are available:
+**[Looking for the Backend API Repository? Click Here](https://github.com/arunjosf/Marqelle.-NET-Ecommerce-Project)** 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
+The frontend is deployed and running live on Vercel: [Visit GD1 Platform](https://marqelle-ecommerce.vercel.app/home)
 
-## React Compiler
+## Tech Stack
+* **Framework:** React.js (Vite)
+* **Styling:** Tailwind CSS
+* **Animations:** Framer Motion
+* **Routing:** React Router DOM
+* **State Management:** React Context API
+* **API Requests:** Axios
+* **Notifications:** React Hot Toast
+* **Icons:** Lucide React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
+* **Authentication:** Secure Login and Signup flows with Email OTP Verification and automatic JWT refresh handling.
+* **Customer Experience:** 
+  * Beautiful landing pages with smooth scroll animations.
+  * Product browsing, filtering, and dynamic search.
+  * Real-time Cart and Wishlist management.
+  * Secure checkout and payment processing via Razorpay.
+  * User profile dashboard for tracking order history.
+* **Admin Dashboard:** 
+  * Secure, role-protected admin routes.
+  * Manage products, view customer analytics, and fulfill orders.
+* **Responsive Design:** A mobile-first approach ensuring the app looks stunning on phones, tablets, and desktop displays.
 
-## Expanding the ESLint configuration
+## Local Development Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Prerequisites
+* [Node.js](https://nodejs.org/) (v16 or higher)
+* Git
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/arunjosf/Marqelle-Project-Front-end-React
+cd Marqelle-Project-Front-end-React
+```

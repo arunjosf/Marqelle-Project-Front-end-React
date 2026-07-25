@@ -102,7 +102,6 @@ export default function Search() {
              <div className="w-full text-center max-w-[250px] sm:max-w-none mx-auto">
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">What are you looking for?</p>
           
-          {/* Form wrapper allows the "Go/Search" button on the mobile keyboard to close it */}
           <form 
             onSubmit={(e) => { e.preventDefault(); inputRef.current?.blur(); }} 
             className="relative flex items-center justify-center sm:w-120 mx-auto"
@@ -116,7 +115,6 @@ export default function Search() {
               className="w-full border-b border-gray-300 bg-transparent text-center text-sm text-gray-700 tracking-wide py-2 focus:outline-none transition-colors placeholder-transparent"
             />
             
-            {/* The Arrow Button: Only shows on mobile (sm:hidden) when text is typed */}
             {searchTerm && (
               <button 
                 type="submit"
