@@ -4,9 +4,6 @@ This is the official React frontend for the **Marqelle** E-Commerce platform. It
 
 **[Looking for the Backend API Repository? Click Here](https://github.com/arunjosf/Marqelle.-NET-Ecommerce-Project)** 
 
-## Live Demo
-The frontend is deployed and running live on Vercel: [Visit GD1 Platform](https://marqelle-ecommerce.vercel.app/home)
-
 ## Tech Stack
 * **Framework:** React.js (Vite)
 * **Styling:** Tailwind CSS
