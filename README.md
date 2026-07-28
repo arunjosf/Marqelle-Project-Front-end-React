@@ -41,7 +41,7 @@ Here is a visual overview of the application in action:
 ![Screenshot 7](public/rd11.png)
 ![Screenshot 8](public/rd8.png)
 ![Screenshot 9](public/rd1.png)
-![Screenshot 10](public/rd3.png)
+![Screenshot 10](public/Rd3.png)
 
 
 ## Local Development Setup
