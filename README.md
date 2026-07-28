@@ -30,6 +30,20 @@ The frontend is deployed and running live on Vercel: [Visit GD1 Platform](https:
   * Manage products, view customer analytics, and fulfill orders.
 * **Responsive Design:** A mobile-first approach ensuring the app looks stunning on phones, tablets, and desktop displays.
 
+## Screenshots
+Here is a visual overview of the application in action:
+![Screenshot 1](public/rd2.png)
+![Screenshot 2](public/rd5.png)
+![Screenshot 3](public/rd4.png)
+![Screenshot 4](public/rd7.png)
+![Screenshot 5](public/rd9.png)
+![Screenshot 6](public/rd10.png)
+![Screenshot 7](public/rd11.png)
+![Screenshot 8](public/rd8.png)
+![Screenshot 9](public/rd1.png)
+![Screenshot 10](public/rd3.png)
+
+
 ## Local Development Setup
 
 ### 1. Prerequisites
